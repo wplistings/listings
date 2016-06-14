@@ -422,7 +422,7 @@ class Cpt {
 
 	/**
 	 * Search custom fields as well as content.
-	 * @param WP_Query $wp
+	 * @param \WP_Query $wp
 	 */
 	public function search_meta( $wp ) {
 		global $pagenow, $wpdb;

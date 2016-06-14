@@ -234,7 +234,7 @@ class SubmitJob extends Form {
 		foreach ( $this->fields as $group_key => $group_fields ) {
 			foreach ( $group_fields as $key => $field ) {
 				if ( $field['required'] && empty( $values[ $group_key ][ $key ] ) ) {
-					return new WP_Error( 'validation-error', sprintf( __( '%s is a required field', 'wp-job-manager' ), $field['label'] ) );
+					return new \WP_Error( 'validation-error', sprintf( __( '%s is a required field', 'wp-job-manager' ), $field['label'] ) );
 				}
 				if ( ! empty( $field['taxonomy'] ) && in_array( $field['type'], array( 'term-checklist', 'term-select', 'term-multiselect' ) ) ) {
 					if ( is_array( $values[ $group_key ][ $key ] ) ) {
@@ -244,7 +244,7 @@ class SubmitJob extends Form {
 					}
 					foreach ( $check_value as $term ) {
 						if ( ! term_exists( $term, $field['taxonomy'] ) ) {
-							return new WP_Error( 'validation-error', sprintf( __( '%s is invalid', 'wp-job-manager' ), $field['label'] ) );
+							return new \WP_Error( 'validation-error', sprintf( __( '%s is invalid', 'wp-job-manager' ), $field['label'] ) );
 						}
 					}
 				}
@@ -260,7 +260,7 @@ class SubmitJob extends Form {
 							$file_info = wp_check_filetype( $file_url );
 
 							if ( ! is_numeric( $file_url ) && $file_info && ! in_array( $file_info['type'], $field['allowed_mime_types'] ) ) {
-								throw new Exception( sprintf( __( '"%s" (filetype %s) needs to be one of the following file types: %s', 'wp-job-manager' ), $field['label'], $file_info['ext'], implode( ', ', array_keys( $field['allowed_mime_types'] ) ) ) );
+								throw new \Exception( sprintf( __( '"%s" (filetype %s) needs to be one of the following file types: %s', 'wp-job-manager' ), $field['label'], $file_info['ext'], implode( ', ', array_keys( $field['allowed_mime_types'] ) ) ) );
 							}
 						}
 					}
@@ -275,7 +275,7 @@ class SubmitJob extends Form {
 			switch ( $allowed_application_method ) {
 				case 'email' :
 					if ( ! is_email( $values['job']['application'] ) ) {
-						throw new Exception( __( 'Please enter a valid application email address', 'wp-job-manager' ) );
+						throw new \Exception( __( 'Please enter a valid application email address', 'wp-job-manager' ) );
 					}
 				break;
 				case 'url' :
@@ -284,7 +284,7 @@ class SubmitJob extends Form {
 						$values['job']['application'] = 'http://' . $values['job']['application'];
 					}
 					if ( ! filter_var( $values['job']['application'], FILTER_VALIDATE_URL ) ) {
-						throw new Exception( __( 'Please enter a valid application URL', 'wp-job-manager' ) );
+						throw new \Exception( __( 'Please enter a valid application URL', 'wp-job-manager' ) );
 					}
 				break;
 				default :
@@ -294,7 +294,7 @@ class SubmitJob extends Form {
 							$values['job']['application'] = 'http://' . $values['job']['application'];
 						}
 						if ( ! filter_var( $values['job']['application'], FILTER_VALIDATE_URL ) ) {
-							throw new Exception( __( 'Please enter a valid application email address or URL', 'wp-job-manager' ) );
+							throw new \Exception( __( 'Please enter a valid application email address or URL', 'wp-job-manager' ) );
 						}
 					}
 				break;
@@ -399,7 +399,7 @@ class SubmitJob extends Form {
 
 			// Validate required
 			if ( is_wp_error( ( $return = $this->validate_fields( $values ) ) ) ) {
-				throw new Exception( $return->get_error_message() );
+				throw new \Exception( $return->get_error_message() );
 			}
 
 			// Account creation
@@ -409,10 +409,10 @@ class SubmitJob extends Form {
 				if ( job_manager_enable_registration() ) {
 					if ( job_manager_user_requires_account() ) {
 						if ( ! job_manager_generate_username_from_email() && empty( $_POST['create_account_username'] ) ) {
-							throw new Exception( __( 'Please enter a username.', 'wp-job-manager' ) );
+							throw new \Exception( __( 'Please enter a username.', 'wp-job-manager' ) );
 						}
 						if ( empty( $_POST['create_account_email'] ) ) {
-							throw new Exception( __( 'Please enter your email address.', 'wp-job-manager' ) );
+							throw new \Exception( __( 'Please enter your email address.', 'wp-job-manager' ) );
 						}
 					}
 					if ( ! empty( $_POST['create_account_email'] ) ) {
@@ -425,12 +425,12 @@ class SubmitJob extends Form {
 				}
 
 				if ( is_wp_error( $create_account ) ) {
-					throw new Exception( $create_account->get_error_message() );
+					throw new \Exception( $create_account->get_error_message() );
 				}
 			}
 
 			if ( job_manager_user_requires_account() && ! is_user_logged_in() ) {
-				throw new Exception( __( 'You must be signed in to post a new listing.' ) );
+				throw new \Exception( __( 'You must be signed in to post a new listing.' ) );
 			}
 
 			// Update the job
@@ -440,7 +440,7 @@ class SubmitJob extends Form {
 			// Successful, show next step
 			$this->step ++;
 
-		} catch ( Exception $e ) {
+		} catch ( \Exception $e ) {
 			$this->add_error( $e->getMessage() );
 			return;
 		}

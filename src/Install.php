@@ -46,7 +46,7 @@ class Install {
         global $wp_roles;
 
         if ( class_exists( 'WP_Roles' ) && ! isset( $wp_roles ) ) {
-            $wp_roles = new WP_Roles();
+            $wp_roles = new \WP_Roles();
         }
 
         if ( is_object( $wp_roles ) ) {
