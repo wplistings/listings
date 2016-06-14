@@ -52,6 +52,7 @@ class Ajax {
 	 * Check for WC Ajax request and fire action
 	 */
 	public static function do_jm_ajax() {
+		/** @var $wp_query \WP_Query */
 		global $wp_query;
 
 		if ( ! empty( $_GET['jm-ajax'] ) ) {

@@ -760,6 +760,7 @@ function job_manager_duplicate_listing( $post_id ) {
 		return 0;
 	}
 
+	/** @var $wpdb \wpdb */
 	global $wpdb;
 
 	/**

@@ -425,6 +425,7 @@ class Cpt {
 	 * @param \WP_Query $wp
 	 */
 	public function search_meta( $wp ) {
+		/** @var $wpdb \wpdb */
 		global $pagenow, $wpdb;
 
 		if ( 'edit.php' !== $pagenow || empty( $wp->query_vars['s'] ) || 'job_listing' !== $wp->query_vars['post_type'] ) {

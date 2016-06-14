@@ -43,9 +43,10 @@ class Install {
      * Init user roles
      */
     private static function init_user_roles() {
+        /** @var $wp_roles \WP_Roles */
         global $wp_roles;
 
-        if ( class_exists( 'WP_Roles' ) && ! isset( $wp_roles ) ) {
+        if ( class_exists( '\WP_Roles' ) && ! isset( $wp_roles ) ) {
             $wp_roles = new \WP_Roles();
         }
 
