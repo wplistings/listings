@@ -1,0 +1,22 @@
+{
+  "name": "thelookandfeel/listings",
+  "type": "wordpress-plugin",
+  "minimum-stability": "dev",
+  "require": {},
+  "prefer-stable": true,
+  "authors": [
+    {
+      "name": "Coen Jacobs",
+      "email": "coen@thelookandfeel.com"
+    }
+  ],
+  "autoload": {
+    "files": [
+      "helpers/functions.php",
+      "helpers/template.php"
+    ],
+    "psr-4": {
+      "Listings\\": "src/"
+    }
+  }
+}
