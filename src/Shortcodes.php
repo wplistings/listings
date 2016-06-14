@@ -473,7 +473,7 @@ class Shortcodes {
 
 			<?php while ( $jobs->have_posts() ) : $jobs->the_post(); ?>
 
-				<div class="job_summary_shortcode align<?php echo $align ?>" style="width: <?php echo $width ? $width : auto; ?>">
+				<div class="job_summary_shortcode align<?php echo $align ?>" style="width: <?php echo $width ? $width : 'auto'; ?>">
 
 					<?php get_job_manager_template_part( 'content-summary', 'job_listing' ); ?>
 
