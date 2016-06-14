@@ -586,7 +586,7 @@ class PostTypes {
 	/**
 	 * Maybe set default meta data for job listings
 	 * @param  int $post_id
-	 * @param  WP_Post $post
+	 * @param  \WP_Post $post
 	 */
 	public function maybe_add_default_meta_data( $post_id, $post = '' ) {
 		if ( empty( $post ) || 'job_listing' === $post->post_type ) {
@@ -626,7 +626,7 @@ class PostTypes {
 	 * Add meta fields for RP4WP to relate jobs by
 	 * @param  array $meta_fields
 	 * @param  int $post_id
-	 * @param  WP_Post $post
+	 * @param  \WP_Post $post
 	 * @return array
 	 */
 	public function rp4wp_related_meta_fields( $meta_fields, $post_id, $post ) {
@@ -640,7 +640,7 @@ class PostTypes {
 	/**
 	 * Add meta fields for RP4WP to relate jobs by
 	 * @param  int $weight
-	 * @param  WP_Post $post
+	 * @param  \WP_Post $post
 	 * @param  string $meta_field
 	 * @return int
 	 */

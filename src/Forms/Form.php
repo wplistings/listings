@@ -333,7 +333,7 @@ abstract class Form {
 				$uploaded_file = job_manager_upload_file( $file_to_upload, array( 'file_key' => $field_key ) );
 
 				if ( is_wp_error( $uploaded_file ) ) {
-					throw new Exception( $uploaded_file->get_error_message() );
+					throw new \Exception( $uploaded_file->get_error_message() );
 				} else {
 					$file_urls[] = $uploaded_file->url;
 				}

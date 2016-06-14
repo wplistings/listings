@@ -25,11 +25,11 @@ class Addons {
 				$raw_addons = wp_remote_retrieve_body( $raw_addons );
 
 				// Get Products
-				$dom = new DOMDocument();
+				$dom = new \DOMDocument();
 				libxml_use_internal_errors(true);
 				$dom->loadHTML( $raw_addons );
 
-				$xpath  = new DOMXPath( $dom );
+				$xpath  = new \DOMXPath( $dom );
 				$tags   = $xpath->query('//ul[@class="products"]');
 				foreach ( $tags as $tag ) {
 					$addons = $tag->ownerDocument->saveXML( $tag );

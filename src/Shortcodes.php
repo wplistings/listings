@@ -2,6 +2,9 @@
 
 namespace Listings;
 
+use Listings\Forms\EditJob;
+use Listings\Forms\SubmitJob;
+
 class Shortcodes {
 
 	private $job_dashboard_message = '';
@@ -38,7 +41,10 @@ class Shortcodes {
 	 * Show the job submission form
 	 */
 	public function submit_job_form( $atts = array() ) {
-		return $GLOBALS['job_manager']->forms->get_form( 'submit-job', $atts );
+		$form = SubmitJob::instance();
+		ob_start();
+		$form->output($atts);
+		return ob_get_clean();
 	}
 
 	/**
@@ -56,14 +62,14 @@ class Shortcodes {
 
 				// Check ownership
 				if ( ! job_manager_user_can_edit_job( $job_id ) ) {
-					throw new Exception( __( 'Invalid ID', 'wp-job-manager' ) );
+					throw new \Exception( __( 'Invalid ID', 'wp-job-manager' ) );
 				}
 
 				switch ( $action ) {
 					case 'mark_filled' :
 						// Check status
 						if ( $job->_filled == 1 )
-							throw new Exception( __( 'This position has already been filled', 'wp-job-manager' ) );
+							throw new \Exception( __( 'This position has already been filled', 'wp-job-manager' ) );
 
 						// Update
 						update_post_meta( $job_id, '_filled', 1 );
@@ -74,7 +80,7 @@ class Shortcodes {
 					case 'mark_not_filled' :
 						// Check status
 						if ( $job->_filled != 1 ) {
-							throw new Exception( __( 'This position is not filled', 'wp-job-manager' ) );
+							throw new \Exception( __( 'This position is not filled', 'wp-job-manager' ) );
 						}
 
 						// Update
@@ -93,7 +99,7 @@ class Shortcodes {
 						break;
 					case 'duplicate' :
 						if ( ! job_manager_get_permalink( 'submit_job_form' ) ) {
-							throw new Exception( __( 'Missing submission page.', 'wp-job-manager' ) );
+							throw new \Exception( __( 'Missing submission page.', 'wp-job-manager' ) );
 						}
 
 						$new_job_id = job_manager_duplicate_listing( $job_id );
@@ -106,7 +112,7 @@ class Shortcodes {
 						break;
 					case 'relist' :
 						if ( ! job_manager_get_permalink( 'submit_job_form' ) ) {
-							throw new Exception( __( 'Missing submission page.', 'wp-job-manager' ) );
+							throw new \Exception( __( 'Missing submission page.', 'wp-job-manager' ) );
 						}
 
 						// redirect to post page
@@ -121,7 +127,7 @@ class Shortcodes {
 
 				do_action( 'job_manager_my_job_do_action', $action, $job_id );
 
-			} catch ( Exception $e ) {
+			} catch ( \Exception $e ) {
 				$this->job_dashboard_message = '<div class="job-manager-error">' . $e->getMessage() . '</div>';
 			}
 		}
@@ -169,7 +175,7 @@ class Shortcodes {
 			'author'              => get_current_user_id()
 		) );
 
-		$jobs = new WP_Query;
+		$jobs = new \WP_Query;
 
 		echo $this->job_dashboard_message;
 
@@ -189,9 +195,11 @@ class Shortcodes {
 	 * Edit job form
 	 */
 	public function edit_job() {
-		global $job_manager;
+		$form = EditJob::instance();
+		ob_start();
+		$form->output();
+		return ob_get_clean();
 
-		echo $job_manager->forms->get_form( 'edit-job' );
 	}
 
 	/**
@@ -403,7 +411,7 @@ class Shortcodes {
 			'p'           => $id
 		);
 
-		$jobs = new WP_Query( $args );
+		$jobs = new \WP_Query( $args );
 
 		if ( $jobs->have_posts() ) : ?>
 
@@ -459,13 +467,13 @@ class Shortcodes {
 			$args['p'] = absint( $id );
 		}
 
-		$jobs = new WP_Query( $args );
+		$jobs = new \WP_Query( $args );
 
 		if ( $jobs->have_posts() ) : ?>
 
 			<?php while ( $jobs->have_posts() ) : $jobs->the_post(); ?>
 
-				<div class="job_summary_shortcode align<?php echo $align ?>" style="width: <?php echo $width ? $width : auto; ?>">
+				<div class="job_summary_shortcode align<?php echo $align ?>" style="width: <?php echo $width ? $width : 'auto'; ?>">
 
 					<?php get_job_manager_template_part( 'content-summary', 'job_listing' ); ?>
 
@@ -501,7 +509,7 @@ class Shortcodes {
 			$args['p'] = absint( $id );
 		}
 
-		$jobs = new WP_Query( $args );
+		$jobs = new \WP_Query( $args );
 
 		if ( $jobs->have_posts() ) : ?>
 

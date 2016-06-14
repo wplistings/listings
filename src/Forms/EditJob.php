@@ -103,7 +103,7 @@ class EditJob extends Form {
 
 			// Validate required
 			if ( is_wp_error( ( $return = $this->validate_fields( $values ) ) ) ) {
-				throw new Exception( $return->get_error_message() );
+				throw new \Exception( $return->get_error_message() );
 			}
 
 			// Update the job
@@ -120,7 +120,7 @@ class EditJob extends Form {
 				break;
 			}
 
-		} catch ( Exception $e ) {
+		} catch ( \Exception $e ) {
 			echo '<div class="job-manager-error">' . $e->getMessage() . '</div>';
 			return;
 		}
