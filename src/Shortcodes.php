@@ -2,6 +2,9 @@
 
 namespace Listings;
 
+use Listings\Forms\EditJob;
+use Listings\Forms\SubmitJob;
+
 class Shortcodes {
 
 	private $job_dashboard_message = '';
@@ -38,7 +41,10 @@ class Shortcodes {
 	 * Show the job submission form
 	 */
 	public function submit_job_form( $atts = array() ) {
-		return $GLOBALS['job_manager']->forms->get_form( 'submit-job', $atts );
+		$form = SubmitJob::instance();
+		ob_start();
+		$form->output($atts);
+		return ob_get_clean();
 	}
 
 	/**
@@ -189,9 +195,11 @@ class Shortcodes {
 	 * Edit job form
 	 */
 	public function edit_job() {
-		global $job_manager;
+		$form = EditJob::instance();
+		ob_start();
+		$form->output();
+		return ob_get_clean();
 
-		echo $job_manager->forms->get_form( 'edit-job' );
 	}
 
 	/**
