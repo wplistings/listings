@@ -18,7 +18,6 @@ class Plugin {
         $this->install = new Install();
         $this->post_types = new PostTypes();
         $this->ajax = new Ajax();
-        $this->shortcodes = new Shortcodes();
         $this->api = new Api();
         $this->forms      = new Forms();
         $this->geocode = new Geocode();
