@@ -13,9 +13,25 @@ class Admin {
 		$this->settings_page = new Settings();
 		$this->writepanels = new Writepanels();
 		$this->setup = new Setup();
+		$this->addons_page = new Addons();
 
 		add_action( 'admin_menu', array( $this, 'admin_menu' ), 12 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+	}
+
+	/**
+	 * admin_menu function.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function admin_menu() {
+		add_menu_page('Listings', 'Listings', 'manage_options', 'listings', function() {
+		}, '', 25);
+		if ( apply_filters( 'job_manager_show_addons_page', true ) ) {
+			add_submenu_page('listings', __('Listings Add-ons', 'listings'), __('Add-ons', 'listings'), 'manage_options', 'listings-addons', array($this->addons_page, 'output'));
+		}
+		add_submenu_page( 'listings', __( 'Settings', 'listings' ), __( 'Settings', 'listings' ), 'manage_options', 'listings-settings', array( $this->settings_page, 'output' ) );
 	}
 
 	/**
@@ -43,26 +59,5 @@ class Admin {
 		}
 
 		wp_enqueue_style( 'job_manager_admin_menu_css', LISTINGS_PLUGIN_URL . '/assets/css/menu.css' );
-	}
-
-	/**
-	 * admin_menu function.
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function admin_menu() {
-		add_submenu_page( 'edit.php?post_type=job_listing', __( 'Settings', 'wp-job-manager' ), __( 'Settings', 'wp-job-manager' ), 'manage_options', 'job-manager-settings', array( $this->settings_page, 'output' ) );
-
-		if ( apply_filters( 'job_manager_show_addons_page', true ) )
-			add_submenu_page(  'edit.php?post_type=job_listing', __( 'WP Job Manager Add-ons', 'wp-job-manager' ),  __( 'Add-ons', 'wp-job-manager' ) , 'manage_options', 'job-manager-addons', array( $this, 'addons_page' ) );
-	}
-
-	/**
-	 * Output addons page
-	 */
-	public function addons_page() {
-		$addons = new Addons();
-		$addons->output();
 	}
 }
