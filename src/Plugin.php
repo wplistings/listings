@@ -2,7 +2,7 @@
 
 namespace Listings;
 
-use Listings\Admin\Admin;
+use Listings\Jobs\Admin\Admin;
 
 class Plugin {
 
