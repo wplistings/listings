@@ -5,6 +5,11 @@ namespace Listings;
 class Forms {
 
 	/**
+	 * @todo this needs a lot of love to handle forms from multiple plugins
+	 * Perhaps it's best to figure out a way to register the Form, instead of
+	 * loading the right Form based on name and file name
+	 */
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
