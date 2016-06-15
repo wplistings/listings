@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Listings
- * Description: Manage listings from the WordPress admin panel, and allow users to listed items directly to your site.
+ * Description: Manage listings from the WordPress admin panel, and allow users to list items directly to your site.
  * Version: 1.0.0
  * Author: The Look and Feel
  * Text Domain: listings
