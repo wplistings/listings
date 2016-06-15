@@ -11,7 +11,6 @@ class Admin {
 	 */
 	public function __construct() {
 		$this->settings_page = new Settings();
-		$this->writepanels = new Writepanels();
 		$this->setup = new Setup();
 		$this->addons_page = new Addons();
 
