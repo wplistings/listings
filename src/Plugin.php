@@ -3,8 +3,6 @@
 namespace Listings;
 
 use Listings\Admin\Admin;
-use Listings\Widgets\FeaturedJobs;
-use Listings\Widgets\RecentJobs;
 
 class Plugin {
 
@@ -38,7 +36,7 @@ class Plugin {
 
         // Actions
         add_action( 'after_setup_theme', array( $this, 'load_plugin_textdomain' ) );
-        add_action( 'widgets_init', array( $this, 'widgets_init' ) );
+
         add_action( 'wp_enqueue_scripts', array( $this, 'frontend_scripts' ) );
         add_action( 'admin_init', array( $this, 'updater' ) );
     }
@@ -69,14 +67,6 @@ class Plugin {
     public function load_plugin_textdomain() {
         load_textdomain( 'wp-job-manager', WP_LANG_DIR . "/wp-job-manager/wp-job-manager-" . apply_filters( 'plugin_locale', get_locale(), 'wp-job-manager' ) . ".mo" );
         load_plugin_textdomain( 'wp-job-manager', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-    }
-
-    /**
-     * Widgets init
-     */
-    public function widgets_init() {
-        register_widget( RecentJobs::class );
-        register_widget( FeaturedJobs::class );
     }
 
     /**
