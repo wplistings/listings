@@ -12,5 +12,7 @@ define( 'LISTINGS_VERSION', '1.0.0' );
 define( 'LISTINGS_PLUGIN_DIR', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'LISTINGS_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
 
-include('vendor/autoload.php');
-$GLOBALS['listings'] = new \Listings\Plugin();
+add_action('plugins_loaded', function() {
+    include('vendor/autoload.php');
+    $GLOBALS['listings'] = new \Listings\Plugin();
+}, 10, 0);
