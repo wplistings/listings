@@ -16,7 +16,6 @@ class Plugin {
 
         // Init classes
         $this->install = new Install();
-        $this->post_types = new PostTypes();
         $this->ajax = new Ajax();
         $this->api = new Api();
         $this->forms      = new Forms();
@@ -30,7 +29,6 @@ class Plugin {
 
         // Switch theme
         add_action( 'after_switch_theme', array( Ajax::class, 'add_endpoint' ), 10 );
-        add_action( 'after_switch_theme', array( $this->post_types, 'register_post_types' ), 11 );
         add_action( 'after_switch_theme', 'flush_rewrite_rules', 15 );
 
         // Actions
@@ -45,7 +43,6 @@ class Plugin {
      */
     public function activate() {
         Ajax::add_endpoint();
-        $this->post_types->register_post_types();
         Install::install();
         flush_rewrite_rules();
     }
