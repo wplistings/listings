@@ -6,4 +6,4 @@ Todo:
 * Extract the jobs specific functionality into a separate plugin
 * Rewrite the CSS and HTML to `listings` classes
 * Change variable names and meta fields
-* Probably a lot more, it's fun project :)
+* Probably a lot more, it's a fun project :)
