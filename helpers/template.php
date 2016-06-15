@@ -51,7 +51,7 @@ function locate_job_manager_template( $template_name, $template_path = 'job_mana
 
 	// Get default template
 	if ( ! $template && $default_path !== false ) {
-		$default_path = $default_path ? $default_path : JOB_MANAGER_PLUGIN_DIR . '/templates/';
+		$default_path = $default_path ? $default_path : LISTINGS_PLUGIN_DIR . '/templates/';
 		if ( file_exists( trailingslashit( $default_path ) . $template_name ) ) {
 			$template = trailingslashit( $default_path ) . $template_name;
 		}
@@ -325,7 +325,7 @@ function the_company_logo( $size = 'thumbnail', $default = null, $post = null ) 
 	} elseif ( $default ) {
 		echo '<img class="company_logo" src="' . esc_attr( $default ) . '" alt="' . esc_attr( get_the_company_name( $post ) ) . '" />';
 	} else {
-		echo '<img class="company_logo" src="' . esc_attr( apply_filters( 'job_manager_default_company_logo', JOB_MANAGER_PLUGIN_URL . '/assets/images/company.png' ) ) . '" alt="' . esc_attr( get_the_company_name( $post ) ) . '" />';
+		echo '<img class="company_logo" src="' . esc_attr( apply_filters( 'job_manager_default_company_logo', LISTINGS_PLUGIN_URL . '/assets/images/company.png' ) ) . '" alt="' . esc_attr( get_the_company_name( $post ) ) . '" />';
 	}
 }
 

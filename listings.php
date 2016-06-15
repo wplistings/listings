@@ -8,9 +8,9 @@
  */
 
 // Define constants
-define( 'JOB_MANAGER_VERSION', '1.25.0' );
-define( 'JOB_MANAGER_PLUGIN_DIR', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
-define( 'JOB_MANAGER_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
+define( 'LISTINGS_VERSION', '1.25.0' );
+define( 'LISTINGS_PLUGIN_DIR', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
+define( 'LISTINGS_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
 
 include('vendor/autoload.php');
 $GLOBALS['listings'] = new \Listings\Plugin();

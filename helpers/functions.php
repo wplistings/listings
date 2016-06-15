@@ -575,7 +575,7 @@ function job_manager_dropdown_categories( $args = '' ) {
 	}
 
 	if ( ! empty( $categories ) ) {
-		include_once( JOB_MANAGER_PLUGIN_DIR . '/includes/class-wp-job-manager-category-walker.php' );
+		include_once( LISTINGS_PLUGIN_DIR . '/includes/class-wp-job-manager-category-walker.php' );
 
 		$walker = new \Listings\CategoryWalker();
 

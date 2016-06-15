@@ -175,8 +175,6 @@ class Cpt {
 	    	return;
 	    }
 
-	    include_once( JOB_MANAGER_PLUGIN_DIR . '/includes/class-wp-job-manager-category-walker.php' );
-
 		$r                 = array();
 		$r['pad_counts']   = 1;
 		$r['hierarchical'] = 1;

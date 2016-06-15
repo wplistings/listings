@@ -123,7 +123,7 @@ class Geocode {
 						'timeout'     => 5,
 					    'redirection' => 1,
 					    'httpversion' => '1.1',
-					    'user-agent'  => 'WordPress/WP-Job-Manager-' . JOB_MANAGER_VERSION . '; ' . get_bloginfo( 'url' ),
+					    'user-agent'  => 'WordPress/WP-Job-Manager-' . LISTINGS_VERSION . '; ' . get_bloginfo( 'url' ),
 					    'sslverify'   => false
 				    )
 				);

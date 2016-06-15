@@ -70,7 +70,7 @@ class Setup {
 	 * Enqueue scripts for setup page
 	 */
 	public function admin_enqueue_scripts() {
-		wp_enqueue_style( 'job_manager_setup_css', JOB_MANAGER_PLUGIN_URL . '/assets/css/setup.css', array( 'dashicons' ) );
+		wp_enqueue_style( 'job_manager_setup_css', LISTINGS_PLUGIN_URL . '/assets/css/setup.css', array( 'dashicons' ) );
 	}
 
 	/**

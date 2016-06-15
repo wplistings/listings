@@ -617,7 +617,7 @@ class PostTypes {
 	 */
 	public function rp4wp_template( $located, $template_name, $args ) {
 		if ( 'related-post-default.php' === $template_name && 'job_listing' === $args['related_post']->post_type ) {
-			return JOB_MANAGER_PLUGIN_DIR . '/templates/content-job_listing.php';
+			return LISTINGS_PLUGIN_DIR . '/templates/content-job_listing.php';
 		}
 		return $located;
 	}

@@ -20,7 +20,7 @@ class Install {
         }
 
         // Update featured posts ordering
-        if ( version_compare( get_option( 'wp_job_manager_version', JOB_MANAGER_VERSION ), '1.22.0', '<' ) ) {
+        if ( version_compare( get_option( 'wp_job_manager_version', LISTINGS_VERSION ), '1.22.0', '<' ) ) {
             $wpdb->query( "UPDATE {$wpdb->posts} p SET p.menu_order = 0 WHERE p.post_type='job_listing';" );
             $wpdb->query( "UPDATE {$wpdb->posts} p LEFT JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id SET p.menu_order = -1 WHERE pm.meta_key = '_featured' AND pm.meta_value='1' AND p.post_type='job_listing';" );
         }
@@ -36,7 +36,7 @@ class Install {
         }
 
         delete_transient( 'wp_job_manager_addons_html' );
-        update_option( 'wp_job_manager_version', JOB_MANAGER_VERSION );
+        update_option( 'wp_job_manager_version', LISTINGS_VERSION );
     }
 
     /**

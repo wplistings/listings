@@ -34,16 +34,16 @@ class Admin {
 			$jquery_version = isset( $wp_scripts->registered['jquery-ui-core']->ver ) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
 
 			wp_enqueue_style( 'jquery-ui-style', '//code.jquery.com/ui/' . $jquery_version . '/themes/smoothness/jquery-ui.css', array(), $jquery_version );
-			wp_enqueue_style( 'job_manager_admin_css', JOB_MANAGER_PLUGIN_URL . '/assets/css/admin.css' );
-			wp_register_script( 'jquery-tiptip', JOB_MANAGER_PLUGIN_URL. '/assets/js/jquery-tiptip/jquery.tipTip.min.js', array( 'jquery' ), JOB_MANAGER_VERSION, true );
-			wp_enqueue_script( 'job_manager_admin_js', JOB_MANAGER_PLUGIN_URL. '/assets/js/admin.min.js', array( 'jquery', 'jquery-tiptip', 'jquery-ui-datepicker' ), JOB_MANAGER_VERSION, true );
+			wp_enqueue_style( 'job_manager_admin_css', LISTINGS_PLUGIN_URL . '/assets/css/admin.css' );
+			wp_register_script( 'jquery-tiptip', LISTINGS_PLUGIN_URL. '/assets/js/jquery-tiptip/jquery.tipTip.min.js', array( 'jquery' ), LISTINGS_VERSION, true );
+			wp_enqueue_script( 'job_manager_admin_js', LISTINGS_PLUGIN_URL. '/assets/js/admin.min.js', array( 'jquery', 'jquery-tiptip', 'jquery-ui-datepicker' ), LISTINGS_VERSION, true );
 
 			wp_localize_script( 'job_manager_admin_js', 'job_manager_admin', array(
 				'date_format' => _x( 'yy-mm-dd', 'Date format for jQuery datepicker', 'wp-job-manager' )
 			) );
 		}
 
-		wp_enqueue_style( 'job_manager_admin_menu_css', JOB_MANAGER_PLUGIN_URL . '/assets/css/menu.css' );
+		wp_enqueue_style( 'job_manager_admin_menu_css', LISTINGS_PLUGIN_URL . '/assets/css/menu.css' );
 	}
 
 	/**

@@ -29,7 +29,7 @@ class Forms {
 	private function load_form_class( $form_name ) {
 		// Now try to load the form_name
 		$form_class  = 'WP_Job_Manager_Form_' . str_replace( '-', '_', $form_name );
-		$form_file   = JOB_MANAGER_PLUGIN_DIR . '/includes/forms/class-wp-job-manager-form-' . $form_name . '.php';
+		$form_file   = LISTINGS_PLUGIN_DIR . '/includes/forms/class-wp-job-manager-form-' . $form_name . '.php';
 
 		if ( class_exists( $form_class ) ) {
 			return call_user_func( array( $form_class, 'instance' ) );
