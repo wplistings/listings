@@ -2,18 +2,22 @@
 
 namespace Listings;
 
+use Listings\Forms\Form;
+
 class Forms {
 
-	/**
-	 * @todo this needs a lot of love to handle forms from multiple plugins
-	 * Perhaps it's best to figure out a way to register the Form, instead of
-	 * loading the right Form based on name and file name
-	 */
+	/** @var array */
+	public $forms = array();
+
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'load_posted_form' ) );
+	}
+
+	public function register_form( Form $form ) {
+		$this->forms[ $form->form_name ] = get_class( $form );
 	}
 
 	/**
@@ -32,24 +36,17 @@ class Forms {
 	 * @return string class name on success, false on failure
 	 */
 	private function load_form_class( $form_name ) {
-		// Now try to load the form_name
-		$form_class  = 'WP_Job_Manager_Form_' . str_replace( '-', '_', $form_name );
-		$form_file   = LISTINGS_PLUGIN_DIR . '/includes/forms/class-wp-job-manager-form-' . $form_name . '.php';
+		if ( ! isset( $this->forms[ $form_name ] ) ) {
+			return false;
+		}
+
+		$form_class = $this->forms[ $form_name ];
 
 		if ( class_exists( $form_class ) ) {
 			return call_user_func( array( $form_class, 'instance' ) );
 		}
 
-		if ( ! file_exists( $form_file ) ) {
-			return false;
-		}
-
-		if ( ! class_exists( $form_class ) ) {
-			include $form_file;
-		}
-
-		// Init the form
-		return call_user_func( array( $form_class, 'instance' ) );
+		return false;
 	}
 
 	/**
