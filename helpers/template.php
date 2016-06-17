@@ -9,7 +9,7 @@
  * @param string $default_path (default: '')
  * @return void
  */
-function listings_get_template( $template_name, $args = array(), $template_path = 'job_manager', $default_path = '' ) {
+function listings_get_template( $template_name, $args = array(), $template_path = 'listings', $default_path = '' ) {
 	$template = new \Listings\Template();
 	$template->get_template($template_name, $args, $template_path, $default_path);
 }

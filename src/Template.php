@@ -4,7 +4,7 @@ namespace Listings;
 
 class Template
 {
-    public function get_template($template_name, $args, $template_path, $default_path)
+    public function get_template( $template_name, $args = array(), $template_path = 'listings', $default_path = '' )
     {
         if ( $args && is_array( $args ) ) {
             extract( $args );
@@ -31,10 +31,10 @@ class Template
         }
 
         // Return what we found
-        return apply_filters( 'job_manager_locate_template', $template, $template_name, $template_path );
+        return apply_filters( 'listings_locate_template', $template, $template_name, $template_path );
     }
 
-    public function get_template_part($slug, $name, $template_path, $default_path)
+    public function get_template_part($slug, $name = '', $template_path = 'listings', $default_path = '')
     {
         $template = '';
 
@@ -42,7 +42,7 @@ class Template
             $template = $this->locate_template( "{$slug}-{$name}.php", $template_path, $default_path );
         }
 
-        // If template file doesn't exist, look in yourtheme/slug.php and yourtheme/job_manager/slug.php
+        // If template file doesn't exist, look in yourtheme/slug.php and yourtheme/listings/slug.php
         if ( ! $template ) {
             $template = $this->locate_template( "{$slug}.php", $template_path, $default_path );
         }
