@@ -16,15 +16,15 @@ class Template
         $this->template_paths[] = $path;
     }
 
-    public function get_template( $template_name, $args = array(), $template_path = 'listings', $default_path = '' )
+    public function get_template( $template_name, $args = array(), $template_path = 'listings' )
     {
         if ( $args && is_array( $args ) ) {
             extract( $args );
         }
-        include( $this->locate_template( $template_name, $template_path, $default_path ) );
+        include( $this->locate_template( $template_name, $template_path ) );
     }
 
-    public function locate_template($template_name, $template_path, $default_path)
+    public function locate_template($template_name, $template_path)
     {
         // Look within passed path within the theme - this is priority
         $template = locate_template(
@@ -35,7 +35,7 @@ class Template
         );
 
         // Get default template
-        if ( ! $template && $default_path !== false ) {
+        if ( ! $template ) {
             foreach ( $this->template_paths as $path ) {
                 if (file_exists(trailingslashit($path) . $template_name)) {
                     $template = trailingslashit($path) . $template_name;
@@ -48,17 +48,17 @@ class Template
         return apply_filters( 'listings_locate_template', $template, $template_name, $template_path );
     }
 
-    public function get_template_part($slug, $name = '', $template_path = 'listings', $default_path = '')
+    public function get_template_part($slug, $name = '', $template_path = 'listings')
     {
         $template = '';
 
         if ( $name ) {
-            $template = $this->locate_template( "{$slug}-{$name}.php", $template_path, $default_path );
+            $template = $this->locate_template( "{$slug}-{$name}.php", $template_path );
         }
 
         // If template file doesn't exist, look in yourtheme/slug.php and yourtheme/listings/slug.php
         if ( ! $template ) {
-            $template = $this->locate_template( "{$slug}.php", $template_path, $default_path );
+            $template = $this->locate_template( "{$slug}.php", $template_path );
         }
 
         if ( $template ) {

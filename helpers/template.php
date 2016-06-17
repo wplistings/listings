@@ -6,12 +6,11 @@
  * @param mixed $template_name
  * @param array $args (default: array())
  * @param string $template_path (default: '')
- * @param string $default_path (default: '')
  * @return void
  */
-function listings_get_template( $template_name, $args = array(), $template_path = 'listings', $default_path = '' ) {
+function listings_get_template( $template_name, $args = array(), $template_path = 'listings' ) {
 	$template = new \Listings\Template();
-	$template->get_template($template_name, $args, $template_path, $default_path);
+	$template->get_template($template_name, $args, $template_path);
 }
 
 /**
@@ -20,11 +19,10 @@ function listings_get_template( $template_name, $args = array(), $template_path 
  * @param string $slug
  * @param string $name (default: '')
  * @param string $template_path (default: 'job_manager')
- * @param string|bool $default_path (default: '') False to not load a default
  */
-function listings_get_template_part( $slug, $name = '', $template_path = 'job_manager', $default_path = '' ) {
+function listings_get_template_part( $slug, $name = '', $template_path = 'job_manager' ) {
 	$template = new \Listings\Template();
-	$template->get_template_part($slug, $name, $template_path, $default_path);
+	$template->get_template_part($slug, $name, $template_path);
 }
 
 /**
