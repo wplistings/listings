@@ -6,6 +6,9 @@ use Listings\Admin\Admin;
 
 class Plugin {
 
+    /** @var Template */
+    public $template;
+
     /**
      * Constructor - get the plugin hooked in and ready
      */
@@ -20,6 +23,7 @@ class Plugin {
         $this->api = new Api();
         $this->forms      = new Forms();
         $this->geocode = new Geocode();
+        $this->template = new Template();
 
         // Setup cache helper
         CacheHelper::init();

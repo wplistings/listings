@@ -9,8 +9,7 @@
  * @return void
  */
 function listings_get_template( $template_name, $args = array(), $template_path = 'listings' ) {
-	$template = new \Listings\Template();
-	$template->get_template($template_name, $args, $template_path);
+	listings()->template->get_template($template_name, $args, $template_path);
 }
 
 /**
@@ -21,8 +20,7 @@ function listings_get_template( $template_name, $args = array(), $template_path 
  * @param string $template_path (default: 'job_manager')
  */
 function listings_get_template_part( $slug, $name = '', $template_path = 'job_manager' ) {
-	$template = new \Listings\Template();
-	$template->get_template_part($slug, $name, $template_path);
+	listings()->template->get_template_part($slug, $name, $template_path);
 }
 
 /**
