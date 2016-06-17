@@ -13,9 +13,13 @@ module.exports = function( grunt ){
 
 		// Compile all .less files.
 		less: {
-			build: {
+			admin: {
 				src: 'assets/css/admin/**/*.less',
 				dest: 'assets/css/admin.css'
+			},
+			frontend: {
+				src: 'assets/css/frontend/**/*.less',
+				dest: 'assets/css/frontend.css'
 			}
 		},
 

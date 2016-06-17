@@ -96,7 +96,6 @@ class Plugin {
             wp_register_script( 'chosen', LISTINGS_PLUGIN_URL . '/assets/js/jquery-chosen/chosen.jquery.min.js', array( 'jquery' ), '1.1.0', true );
             wp_register_script( 'wp-job-manager-term-multiselect', LISTINGS_PLUGIN_URL . '/assets/js/term-multiselect.min.js', array( 'jquery', 'chosen' ), LISTINGS_VERSION, true );
             wp_register_script( 'wp-job-manager-multiselect', LISTINGS_PLUGIN_URL . '/assets/js/multiselect.min.js', array( 'jquery', 'chosen' ), LISTINGS_VERSION, true );
-            wp_enqueue_style( 'chosen', LISTINGS_PLUGIN_URL . '/assets/css/chosen.css' );
             $ajax_filter_deps[] = 'chosen';
 
             wp_localize_script( 'chosen', 'job_manager_chosen_multiselect_args',
