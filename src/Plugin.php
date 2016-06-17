@@ -100,11 +100,11 @@ class Plugin {
             wp_register_script( 'wp-job-manager-ajax-file-upload', LISTINGS_PLUGIN_URL . '/assets/js/ajax-file-upload.min.js', array( 'jquery', 'jquery-fileupload' ), LISTINGS_VERSION, true );
 
             ob_start();
-            get_job_manager_template( 'form-fields/uploaded-file-html.php', array( 'name' => '', 'value' => '', 'extension' => 'jpg' ) );
+            listings_get_template( 'form-fields/uploaded-file-html.php', array( 'name' => '', 'value' => '', 'extension' => 'jpg' ) );
             $js_field_html_img = ob_get_clean();
 
             ob_start();
-            get_job_manager_template( 'form-fields/uploaded-file-html.php', array( 'name' => '', 'value' => '', 'extension' => 'zip' ) );
+            listings_get_template( 'form-fields/uploaded-file-html.php', array( 'name' => '', 'value' => '', 'extension' => 'zip' ) );
             $js_field_html = ob_get_clean();
 
             wp_localize_script( 'wp-job-manager-ajax-file-upload', 'job_manager_ajax_file_upload', array(

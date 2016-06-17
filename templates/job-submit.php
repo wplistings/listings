@@ -12,7 +12,7 @@ global $job_manager;
 
 	<?php if ( apply_filters( 'submit_job_form_show_signin', true ) ) : ?>
 
-		<?php get_job_manager_template( 'account-signin.php' ); ?>
+		<?php listings_get_template( 'account-signin.php' ); ?>
 
 	<?php endif; ?>
 
@@ -25,7 +25,7 @@ global $job_manager;
 			<fieldset class="fieldset-<?php esc_attr_e( $key ); ?>">
 				<label for="<?php esc_attr_e( $key ); ?>"><?php echo $field['label'] . apply_filters( 'submit_job_form_required_label', $field['required'] ? '' : ' <small>' . __( '(optional)', 'wp-job-manager' ) . '</small>', $field ); ?></label>
 				<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
-					<?php get_job_manager_template( 'form-fields/' . $field['type'] . '-field.php', array( 'key' => $key, 'field' => $field ) ); ?>
+					<?php listings_get_template( 'form-fields/' . $field['type'] . '-field.php', array( 'key' => $key, 'field' => $field ) ); ?>
 				</div>
 			</fieldset>
 		<?php endforeach; ?>
@@ -42,7 +42,7 @@ global $job_manager;
 				<fieldset class="fieldset-<?php esc_attr_e( $key ); ?>">
 					<label for="<?php esc_attr_e( $key ); ?>"><?php echo $field['label'] . apply_filters( 'submit_job_form_required_label', $field['required'] ? '' : ' <small>' . __( '(optional)', 'wp-job-manager' ) . '</small>', $field ); ?></label>
 					<div class="field <?php echo $field['required'] ? 'required-field' : ''; ?>">
-						<?php get_job_manager_template( 'form-fields/' . $field['type'] . '-field.php', array( 'key' => $key, 'field' => $field ) ); ?>
+						<?php listings_get_template( 'form-fields/' . $field['type'] . '-field.php', array( 'key' => $key, 'field' => $field ) ); ?>
 					</div>
 				</fieldset>
 			<?php endforeach; ?>

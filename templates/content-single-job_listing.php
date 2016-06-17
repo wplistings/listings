@@ -20,7 +20,7 @@
 		</div>
 
 		<?php if ( candidates_can_apply() ) : ?>
-			<?php get_job_manager_template( 'job-application.php' ); ?>
+			<?php listings_get_template( 'job-application.php' ); ?>
 		<?php endif; ?>
 
 		<?php

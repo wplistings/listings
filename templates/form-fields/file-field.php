@@ -13,10 +13,10 @@ if ( ! empty( $field['ajax'] ) ) {
 	<?php if ( ! empty( $field['value'] ) ) : ?>
 		<?php if ( is_array( $field['value'] ) ) : ?>
 			<?php foreach ( $field['value'] as $value ) : ?>
-				<?php get_job_manager_template( 'form-fields/uploaded-file-html.php', array( 'key' => $key, 'name' => 'current_' . $field_name, 'value' => $value, 'field' => $field ) ); ?>
+				<?php listings_get_template( 'form-fields/uploaded-file-html.php', array( 'key' => $key, 'name' => 'current_' . $field_name, 'value' => $value, 'field' => $field ) ); ?>
 			<?php endforeach; ?>
 		<?php elseif ( $value = $field['value'] ) : ?>
-			<?php get_job_manager_template( 'form-fields/uploaded-file-html.php', array( 'key' => $key, 'name' => 'current_' . $field_name, 'value' => $value, 'field' => $field ) ); ?>
+			<?php listings_get_template( 'form-fields/uploaded-file-html.php', array( 'key' => $key, 'name' => 'current_' . $field_name, 'value' => $value, 'field' => $field ) ); ?>
 		<?php endif; ?>
 	<?php endif; ?>
 </div>

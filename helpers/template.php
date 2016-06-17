@@ -1,14 +1,4 @@
 <?php
-/**
- * Template Functions
- *
- * Template functions specifically created for job listings
- *
- * @author 		Mike Jolley
- * @category 	Core
- * @package 	Job Manager/Template
- * @version     1.20.0
- */
 
 /**
  * Get and include template files.
@@ -19,46 +9,9 @@
  * @param string $default_path (default: '')
  * @return void
  */
-function get_job_manager_template( $template_name, $args = array(), $template_path = 'job_manager', $default_path = '' ) {
-	if ( $args && is_array( $args ) ) {
-		extract( $args );
-	}
-	include( locate_job_manager_template( $template_name, $template_path, $default_path ) );
-}
-
-/**
- * Locate a template and return the path for inclusion.
- *
- * This is the load order:
- *
- *		yourtheme		/	$template_path	/	$template_name
- *		yourtheme		/	$template_name
- *		$default_path	/	$template_name
- *
- * @param string $template_name
- * @param string $template_path (default: 'job_manager')
- * @param string|bool $default_path (default: '') False to not load a default
- * @return string
- */
-function locate_job_manager_template( $template_name, $template_path = 'job_manager', $default_path = '' ) {
-	// Look within passed path within the theme - this is priority
-	$template = locate_template(
-		array(
-			trailingslashit( $template_path ) . $template_name,
-			$template_name
-		)
-	);
-
-	// Get default template
-	if ( ! $template && $default_path !== false ) {
-		$default_path = $default_path ? $default_path : LISTINGS_PLUGIN_DIR . '/templates/';
-		if ( file_exists( trailingslashit( $default_path ) . $template_name ) ) {
-			$template = trailingslashit( $default_path ) . $template_name;
-		}
-	}
-
-	// Return what we found
-	return apply_filters( 'job_manager_locate_template', $template, $template_name, $template_path );
+function listings_get_template( $template_name, $args = array(), $template_path = 'job_manager', $default_path = '' ) {
+	$template = new \Listings\Template();
+	$template->get_template($template_name, $args, $template_path, $default_path);
 }
 
 /**
@@ -69,21 +22,9 @@ function locate_job_manager_template( $template_name, $template_path = 'job_mana
  * @param string $template_path (default: 'job_manager')
  * @param string|bool $default_path (default: '') False to not load a default
  */
-function get_job_manager_template_part( $slug, $name = '', $template_path = 'job_manager', $default_path = '' ) {
-	$template = '';
-
-	if ( $name ) {
-		$template = locate_job_manager_template( "{$slug}-{$name}.php", $template_path, $default_path );
-	}
-
-	// If template file doesn't exist, look in yourtheme/slug.php and yourtheme/job_manager/slug.php
-	if ( ! $template ) {
-		$template = locate_job_manager_template( "{$slug}.php", $template_path, $default_path );
-	}
-
-	if ( $template ) {
-		load_template( $template, false );
-	}
+function listings_get_template_part( $slug, $name = '', $template_path = 'job_manager', $default_path = '' ) {
+	$template = new \Listings\Template();
+	$template->get_template_part($slug, $name, $template_path, $default_path);
 }
 
 /**
@@ -106,7 +47,7 @@ add_filter( 'body_class', 'job_manager_body_class' );
  */
 function get_job_listing_pagination( $max_num_pages, $current_page = 1 ) {
 	ob_start();
-	get_job_manager_template( 'job-pagination.php', array( 'max_num_pages' => $max_num_pages, 'current_page' => absint( $current_page ) ) );
+	listings_get_template( 'job-pagination.php', array( 'max_num_pages' => $max_num_pages, 'current_page' => absint( $current_page ) ) );
 	return ob_get_clean();
 }
 
@@ -648,7 +589,7 @@ function get_job_listing_class( $class = '', $post_id = null ) {
  * Displays job meta data on the single job page
  */
 function job_listing_meta_display() {
-	get_job_manager_template( 'content-single-job_listing-meta.php', array() );
+	listings_get_template( 'content-single-job_listing-meta.php', array() );
 }
 add_action( 'single_job_listing_start', 'job_listing_meta_display', 20 );
 
@@ -656,6 +597,6 @@ add_action( 'single_job_listing_start', 'job_listing_meta_display', 20 );
  * Displays job company data on the single job page
  */
 function job_listing_company_display() {
-	get_job_manager_template( 'content-single-job_listing-company.php', array() );
+	listings_get_template( 'content-single-job_listing-company.php', array() );
 }
 add_action( 'single_job_listing_start', 'job_listing_company_display', 30 );

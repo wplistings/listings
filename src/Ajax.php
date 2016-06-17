@@ -123,13 +123,13 @@ class Ajax {
 
 			<?php while ( $jobs->have_posts() ) : $jobs->the_post(); ?>
 
-				<?php get_job_manager_template_part( 'content', 'job_listing' ); ?>
+				<?php listings_get_template_part( 'content', 'job_listing' ); ?>
 
 			<?php endwhile; ?>
 
 		<?php else : ?>
 
-			<?php get_job_manager_template_part( 'content', 'no-jobs-found' ); ?>
+			<?php listings_get_template_part( 'content', 'no-jobs-found' ); ?>
 
 		<?php endif;
 
