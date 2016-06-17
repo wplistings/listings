@@ -12,8 +12,9 @@ class Plugin {
     /**
      * Constructor - get the plugin hooked in and ready
      */
-    public function __construct() {
-        if ( is_admin() ) {
+    public function __construct()
+    {
+        if (is_admin()) {
             new Admin();
         }
 
@@ -27,7 +28,10 @@ class Plugin {
 
         // Setup cache helper
         CacheHelper::init();
+    }
 
+    public function hooks()
+    {
         // Activation - works with symlinks
         register_activation_hook( basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ ), array( $this, 'activate' ) );
 
@@ -40,6 +44,8 @@ class Plugin {
 
         add_action( 'wp_enqueue_scripts', array( $this, 'frontend_scripts' ) );
         add_action( 'admin_init', array( $this, 'updater' ) );
+
+        do_action('listings_init');
     }
 
     /**

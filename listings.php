@@ -19,6 +19,7 @@ function listings() {
     static $instance;
     if ( is_null( $instance ) ) {
         $instance = new \Listings\Plugin();
+        $instance->hooks();
     }
     return $instance;
 }
