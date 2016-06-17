@@ -14,7 +14,6 @@ class Setup {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ), 12 );
 		add_action( 'admin_head', array( $this, 'admin_head' ) );
 		add_action( 'admin_init', array( $this, 'redirect' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 12 );
 	}
 
 	/**
@@ -64,13 +63,6 @@ class Setup {
 
 		wp_redirect( admin_url( 'index.php?page=job-manager-setup' ) );
 		exit;
-	}
-
-	/**
-	 * Enqueue scripts for setup page
-	 */
-	public function admin_enqueue_scripts() {
-		wp_enqueue_style( 'job_manager_setup_css', LISTINGS_PLUGIN_URL . '/assets/css/setup.css', array( 'dashicons' ) );
 	}
 
 	/**

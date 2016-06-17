@@ -56,7 +56,5 @@ class Admin {
 				'date_format' => _x( 'yy-mm-dd', 'Date format for jQuery datepicker', 'wp-job-manager' )
 			) );
 		}
-
-		wp_enqueue_style( 'job_manager_admin_menu_css', LISTINGS_PLUGIN_URL . '/assets/css/menu.css' );
 	}
 }
