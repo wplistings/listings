@@ -399,12 +399,12 @@ function listings_prepare_uploaded_files( $file_data ) {
 
 /**
  * Upload a file using WordPress file API.
- * @param  array $file_data Array of $_FILE data to upload.
+ * @param  array $file Array of $_FILE data to upload.
  * @param  array $args Optional arguments
  * @return array|WP_Error Array of objects containing either file information or an error
  */
 function listings_upload_file( $file, $args = array() ) {
-	global $job_manager_upload, $job_manager_uploading_file;
+	global $listings_upload, $listings_uploading_file;
 
 	include_once( ABSPATH . 'wp-admin/includes/file.php' );
 	include_once( ABSPATH . 'wp-admin/includes/media.php' );
@@ -415,18 +415,18 @@ function listings_upload_file( $file, $args = array() ) {
 		'allowed_mime_types' => get_allowed_mime_types()
 	) );
 
-	$job_manager_upload         = true;
-	$job_manager_uploading_file = $args['file_key'];
+	$listings_upload         = true;
+	$listings_uploading_file = $args['file_key'];
 	$uploaded_file              = new stdClass();
 
 	if ( ! in_array( $file['type'], $args['allowed_mime_types'] ) ) {
 		if ( $args['file_label'] ) {
-			return new WP_Error( 'upload', sprintf( __( '"%s" (filetype %s) needs to be one of the following file types: %s', 'wp-job-manager' ), $args['file_label'], $file['type'], implode( ', ', array_keys( $args['allowed_mime_types'] ) ) ) );
+			return new WP_Error( 'upload', sprintf( __( '"%s" (filetype %s) needs to be one of the following file types: %s', 'listings' ), $args['file_label'], $file['type'], implode( ', ', array_keys( $args['allowed_mime_types'] ) ) ) );
 		} else {
-			return new WP_Error( 'upload', sprintf( __( 'Uploaded files need to be one of the following file types: %s', 'wp-job-manager' ), implode( ', ', array_keys( $args['allowed_mime_types'] ) ) ) );
+			return new WP_Error( 'upload', sprintf( __( 'Uploaded files need to be one of the following file types: %s', 'listings' ), implode( ', ', array_keys( $args['allowed_mime_types'] ) ) ) );
 		}
 	} else {
-		$upload = wp_handle_upload( $file, apply_filters( 'submit_job_wp_handle_upload_overrides', array( 'test_form' => false ) ) );
+		$upload = wp_handle_upload( $file, apply_filters( 'listings_submit_wp_handle_upload_overrides', array( 'test_form' => false ) ) );
 		if ( ! empty( $upload['error'] ) ) {
 			return new WP_Error( 'upload', $upload['error'] );
 		} else {
@@ -439,8 +439,8 @@ function listings_upload_file( $file, $args = array() ) {
 		}
 	}
 
-	$job_manager_upload         = false;
-	$job_manager_uploading_file = '';
+	$listings_upload         = false;
+	$listings_uploading_file = '';
 
 	return $uploaded_file;
 }
