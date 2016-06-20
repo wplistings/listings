@@ -233,9 +233,9 @@ function listings_dropdown_categories( $args = '' ) {
 		'value'           => 'id',
 		'multiple'        => true,
 		'show_option_all' => false,
-		'placeholder'     => __( 'Choose a category&hellip;', 'wp-job-manager' ),
-		'no_results_text' => __( 'No results match', 'wp-job-manager' ),
-		'multiple_text'   => __( 'Select Some Options', 'wp-job-manager' )
+		'placeholder'     => __( 'Choose a category&hellip;', 'listings' ),
+		'no_results_text' => __( 'No results match', 'listings' ),
+		'multiple_text'   => __( 'Select Some Options', 'listings' )
 	);
 
 	$r = wp_parse_args( $args, $defaults );
