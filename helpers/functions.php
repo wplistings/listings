@@ -318,7 +318,7 @@ function listings_dropdown_categories( $args = '' ) {
  * @param  string $page e.g. job_dashboard, submit_job_form, jobs
  * @return int
  */
-function job_manager_get_page_id( $page ) {
+function listings_get_page_id( $page ) {
 	$page_id = get_option( 'job_manager_' . $page . '_page_id', false );
 	if ( $page_id ) {
 		return absint( function_exists( 'pll_get_post' ) ? pll_get_post( $page_id ) : $page_id );
@@ -332,8 +332,8 @@ function job_manager_get_page_id( $page ) {
  * @param  string $page e.g. job_dashboard, submit_job_form, jobs
  * @return string|bool
  */
-function job_manager_get_permalink( $page ) {
-	if ( $page_id = job_manager_get_page_id( $page ) ) {
+function listings_get_permalink( $page ) {
+	if ( $page_id = listings_get_page_id( $page ) ) {
 		return get_permalink( $page_id );
 	} else {
 		return false;
