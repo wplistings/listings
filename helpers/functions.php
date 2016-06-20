@@ -157,11 +157,11 @@ function wp_job_manager_create_account( $args, $deprecated = '' ) {
 endif;
 
 /**
- * True if an the user can post a job. If accounts are required, and reg is enabled, users can post (they signup at the same time).
+ * True if an the user can post a listing. If accounts are required, and reg is enabled, users can post (they signup at the same time).
  *
  * @return bool
  */
-function job_manager_user_can_post_job() {
+function listings_user_can_post_listing() {
 	$can_post = true;
 
 	if ( ! is_user_logged_in() ) {
@@ -170,28 +170,28 @@ function job_manager_user_can_post_job() {
 		}
 	}
 
-	return apply_filters( 'job_manager_user_can_post_job', $can_post );
+	return apply_filters( 'listings_user_can_post_listing', $can_post );
 }
 
 /**
- * True if an the user can edit a job.
+ * True if an the user can edit a listing.
  *
  * @return bool
  */
-function job_manager_user_can_edit_job( $job_id ) {
+function listings_user_can_edit_listing( $listing_id ) {
 	$can_edit = true;
 
-	if ( ! is_user_logged_in() || ! $job_id ) {
+	if ( ! is_user_logged_in() || ! $listing_id ) {
 		$can_edit = false;
 	} else {
-		$job      = get_post( $job_id );
+		$job      = get_post( $listing_id );
 
-		if ( ! $job || ( absint( $job->post_author ) !== get_current_user_id() && ! current_user_can( 'edit_post', $job_id ) ) ) {
+		if ( ! $job || ( absint( $job->post_author ) !== get_current_user_id() && ! current_user_can( 'edit_post', $listing_id ) ) ) {
 			$can_edit = false;
 		}
 	}
 
-	return apply_filters( 'job_manager_user_can_edit_job', $can_edit, $job_id );
+	return apply_filters( 'listings_user_can_edit_listing', $can_edit, $listing_id );
 }
 
 /**
