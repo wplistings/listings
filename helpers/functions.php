@@ -226,8 +226,8 @@ function listings_user_requires_account() {
  *
  * @return bool
  */
-function job_manager_user_can_edit_pending_submissions() {
-	return apply_filters( 'job_manager_user_can_edit_pending_submissions', get_option( 'job_manager_user_can_edit_pending_submissions' ) == 1 ? true : false );
+function listings_user_can_edit_pending_submissions() {
+	return apply_filters( 'listings_user_can_edit_pending_submissions', get_option( 'job_manager_user_can_edit_pending_submissions' ) == 1 ? true : false );
 }
 
 /**
