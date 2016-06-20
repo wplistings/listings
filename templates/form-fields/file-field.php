@@ -26,6 +26,6 @@ if ( ! empty( $field['ajax'] ) ) {
 	<?php if ( ! empty( $field['description'] ) ) : ?>
 		<?php echo $field['description']; ?>
 	<?php else : ?>
-		<?php printf( __( 'Maximum file size: %s.', 'wp-job-manager' ), size_format( wp_max_upload_size() ) ); ?>
+		<?php printf( __( 'Maximum file size: %s.', 'listings' ), size_format( wp_max_upload_size() ) ); ?>
 	<?php endif; ?>
 </small>

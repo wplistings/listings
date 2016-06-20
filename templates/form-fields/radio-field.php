@@ -3,7 +3,7 @@
  * Radio Field. Example definition:
  *
  * 'test_radio' => array(
- * 		'label'    => __( 'Test Radio', 'wp-job-manager' ),
+ * 		'label'    => __( 'Test Radio', 'listings' ),
  * 		'type'     => 'radio',
  * 		'required' => false,
  * 		'default'  => 'option2',

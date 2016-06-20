@@ -3,6 +3,8 @@
 namespace Listings;
 
 use Listings\Admin\Admin;
+use Listings\Ajax\Actions\UploadFile;
+use Listings\Ajax\Handler;
 
 class Plugin {
 
@@ -20,11 +22,13 @@ class Plugin {
 
         // Init classes
         $this->install = new Install();
-        $this->ajax = new Ajax();
+        $this->ajax = new Handler();
         $this->api = new Api();
         $this->forms      = new Forms();
         $this->geocode = new Geocode();
         $this->template = new Template();
+
+        $this->ajax->registerAction(new UploadFile());
 
         // Setup cache helper
         CacheHelper::init();
@@ -36,7 +40,7 @@ class Plugin {
         register_activation_hook( basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ ), array( $this, 'activate' ) );
 
         // Switch theme
-        add_action( 'after_switch_theme', array( Ajax::class, 'add_endpoint' ), 10 );
+        add_action( 'after_switch_theme', array( Handler::class, 'add_endpoint' ), 10 );
         add_action( 'after_switch_theme', 'flush_rewrite_rules', 15 );
 
         // Actions
@@ -52,7 +56,7 @@ class Plugin {
      * Called on plugin activation
      */
     public function activate() {
-        Ajax::add_endpoint();
+        Handler::add_endpoint();
         Install::install();
         flush_rewrite_rules();
     }
@@ -79,7 +83,7 @@ class Plugin {
      * Register and enqueue scripts and css
      */
     public function frontend_scripts() {
-        $ajax_url         = Ajax::get_endpoint();
+        $ajax_url         = Handler::get_endpoint();
         $ajax_filter_deps = array( 'jquery', 'jquery-deserialize' );
         $ajax_data 		  = array(
             'ajax_url'                => $ajax_url,

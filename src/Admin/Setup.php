@@ -201,19 +201,19 @@ class Setup {
 					<li><a href="<?php echo admin_url( 'edit.php?post_type=job_listing&page=job-manager-settings' ); ?>"><?php _e( 'Tweak the plugin settings', 'wp-job-manager' ); ?></a></li>
 					<li><a href="<?php echo admin_url( 'post-new.php?post_type=job_listing' ); ?>"><?php _e( 'Add a job via the back-end', 'wp-job-manager' ); ?></a></li>
 
-					<?php if ( $permalink = job_manager_get_permalink( 'submit_job_form' ) ) : ?>
+					<?php if ( $permalink = listings_get_permalink( 'submit_job_form' ) ) : ?>
 						<li><a href="<?php echo esc_url( $permalink ); ?>"><?php _e( 'Add a job via the front-end', 'wp-job-manager' ); ?></a></li>
 					<?php else : ?>
 						<li><a href="https://wpjobmanager.com/document/the-job-submission-form/"><?php _e( 'Find out more about the front-end job submission form', 'wp-job-manager' ); ?></a></li>
 					<?php endif; ?>
 
-					<?php if ( $permalink = job_manager_get_permalink( 'jobs' ) ) : ?>
+					<?php if ( $permalink = listings_get_permalink( 'jobs' ) ) : ?>
 						<li><a href="<?php echo esc_url( $permalink ); ?>"><?php _e( 'View submitted job listings', 'wp-job-manager' ); ?></a></li>
 					<?php else : ?>
 						<li><a href="https://wpjobmanager.com/document/shortcode-reference/#section-1"><?php _e( 'Add the [jobs] shortcode to a page to list jobs', 'wp-job-manager' ); ?></a></li>
 					<?php endif; ?>
 
-					<?php if ( $permalink = job_manager_get_permalink( 'job_dashboard' ) ) : ?>
+					<?php if ( $permalink = listings_get_permalink( 'job_dashboard' ) ) : ?>
 						<li><a href="<?php echo esc_url( $permalink ); ?>"><?php _e( 'View the job dashboard', 'wp-job-manager' ); ?></a></li>
 					<?php else : ?>
 						<li><a href="https://wpjobmanager.com/document/the-job-dashboard/"><?php _e( 'Find out more about the front-end job dashboard', 'wp-job-manager' ); ?></a></li>

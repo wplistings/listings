@@ -23,6 +23,6 @@ $args = array(
 
 if ( isset( $field['placeholder'] ) && ! empty( $field['placeholder'] ) ) $args['placeholder'] = $field['placeholder'];
 
-job_manager_dropdown_categories( apply_filters( 'job_manager_term_multiselect_field_args', $args ) );
+listings_dropdown_categories( apply_filters( 'listings_term_multiselect_field_args', $args ) );
 
 if ( ! empty( $field['description'] ) ) : ?><small class="description"><?php echo $field['description']; ?></small><?php endif; ?>
