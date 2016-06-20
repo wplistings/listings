@@ -48,34 +48,6 @@ function listings_get_listing_pagination( $max_num_pages, $current_page = 1 ) {
 }
 
 /**
- * Outputs the jobs status
- *
- * @return void
- */
-function the_job_status( $post = null ) {
-	echo get_the_job_status( $post );
-}
-
-/**
- * Gets the jobs status
- *
- * @return string
- */
-function get_the_job_status( $post = null ) {
-	$post     = get_post( $post );
-	$status   = $post->post_status;
-	$statuses = get_job_listing_post_statuses();
-
-	if ( isset( $statuses[ $status ] ) ) {
-		$status = $statuses[ $status ];
-	} else {
-		$status = __( 'Inactive', 'wp-job-manager' );
-	}
-
-	return apply_filters( 'the_job_status', $status, $post );
-}
-
-/**
  * Return whether or not the position has been marked as filled
  *
  * @param  object $post

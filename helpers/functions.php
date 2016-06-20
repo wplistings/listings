@@ -27,25 +27,6 @@ if ( ! function_exists( 'get_job_listings_keyword_search' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'get_job_listing_post_statuses' ) ) :
-/**
- * Get post statuses used for jobs
- *
- * @access public
- * @return array
- */
-function get_job_listing_post_statuses() {
-	return apply_filters( 'job_listing_post_statuses', array(
-		'draft'           => _x( 'Draft', 'post status', 'wp-job-manager' ),
-		'expired'         => _x( 'Expired', 'post status', 'wp-job-manager' ),
-		'preview'         => _x( 'Preview', 'post status', 'wp-job-manager' ),
-		'pending'         => _x( 'Pending approval', 'post status', 'wp-job-manager' ),
-		'pending_payment' => _x( 'Pending payment', 'post status', 'wp-job-manager' ),
-		'publish'         => _x( 'Active', 'post status', 'wp-job-manager' ),
-	) );
-}
-endif;
-
 if ( ! function_exists( 'get_featured_job_ids' ) ) :
 /**
  * Gets the ids of featured jobs.
