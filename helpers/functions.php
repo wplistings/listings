@@ -27,26 +27,6 @@ if ( ! function_exists( 'get_job_listings_keyword_search' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'get_job_listing_categories' ) ) :
-/**
- * Get job categories
- *
- * @access public
- * @return array
- */
-function get_job_listing_categories() {
-	if ( ! get_option( 'job_manager_enable_categories' ) ) {
-		return array();
-	}
-
-	return get_terms( "job_listing_category", array(
-		'orderby'       => 'name',
-	    'order'         => 'ASC',
-	    'hide_empty'    => false,
-	) );
-}
-endif;
-
 if ( ! function_exists( 'listings_notify_new_user' ) ) :
 	/**
 	 * Handle account creation.
