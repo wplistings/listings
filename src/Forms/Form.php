@@ -327,7 +327,7 @@ abstract class Form {
 			}
 
 			$file_urls       = array();
-			$files_to_upload = job_manager_prepare_uploaded_files( $_FILES[ $field_key ] );
+			$files_to_upload = listings_prepare_uploaded_files( $_FILES[ $field_key ] );
 
 			foreach ( $files_to_upload as $file_to_upload ) {
 				$uploaded_file = job_manager_upload_file( $file_to_upload, array( 'file_key' => $field_key ) );

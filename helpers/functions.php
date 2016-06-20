@@ -641,7 +641,7 @@ add_filter( 'upload_dir', 'job_manager_upload_dir' );
  * @param  array $file_data
  * @return array
  */
-function job_manager_prepare_uploaded_files( $file_data ) {
+function listings_prepare_uploaded_files( $file_data ) {
 	$files_to_upload = array();
 
 	if ( is_array( $file_data['name'] ) ) {
