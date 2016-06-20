@@ -3,17 +3,27 @@
 namespace Listings\Ajax;
 
 class Handler {
+	/** @var string */
+	public $ajax_prefix = '';
 
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
+		$this->ajax_prefix = 'job_manager_ajax_';
+
 		add_action( 'init', array( __CLASS__, 'add_endpoint') );
 		add_action( 'template_redirect', array( __CLASS__, 'do_jm_ajax'), 0 );
 
 		// JM Ajax endpoints
 		add_action( 'job_manager_ajax_get_listings', array( $this, 'get_listings' ) );
 		add_action( 'job_manager_ajax_upload_file', array( $this, 'upload_file' ) );
+	}
+	
+	public function registerAction( Action $action ) {
+		$action_string = $action->getActionString();
+		
+		add_action( $this->ajax_prefix . $action_string, array( $action, 'doAction' ) );
 	}
 
 	/**
