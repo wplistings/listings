@@ -1,8 +1,8 @@
 <?php
 
-namespace Listings;
+namespace Listings\Ajax;
 
-class Ajax {
+class Handler {
 
 	/**
 	 * Constructor
