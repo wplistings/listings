@@ -27,25 +27,6 @@ if ( ! function_exists( 'get_job_listings_keyword_search' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'get_featured_job_ids' ) ) :
-/**
- * Gets the ids of featured jobs.
- *
- * @access public
- * @return array
- */
-function get_featured_job_ids() {
-	return get_posts( array(
-		'posts_per_page' => -1,
-		'post_type'      => 'job_listing',
-		'post_status'    => 'publish',
-		'meta_key'       => '_featured',
-		'meta_value'     => '1',
-		'fields'         => 'ids'
-	) );
-}
-endif;
-
 if ( ! function_exists( 'get_job_listing_categories' ) ) :
 /**
  * Get job categories
