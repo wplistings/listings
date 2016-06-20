@@ -14,12 +14,6 @@ class Handler {
 		// JM Ajax endpoints
 		add_action( 'job_manager_ajax_get_listings', array( $this, 'get_listings' ) );
 		add_action( 'job_manager_ajax_upload_file', array( $this, 'upload_file' ) );
-
-		// BW compatible handlers
-		add_action( 'wp_ajax_nopriv_job_manager_get_listings', array( $this, 'get_listings' ) );
-		add_action( 'wp_ajax_job_manager_get_listings', array( $this, 'get_listings' ) );
-		add_action( 'wp_ajax_nopriv_job_manager_upload_file', array( $this, 'upload_file' ) );
-		add_action( 'wp_ajax_job_manager_upload_file', array( $this, 'upload_file' ) );
 	}
 
 	/**
