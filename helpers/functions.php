@@ -203,7 +203,7 @@ function job_manager_user_can_post_job() {
 	$can_post = true;
 
 	if ( ! is_user_logged_in() ) {
-		if ( job_manager_user_requires_account() && ! job_manager_enable_registration() ) {
+		if ( listings_user_requires_account() && ! listings_enable_registration() ) {
 			$can_post = false;
 		}
 	}
@@ -237,8 +237,8 @@ function job_manager_user_can_edit_job( $job_id ) {
  *
  * @return bool
  */
-function job_manager_enable_registration() {
-	return apply_filters( 'job_manager_enable_registration', get_option( 'job_manager_enable_registration' ) == 1 ? true : false );
+function listings_enable_registration() {
+	return apply_filters( 'listings_enable_registration', get_option( 'job_manager_enable_registration' ) == 1 ? true : false );
 }
 
 /**
@@ -246,8 +246,8 @@ function job_manager_enable_registration() {
  *
  * @return bool
  */
-function job_manager_generate_username_from_email() {
-	return apply_filters( 'job_manager_generate_username_from_email', get_option( 'job_manager_generate_username_from_email' ) == 1 ? true : false );
+function listings_generate_username_from_email() {
+	return apply_filters( 'listings_generate_username_from_email', get_option( 'job_manager_generate_username_from_email' ) == 1 ? true : false );
 }
 
 /**
@@ -255,8 +255,8 @@ function job_manager_generate_username_from_email() {
  *
  * @return bool
  */
-function job_manager_user_requires_account() {
-	return apply_filters( 'job_manager_user_requires_account', get_option( 'job_manager_user_requires_account' ) == 1 ? true : false );
+function listings_user_requires_account() {
+	return apply_filters( 'listings_user_requires_account', get_option( 'job_manager_user_requires_account' ) == 1 ? true : false );
 }
 
 /**

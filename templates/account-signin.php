@@ -14,9 +14,9 @@
 
 <?php else :
 
-	$account_required             = job_manager_user_requires_account();
-	$registration_enabled         = job_manager_enable_registration();
-	$generate_username_from_email = job_manager_generate_username_from_email();
+	$account_required             = listings_user_requires_account();
+	$registration_enabled         = listings_enable_registration();
+	$generate_username_from_email = listings_generate_username_from_email();
 	?>
 	<fieldset>
 		<label><?php _e( 'Have an account?', 'listings' ); ?></label>
