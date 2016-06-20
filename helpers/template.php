@@ -28,14 +28,14 @@ function listings_get_template_part( $slug, $name = '', $template_path = 'job_ma
  * @param  array $classes
  * @return array
  */
-function job_manager_body_class( $classes ) {
+function listings_body_class( $classes ) {
 	$classes   = (array) $classes;
 	$classes[] = sanitize_title( wp_get_theme() );
 
 	return array_unique( $classes );
 }
 
-add_filter( 'body_class', 'job_manager_body_class' );
+add_filter( 'body_class', 'listings_body_class' );
 
 /**
  * Get jobs pagination for [jobs] shortcode
@@ -46,134 +46,6 @@ function listings_get_listing_pagination( $max_num_pages, $current_page = 1 ) {
 	listings_get_template( 'job-pagination.php', array( 'max_num_pages' => $max_num_pages, 'current_page' => absint( $current_page ) ) );
 	return ob_get_clean();
 }
-
-/**
- * Return whether or not the position has been marked as filled
- *
- * @param  object $post
- * @return boolean
- */
-function is_position_filled( $post = null ) {
-	$post = get_post( $post );
-	return $post->_filled ? true : false;
-}
-
-/**
- * Return whether or not the position has been featured
- *
- * @param  object $post
- * @return boolean
- */
-function is_position_featured( $post = null ) {
-	$post = get_post( $post );
-	return $post->_featured ? true : false;
-}
-
-/**
- * Return whether or not applications are allowed
- *
- * @param  object $post
- * @return boolean
- */
-function candidates_can_apply( $post = null ) {
-	$post = get_post( $post );
-	return apply_filters( 'job_manager_candidates_can_apply', ( ! is_position_filled() && ! in_array( $post->post_status, array( 'preview', 'expired' ) ) ), $post );
-}
-
-/**
- * the_job_permalink function.
- *
- * @access public
- * @return void
- */
-function the_job_permalink( $post = null ) {
-	echo get_the_job_permalink( $post );
-}
-
-/**
- * get_the_job_permalink function.
- *
- * @access public
- * @param mixed $post (default: null)
- * @return string
- */
-function get_the_job_permalink( $post = null ) {
-	$post = get_post( $post );
-	$link = get_permalink( $post );
-
-	return apply_filters( 'the_job_permalink', $link, $post );
-}
-
-/**
- * get_the_job_application_method function.
- *
- * @access public
- * @param mixed $post (default: null)
- * @return object
- */
-function get_the_job_application_method( $post = null ) {
-	$post = get_post( $post );
-
-	if ( $post && $post->post_type !== 'job_listing' ) {
-		return;
-	}
-
-	$method = new stdClass();
-	$apply  = $post->_application;
-
-	if ( empty( $apply ) )
-		return false;
-
-	if ( strstr( $apply, '@' ) && is_email( $apply ) ) {
-		$method->type      = 'email';
-		$method->raw_email = $apply;
-		$method->email     = antispambot( $apply );
-		$method->subject   = apply_filters( 'job_manager_application_email_subject', sprintf( __( 'Application via "%s" listing on %s', 'wp-job-manager' ), $post->post_title, home_url() ), $post );
-	} else {
-		if ( strpos( $apply, 'http' ) !== 0 )
-			$apply = 'http://' . $apply;
-		$method->type = 'url';
-		$method->url  = $apply;
-	}
-
-	return apply_filters( 'the_job_application_method', $method, $post );
-}
-/**
- * the_job_type function.
- *
- * @access public
- * @return void
- */
-function the_job_type( $post = null ) {
-	if ( $job_type = get_the_job_type( $post ) ) {
-		echo $job_type->name;
-	}
-}
-
-/**
- * get_the_job_type function.
- *
- * @access public
- * @param mixed $post (default: null)
- * @return void
- */
-function get_the_job_type( $post = null ) {
-	$post = get_post( $post );
-	if ( $post->post_type !== 'job_listing' ) {
-		return;
-	}
-
-	$types = wp_get_post_terms( $post->ID, 'job_listing_type' );
-
-	if ( $types ) {
-		$type = current( $types );
-	} else {
-		$type = false;
-	}
-
-	return apply_filters( 'the_job_type', $type, $post );
-}
-
 
 /**
  * the_job_location function.
@@ -535,11 +407,11 @@ function get_job_listing_class( $class = '', $post_id = null ) {
 		$classes[] = 'job-type-' . sanitize_title( $job_type->name );
 	}
 
-	if ( is_position_filled( $post ) ) {
+	if ( listings_jobs_is_position_filled( $post ) ) {
 		$classes[] = 'job_position_filled';
 	}
 
-	if ( is_position_featured( $post ) ) {
+	if ( listings_jobs_is_position_featured( $post ) ) {
 		$classes[] = 'job_position_featured';
 	}
 
