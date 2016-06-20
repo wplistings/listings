@@ -3,6 +3,7 @@
 namespace Listings;
 
 use Listings\Admin\Admin;
+use Listings\Ajax\Actions\UploadFile;
 use Listings\Ajax\Handler;
 
 class Plugin {
@@ -26,6 +27,8 @@ class Plugin {
         $this->forms      = new Forms();
         $this->geocode = new Geocode();
         $this->template = new Template();
+
+        $this->ajax->registerAction(new UploadFile());
 
         // Setup cache helper
         CacheHelper::init();

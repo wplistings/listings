@@ -17,7 +17,6 @@ class Handler {
 
 		// JM Ajax endpoints
 		add_action( 'job_manager_ajax_get_listings', array( $this, 'get_listings' ) );
-		add_action( 'job_manager_ajax_upload_file', array( $this, 'upload_file' ) );
 	}
 	
 	public function registerAction( Action $action ) {
@@ -205,31 +204,5 @@ class Handler {
 		$result['max_num_pages'] = $jobs->max_num_pages;
 
 		wp_send_json( apply_filters( 'job_manager_get_listings_result', $result, $jobs ) );
-	}
-
-	/**
-	 * Upload file via ajax
-	 *
-	 * No nonce field since the form may be statically cached.
-	 */
-	public function upload_file() {
-		$data = array( 'files' => array() );
-
-		if ( ! empty( $_FILES ) ) {
-			foreach ( $_FILES as $file_key => $file ) {
-				$files_to_upload = job_manager_prepare_uploaded_files( $file );
-				foreach ( $files_to_upload as $file_to_upload ) {
-					$uploaded_file = job_manager_upload_file( $file_to_upload, array( 'file_key' => $file_key ) );
-
-					if ( is_wp_error( $uploaded_file ) ) {
-						$data['files'][] = array( 'error' => $uploaded_file->get_error_message() );
-					} else {
-						$data['files'][] = $uploaded_file;
-					}
-				}
-			}
-		}
-
-		wp_send_json( $data );
 	}
 }
