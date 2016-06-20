@@ -47,14 +47,14 @@ function get_job_listing_categories() {
 }
 endif;
 
-if ( ! function_exists( 'wp_job_manager_notify_new_user' ) ) :
+if ( ! function_exists( 'listings_notify_new_user' ) ) :
 	/**
 	 * Handle account creation.
 	 *
 	 * @param  int $user_id
 	 * @param  string $password
 	 */
-	function wp_job_manager_notify_new_user( $user_id, $password ) {
+	function listings_notify_new_user( $user_id, $password ) {
 		global $wp_version;
 
 		if ( version_compare( $wp_version, '4.3.1', '<' ) ) {
@@ -65,7 +65,7 @@ if ( ! function_exists( 'wp_job_manager_notify_new_user' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'job_manager_create_account' ) ) :
+if ( ! function_exists( 'listings_create_account' ) ) :
 /**
  * Handle account creation.
  *
@@ -73,7 +73,7 @@ if ( ! function_exists( 'job_manager_create_account' ) ) :
  * @param  string $deprecated role string
  * @return WP_error | bool was an account created?
  */
-function wp_job_manager_create_account( $args, $deprecated = '' ) {
+function listings_create_account( $args, $deprecated = '' ) {
 	global $current_user;
 
 	// Soft Deprecated in 1.20.0
@@ -98,7 +98,7 @@ function wp_job_manager_create_account( $args, $deprecated = '' ) {
 	$email    = apply_filters( 'user_registration_email', sanitize_email( $email ) );
 
 	if ( empty( $email ) ) {
-		return new WP_Error( 'validation-error', __( 'Invalid email address.', 'wp-job-manager' ) );
+		return new WP_Error( 'validation-error', __( 'Invalid email address.', 'listings' ) );
 	}
 
 	if ( empty( $username ) ) {
@@ -106,11 +106,11 @@ function wp_job_manager_create_account( $args, $deprecated = '' ) {
 	}
 
 	if ( ! is_email( $email ) ) {
-		return new WP_Error( 'validation-error', __( 'Your email address isn&#8217;t correct.', 'wp-job-manager' ) );
+		return new WP_Error( 'validation-error', __( 'Your email address isn&#8217;t correct.', 'listings' ) );
 	}
 
 	if ( email_exists( $email ) ) {
-		return new WP_Error( 'validation-error', __( 'This email is already registered, please choose another one.', 'wp-job-manager' ) );
+		return new WP_Error( 'validation-error', __( 'This email is already registered, please choose another one.', 'listings' ) );
 	}
 
 	// Ensure username is unique
@@ -124,9 +124,9 @@ function wp_job_manager_create_account( $args, $deprecated = '' ) {
 
 	// Final error checking
 	$reg_errors = new WP_Error();
-	$reg_errors = apply_filters( 'job_manager_registration_errors', $reg_errors, $username, $email );
+	$reg_errors = apply_filters( 'listings_registration_errors', $reg_errors, $username, $email );
 
-	do_action( 'job_manager_register_post', $username, $email, $reg_errors );
+	do_action( 'listings_register_post', $username, $email, $reg_errors );
 
 	if ( $reg_errors->get_error_code() ) {
 		return $reg_errors;
@@ -140,14 +140,14 @@ function wp_job_manager_create_account( $args, $deprecated = '' ) {
 		'role'       => $role
     );
 
-    $user_id = wp_insert_user( apply_filters( 'job_manager_create_account_data', $new_user ) );
+    $user_id = wp_insert_user( apply_filters( 'listings_create_account_data', $new_user ) );
 
     if ( is_wp_error( $user_id ) ) {
     	return $user_id;
     }
 
     // Notify
-    wp_job_manager_notify_new_user( $user_id, $password, $new_user );
+	listings_notify_new_user( $user_id, $password );
     // Login
     wp_set_auth_cookie( $user_id, true, is_ssl() );
     $current_user = get_user_by( 'id', $user_id );
