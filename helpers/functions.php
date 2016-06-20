@@ -272,7 +272,7 @@ function job_manager_user_can_edit_pending_submissions() {
  * Based on wp_dropdown_categories, with the exception of supporting multiple selected categories.
  * @see  wp_dropdown_categories
  */
-function job_manager_dropdown_categories( $args = '' ) {
+function listings_dropdown_categories( $args = '' ) {
 	$defaults = array(
 		'orderby'         => 'id',
 		'order'           => 'ASC',
@@ -331,8 +331,6 @@ function job_manager_dropdown_categories( $args = '' ) {
 	}
 
 	if ( ! empty( $categories ) ) {
-		include_once( LISTINGS_PLUGIN_DIR . '/includes/class-wp-job-manager-category-walker.php' );
-
 		$walker = new \Listings\CategoryWalker();
 
 		if ( $hierarchical ) {
