@@ -341,15 +341,15 @@ function job_manager_get_permalink( $page ) {
 }
 
 /**
- * Filters the upload dir when $job_manager_upload is true
+ * Filters the upload dir when $listings_upload is true
  * @param  array $pathdata
  * @return array
  */
-function job_manager_upload_dir( $pathdata ) {
-	global $job_manager_upload, $job_manager_uploading_file;
+function listings_upload_dir( $pathdata ) {
+	global $listings_upload, $listings_uploading_file;
 
-	if ( ! empty( $job_manager_upload ) ) {
-		$dir = untrailingslashit( apply_filters( 'job_manager_upload_dir', 'job-manager-uploads/' . sanitize_key( $job_manager_uploading_file ), sanitize_key( $job_manager_uploading_file ) ) );
+	if ( ! empty( $listings_upload ) ) {
+		$dir = untrailingslashit( apply_filters( 'listings_upload_dir', 'listings-uploads/' . sanitize_key( $listings_uploading_file ), sanitize_key( $listings_uploading_file ) ) );
 
 		if ( empty( $pathdata['subdir'] ) ) {
 			$pathdata['path']   = $pathdata['path'] . '/' . $dir;
@@ -365,7 +365,8 @@ function job_manager_upload_dir( $pathdata ) {
 
 	return $pathdata;
 }
-add_filter( 'upload_dir', 'job_manager_upload_dir' );
+
+add_filter( 'upload_dir', 'listings_upload_dir' );
 
 /**
  * Prepare files for upload by standardizing them into an array. This adds support for multiple file upload fields.
