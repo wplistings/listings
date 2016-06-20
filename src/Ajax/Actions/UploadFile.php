@@ -19,7 +19,7 @@ class UploadFile extends Action {
             foreach ( $_FILES as $file_key => $file ) {
                 $files_to_upload = listings_prepare_uploaded_files( $file );
                 foreach ( $files_to_upload as $file_to_upload ) {
-                    $uploaded_file = job_manager_upload_file( $file_to_upload, array( 'file_key' => $file_key ) );
+                    $uploaded_file = listings_upload_file( $file_to_upload, array( 'file_key' => $file_key ) );
 
                     if ( is_wp_error( $uploaded_file ) ) {
                         $data['files'][] = array( 'error' => $uploaded_file->get_error_message() );

@@ -672,7 +672,7 @@ function listings_prepare_uploaded_files( $file_data ) {
  * @param  array $args Optional arguments
  * @return array|WP_Error Array of objects containing either file information or an error
  */
-function job_manager_upload_file( $file, $args = array() ) {
+function listings_upload_file( $file, $args = array() ) {
 	global $job_manager_upload, $job_manager_uploading_file;
 
 	include_once( ABSPATH . 'wp-admin/includes/file.php' );
