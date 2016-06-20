@@ -41,7 +41,7 @@ add_filter( 'body_class', 'job_manager_body_class' );
  * Get jobs pagination for [jobs] shortcode
  * @return [type] [description]
  */
-function get_job_listing_pagination( $max_num_pages, $current_page = 1 ) {
+function listings_get_listing_pagination( $max_num_pages, $current_page = 1 ) {
 	ob_start();
 	listings_get_template( 'job-pagination.php', array( 'max_num_pages' => $max_num_pages, 'current_page' => absint( $current_page ) ) );
 	return ob_get_clean();
