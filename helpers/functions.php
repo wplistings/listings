@@ -1,24 +1,24 @@
 <?php
 
-if ( ! function_exists( 'get_job_listings_keyword_search' ) ) :
+if ( ! function_exists( 'listings_get_keyword_search' ) ) :
 	/**
 	 * Join and where query for keywords
 	 *
 	 * @param array $args
 	 * @return array
 	 */
-	function get_job_listings_keyword_search( $args ) {
-		global $wpdb, $job_manager_keyword;
+	function listings_get_keyword_search( $args ) {
+		global $wpdb, $listings_keyword;
 
 		$conditions   = array();
-		$conditions[] = "{$wpdb->posts}.post_title LIKE '%" . esc_sql( $job_manager_keyword ) . "%'";
-		$conditions[] = "{$wpdb->posts}.ID IN ( SELECT post_id FROM {$wpdb->postmeta} WHERE meta_value LIKE '%" . esc_sql( $job_manager_keyword ) . "%' )";
-		$conditions[] = "{$wpdb->posts}.ID IN ( SELECT object_id FROM {$wpdb->term_relationships} AS tr LEFT JOIN {$wpdb->terms} AS t ON tr.term_taxonomy_id = t.term_id WHERE t.name LIKE '%" . esc_sql( $job_manager_keyword ) . "%' )";
+		$conditions[] = "{$wpdb->posts}.post_title LIKE '%" . esc_sql( $listings_keyword ) . "%'";
+		$conditions[] = "{$wpdb->posts}.ID IN ( SELECT post_id FROM {$wpdb->postmeta} WHERE meta_value LIKE '%" . esc_sql( $listings_keyword ) . "%' )";
+		$conditions[] = "{$wpdb->posts}.ID IN ( SELECT object_id FROM {$wpdb->term_relationships} AS tr LEFT JOIN {$wpdb->terms} AS t ON tr.term_taxonomy_id = t.term_id WHERE t.name LIKE '%" . esc_sql( $listings_keyword ) . "%' )";
 
-		if ( ctype_alnum( $job_manager_keyword ) ) {
-			$conditions[] = "{$wpdb->posts}.post_content RLIKE '[[:<:]]" . esc_sql( $job_manager_keyword ) . "[[:>:]]'";
+		if ( ctype_alnum( $listings_keyword ) ) {
+			$conditions[] = "{$wpdb->posts}.post_content RLIKE '[[:<:]]" . esc_sql( $listings_keyword ) . "[[:>:]]'";
 		} else {
-			$conditions[] = "{$wpdb->posts}.post_content LIKE '%" . esc_sql( $job_manager_keyword ) . "%'";
+			$conditions[] = "{$wpdb->posts}.post_content LIKE '%" . esc_sql( $listings_keyword ) . "%'";
 		}
 
 		$args['where'] .= " AND ( " . implode( ' OR ', $conditions ) . " ) ";
