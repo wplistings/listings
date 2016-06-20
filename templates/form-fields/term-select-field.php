@@ -15,7 +15,7 @@ if ( is_array( $selected ) ) {
 	$selected = current( $selected );
 }
 
-wp_dropdown_categories( apply_filters( 'job_manager_term_select_field_wp_dropdown_categories_args', array(
+wp_dropdown_categories( apply_filters( 'listings_term_select_field_wp_dropdown_categories_args', array(
 	'taxonomy'         => $field['taxonomy'],
 	'hierarchical'     => 1,
 	'show_option_all'  => false,

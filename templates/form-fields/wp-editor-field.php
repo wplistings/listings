@@ -1,5 +1,5 @@
 <?php
-$editor = apply_filters( 'submit_job_form_wp_editor_args', array(
+$editor = apply_filters( 'listings_submit_form_wp_editor_args', array(
 	'textarea_name' => isset( $field['name'] ) ? $field['name'] : $key,
 	'media_buttons' => false,
 	'textarea_rows' => 8,
