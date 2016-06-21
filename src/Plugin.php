@@ -27,6 +27,7 @@ class Plugin {
         $this->forms      = new Forms();
         $this->geocode = new Geocode();
         $this->template = new Template();
+        $this->posttypes = new PostTypes();
 
         $this->ajax->registerAction(new UploadFile());
 
