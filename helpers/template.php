@@ -54,7 +54,7 @@ function listings_get_listing_pagination( $max_num_pages, $current_page = 1 ) {
  * @param  string $size
  * @return string
  */
-function job_manager_get_resized_image( $logo, $size ) {
+function listings_get_resized_image( $logo, $size ) {
 	global $_wp_additional_image_sizes;
 
 	if ( $size !== 'full' && strstr( $logo, WP_CONTENT_URL ) && ( isset( $_wp_additional_image_sizes[ $size ] ) || in_array( $size, array( 'thumbnail', 'medium', 'large' ) ) ) ) {
