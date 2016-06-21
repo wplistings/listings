@@ -48,90 +48,6 @@ function listings_get_listing_pagination( $max_num_pages, $current_page = 1 ) {
 }
 
 /**
- * the_job_location function.
- * @param  boolean $map_link whether or not to link to google maps
- * @return [type]
- */
-function the_job_location( $map_link = true, $post = null ) {
-	$location = get_the_job_location( $post );
-
-	if ( $location ) {
-		if ( $map_link ) {
-			// If linking to google maps, we don't want anything but text here
-			echo apply_filters( 'the_job_location_map_link', '<a class="google_map_link" href="' . esc_url( 'http://maps.google.com/maps?q=' . urlencode( strip_tags( $location ) ) . '&zoom=14&size=512x512&maptype=roadmap&sensor=false' ) . '" target="_blank">' . esc_html( strip_tags( $location ) ) . '</a>', $location, $post );
-		} else {
-			echo wp_kses_post( $location );
-		}
-	} else {
-		echo wp_kses_post( apply_filters( 'the_job_location_anywhere_text', __( 'Anywhere', 'wp-job-manager' ) ) );
-	}
-}
-
-/**
- * get_the_job_location function.
- *
- * @access public
- * @param mixed $post (default: null)
- * @return void
- */
-function get_the_job_location( $post = null ) {
-	$post = get_post( $post );
-	if ( $post->post_type !== 'job_listing' ) {
-		return;
-	}
-
-	return apply_filters( 'the_job_location', $post->_job_location, $post );
-}
-
-/**
- * the_company_logo function.
- *
- * @access public
- * @param string $size (default: 'full')
- * @param mixed $default (default: null)
- * @return void
- */
-function the_company_logo( $size = 'thumbnail', $default = null, $post = null ) {
-	$logo = get_the_company_logo( $post, $size );
-
-	if ( has_post_thumbnail( $post ) ) {
-		echo '<img class="company_logo" src="' . esc_attr( $logo ) . '" alt="' . esc_attr( get_the_company_name( $post ) ) . '" />';
-
-	// Before 1.24.0, logo URLs were stored in post meta.
-	} elseif ( ! empty( $logo ) && ( strstr( $logo, 'http' ) || file_exists( $logo ) ) ) {
-		if ( $size !== 'full' ) {
-			$logo = job_manager_get_resized_image( $logo, $size );
-		}
-		echo '<img class="company_logo" src="' . esc_attr( $logo ) . '" alt="' . esc_attr( get_the_company_name( $post ) ) . '" />';
-	} elseif ( $default ) {
-		echo '<img class="company_logo" src="' . esc_attr( $default ) . '" alt="' . esc_attr( get_the_company_name( $post ) ) . '" />';
-	} else {
-		echo '<img class="company_logo" src="' . esc_attr( apply_filters( 'job_manager_default_company_logo', LISTINGS_PLUGIN_URL . '/assets/images/company.png' ) ) . '" alt="' . esc_attr( get_the_company_name( $post ) ) . '" />';
-	}
-}
-
-/**
- * get_the_company_logo function.
- *
- * @access public
- * @param mixed $post (default: null)
- * @return string Image SRC
- */
-function get_the_company_logo( $post = null, $size = 'thumbnail' ) {
-	$post = get_post( $post );
-
-	if ( has_post_thumbnail( $post->ID ) ) {
-		$src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), $size );
-		return $src ? $src[0] : '';
-	} elseif ( ! empty( $post->_company_logo ) ) {
-		// Before 1.24.0, logo URLs were stored in post meta.
-		return apply_filters( 'the_company_logo', $post->_company_logo, $post );
-	}
-
-	return '';
-}
-
-/**
  * Resize and get url of the image
  *
  * @param  string $logo
@@ -403,7 +319,7 @@ function get_job_listing_class( $class = '', $post_id = null ) {
 	}
 
 	$classes[] = 'job_listing';
-	if ( $job_type = get_the_job_type() ) {
+	if ( $job_type = listings_jobs_get_the_job_type() ) {
 		$classes[] = 'job-type-' . sanitize_title( $job_type->name );
 	}
 
