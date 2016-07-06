@@ -71,7 +71,7 @@ class Settings {
 			    <h2 class="nav-tab-wrapper">
 			    	<?php
 			    		foreach ( $this->settings as $key => $section ) {
-			    			echo '<a href="#settings-' . sanitize_title( $key ) . '" class="nav-tab">' . esc_html( $section[0] ) . '</a>';
+			    			echo '<a href="' . add_query_arg('tab', sanitize_title( $key ) ) . '" class="nav-tab">' . esc_html( $section[0] ) . '</a>';
 			    		}
 			    	?>
 			    </h2>
