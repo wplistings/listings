@@ -7,7 +7,6 @@ class Settings {
 	public $settings = array();
 
 	public function __construct() {
-		$this->settings_group = 'listings';
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 	}
 
@@ -45,11 +44,11 @@ class Settings {
 	public function register_settings() {
 		$this->init_settings();
 
-		foreach ( $this->settings as $section ) {
+		foreach ( $this->settings as $key => $section ) {
 			foreach ( $section[1] as $option ) {
 				if ( isset( $option['std'] ) )
 					add_option( $option['name'], $option['std'] );
-				register_setting( $this->settings_group, $option['name'] );
+				register_setting( $key, $option['name'] );
 			}
 		}
 	}
@@ -66,8 +65,6 @@ class Settings {
 		<div class="wrap listings-settings-wrap">
 			<form method="post" action="options.php">
 
-				<?php settings_fields( $this->settings_group ); ?>
-
 				<?php
 				$settings_keys = array_keys($this->settings);
 				$first_tab = array_shift($settings_keys);
@@ -77,6 +74,8 @@ class Settings {
 				} else {
 					$active_tab = $_GET['tab'];
 				}
+
+				settings_fields( $active_tab );
 				?>
 
 			    <h2 class="nav-tab-wrapper">
