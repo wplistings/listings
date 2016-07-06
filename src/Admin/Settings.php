@@ -18,7 +18,22 @@ class Settings {
 	 * @return void
 	 */
 	protected function init_settings() {
-		$this->settings = apply_filters( 'listings_settings', array() );
+		$this->settings = apply_filters( 'listings_settings', array(
+			'listings_settings' => array(
+				__( 'Settings', 'listings' ),
+				array(
+					array(
+						'name'       => 'listings_enable_default_post_type',
+						'std'        => '1',
+						'label'      => __( 'Enable generic listings', 'listings' ),
+						'cb_label'   => __( 'Enable', 'listings' ),
+						'desc'       => __( 'This enables the generic listings type to create a generic listings site.', 'listings' ),
+						'type'       => 'checkbox',
+						'attributes' => array()
+					),
+				)
+			)
+		) );
 	}
 
 	/**
