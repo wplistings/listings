@@ -68,10 +68,25 @@ class Settings {
 
 				<?php settings_fields( $this->settings_group ); ?>
 
+				<?php
+				$settings_keys = array_keys($this->settings);
+				$first_tab = array_shift($settings_keys);
+
+				if ( !isset($_GET['tab'] ) || ! isset($this->settings[ $_GET['tab']])) {
+					$active_tab = $first_tab;
+				} else {
+					$active_tab = $_GET['tab'];
+				}
+				?>
+
 			    <h2 class="nav-tab-wrapper">
 			    	<?php
 			    		foreach ( $this->settings as $key => $section ) {
-			    			echo '<a href="' . add_query_arg('tab', sanitize_title( $key ) ) . '" class="nav-tab">' . esc_html( $section[0] ) . '</a>';
+			    			echo '<a href="' . add_query_arg('tab', sanitize_title( $key ) ) . '" class="nav-tab';
+			    			 if ( sanitize_title( $key ) == $active_tab ) {
+								 echo ' nav-tab-active';
+							 }
+							echo '">' . esc_html( $section[0] ) . '</a>';
 			    		}
 			    	?>
 			    </h2>
@@ -80,6 +95,12 @@ class Settings {
 					if ( ! empty( $_GET['settings-updated'] ) ) {
 						flush_rewrite_rules();
 						echo '<div class="updated fade listings-updated"><p>' . __( 'Settings successfully saved', 'listings' ) . '</p></div>';
+					}
+
+					if (isset($_GET['tab'] ) && isset( $this->settings[ $_GET['tab'] ] ) ) {
+						$this->settings = array( $this->settings[ $_GET['tab'] ] );
+					} else {
+						$this->settings = array(array_pop($this->settings));
 					}
 
 					foreach ( $this->settings as $key => $section ) {
