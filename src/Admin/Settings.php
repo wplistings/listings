@@ -31,6 +31,10 @@ class Settings {
 						'attributes' => array()
 					),
 				)
+			),
+			'listings_pages' => array(
+				__( 'Pages', 'listings' ),
+				array(),
 			)
 		) );
 	}
