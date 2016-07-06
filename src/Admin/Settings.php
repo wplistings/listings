@@ -85,7 +85,8 @@ class Settings {
 			    <h2 class="nav-tab-wrapper">
 			    	<?php
 			    		foreach ( $this->settings as $key => $section ) {
-			    			echo '<a href="' . add_query_arg('tab', sanitize_title( $key ) ) . '" class="nav-tab';
+							$tab_url = remove_query_arg('settings-updated', add_query_arg('tab', sanitize_title( $key ) ) );
+			    			echo '<a href="' . $tab_url . '" class="nav-tab';
 			    			 if ( sanitize_title( $key ) == $active_tab ) {
 								 echo ' nav-tab-active';
 							 }
