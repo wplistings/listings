@@ -6,7 +6,7 @@ class CacheHelper {
 
 	public static function init() {
 		add_action( 'save_post', array( __CLASS__, 'flush_get_job_listings_cache' ) );
-		add_action( 'listings_my_job_do_action', array( __CLASS__, 'listings_my_job_do_action' ) );
+		add_action( 'listings_my_listing_do_action', array( __CLASS__, 'my_listing_do_action' ) );
 		add_action( 'set_object_terms', array( __CLASS__, 'set_term' ), 10, 4 );
 		add_action( 'edited_term', array( __CLASS__, 'edited_term' ), 10, 3 );
 		add_action( 'create_term', array( __CLASS__, 'edited_term' ), 10, 3 );
@@ -26,9 +26,9 @@ class CacheHelper {
 	/**
 	 * Flush the cache
 	 */
-	public static function job_manager_my_job_do_action( $action ) {
+	public static function my_listing_do_action( $action ) {
 		if ( 'mark_filled' === $action || 'mark_not_filled' === $action ) {
-			self::get_transient_version( 'get_job_listings', true );
+			self::get_transient_version( 'get_listings', true );
 		}
 	}
 
@@ -36,14 +36,14 @@ class CacheHelper {
 	 * When any post has a term set
 	 */
 	public static function set_term( $object_id = '', $terms = '', $tt_ids = '', $taxonomy = '' ) {
-		self::get_transient_version( 'jm_get_' . sanitize_text_field( $taxonomy ), true );
+		self::get_transient_version( 'listings_get_' . sanitize_text_field( $taxonomy ), true );
 	}
 
 	/**
 	 * When any term is edited
 	 */
 	public static function edited_term( $term_id = '', $tt_id = '', $taxonomy = '' ) {
-		self::get_transient_version( 'jm_get_' . sanitize_text_field( $taxonomy ), true );
+		self::get_transient_version( 'listings_get_' . sanitize_text_field( $taxonomy ), true );
 	}
 
 	/**
