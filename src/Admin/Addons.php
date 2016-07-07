@@ -48,8 +48,6 @@ class Addons {
 		<div class="wrap wp_job_manager wp_job_manager_addons_wrap">
 			<h2><?php _e( 'WP Job Manager Add-ons', 'listings' ); ?></h2>
 
-			<div id="job-manager-addons-banner" class="notice updated below-h2"><strong><?php _e( 'Do you need multiple add-ons?', 'wp-job-manager' ); ?></strong> <a href="https://wpjobmanager.com/add-ons/bundle/" class="button"><?php _e( 'Check out the core add-on bundle &rarr;', 'wp-job-manager' ); ?></a></div>
-
 			<?php echo $addons; ?>
 		</div>
 		<?php
