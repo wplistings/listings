@@ -299,7 +299,7 @@ function listings_dropdown_categories( $args = '' ) {
  * @return int
  */
 function listings_get_page_id( $page ) {
-	$page_id = get_option( 'job_manager_' . $page . '_page_id', false );
+	$page_id = get_option( 'listings_' . $page . '_page_id', false );
 	if ( $page_id ) {
 		return absint( function_exists( 'pll_get_post' ) ? pll_get_post( $page_id ) : $page_id );
 	} else {
