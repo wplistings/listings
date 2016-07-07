@@ -8,17 +8,17 @@ class Geocode {
 	 * Constructor
 	 */
 	public function __construct() {
-		add_action( 'job_manager_update_job_data', array( $this, 'update_location_data' ), 20, 2 );
-		add_action( 'job_manager_job_location_edited', array( $this, 'change_location_data' ), 20, 2 );
+		add_action( 'listings_update_listing_data', array( $this, 'update_location_data' ), 20, 2 );
+		add_action( 'listings_listing_location_edited', array( $this, 'change_location_data' ), 20, 2 );
 	}
 
 	/**
 	 * Update location data - when submitting a job
 	 */
-	public function update_location_data( $job_id, $values ) {
-		if ( apply_filters( 'job_manager_geolocation_enabled', true ) && isset( $values['job']['job_location'] ) ) {
-			$address_data = self::get_location_data( $values['job']['job_location'] );
-			self::save_location_data( $job_id, $address_data );
+	public function update_location_data( $listing_id, $values ) {
+		if ( apply_filters( 'listings_geolocation_enabled', true ) && isset( $values['listing']['listing_location'] ) ) {
+			$address_data = self::get_location_data( $values['listing']['listing_location'] );
+			self::save_location_data( $listing_id, $address_data );
 		}
 	}
 
@@ -28,7 +28,7 @@ class Geocode {
 	 * @param  string $new_location
 	 */
 	public function change_location_data( $job_id, $new_location ) {
-		if ( apply_filters( 'job_manager_geolocation_enabled', true ) ) {
+		if ( apply_filters( 'listings_geolocation_enabled', true ) ) {
 			$address_data = self::get_location_data( $new_location );
 			self::clear_location_data( $job_id );
 			self::save_location_data( $job_id, $address_data );
@@ -118,12 +118,12 @@ class Geocode {
 		try {
 			if ( false === $geocoded_address || empty( $geocoded_address->results[0] ) ) {
 				$result = wp_remote_get(
-					apply_filters( 'job_manager_geolocation_endpoint', "http://maps.googleapis.com/maps/api/geocode/json?address=" . $raw_address . "&sensor=false&region=" . apply_filters( 'job_manager_geolocation_region_cctld', '', $raw_address ), $raw_address ),
+					apply_filters( 'listings_geolocation_endpoint', "http://maps.googleapis.com/maps/api/geocode/json?address=" . $raw_address . "&sensor=false&region=" . apply_filters( 'listings_geolocation_region_cctld', '', $raw_address ), $raw_address ),
 					array(
 						'timeout'     => 5,
 					    'redirection' => 1,
 					    'httpversion' => '1.1',
-					    'user-agent'  => 'WordPress/WP-Job-Manager-' . LISTINGS_VERSION . '; ' . get_bloginfo( 'url' ),
+					    'user-agent'  => 'WordPress/Listings-' . LISTINGS_VERSION . '; ' . get_bloginfo( 'url' ),
 					    'sslverify'   => false
 				    )
 				);
@@ -133,25 +133,25 @@ class Geocode {
 				if ( $geocoded_address->status ) {
 					switch ( $geocoded_address->status ) {
 						case 'ZERO_RESULTS' :
-							throw new \Exception( __( "No results found", 'wp-job-manager' ) );
+							throw new \Exception( __( "No results found", 'listings' ) );
 						break;
 						case 'OVER_QUERY_LIMIT' :
-							set_transient( 'jm_geocode_over_query_limit', 1, HOUR_IN_SECONDS );
-							throw new \Exception( __( "Query limit reached", 'wp-job-manager' ) );
+							set_transient( 'listings_geocode_over_query_limit', 1, HOUR_IN_SECONDS );
+							throw new \Exception( __( "Query limit reached", 'listings' ) );
 						break;
 						case 'OK' :
 							if ( ! empty( $geocoded_address->results[0] ) ) {
 								set_transient( $transient_name, $geocoded_address, 24 * HOUR_IN_SECONDS * 365 );
 							} else {
-								throw new \Exception( __( "Geocoding error", 'wp-job-manager' ) );
+								throw new \Exception( __( "Geocoding error", 'listings' ) );
 							}
 						break;
 						default :
-							throw new \Exception( __( "Geocoding error", 'wp-job-manager' ) );
+							throw new \Exception( __( "Geocoding error", 'listings' ) );
 						break;
 					}
 				} else {
-					throw new \Exception( __( "Geocoding error", 'wp-job-manager' ) );
+					throw new \Exception( __( "Geocoding error", 'listings' ) );
 				}
 			}
 		} catch ( \Exception $e ) {
@@ -203,6 +203,6 @@ class Geocode {
 			}
 		}
 
-		return apply_filters( 'job_manager_geolocation_get_location_data', $address, $geocoded_address );
+		return apply_filters( 'listings_geolocation_get_location_data', $address, $geocoded_address );
 	}
 }

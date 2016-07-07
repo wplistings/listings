@@ -10,7 +10,7 @@ if ( isset( $field['value'] ) ) {
 	$selected = '';
 }
 
-wp_enqueue_script( 'wp-job-manager-term-multiselect' );
+wp_enqueue_script( 'listings-term-multiselect' );
 
 $args = array(
 	'taxonomy'     => $field['taxonomy'],

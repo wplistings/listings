@@ -22,7 +22,7 @@ class Api {
 	 * @return void
 	 */
 	public function add_query_vars( $vars ) {
-		$vars[] = 'job-manager-api';
+		$vars[] = 'listings-api';
 		return $vars;
 	}
 
@@ -33,7 +33,7 @@ class Api {
 	 * @return void
 	 */
 	public function add_endpoint() {
-		add_rewrite_endpoint( 'job-manager-api', EP_ALL );
+		add_rewrite_endpoint( 'listings-api', EP_ALL );
 	}
 
 	/**
@@ -45,22 +45,22 @@ class Api {
 	public function api_requests() {
 		global $wp;
 
-		if ( ! empty( $_GET['job-manager-api'] ) )
-			$wp->query_vars['job-manager-api'] = $_GET['job-manager-api'];
+		if ( ! empty( $_GET['listings-api'] ) )
+			$wp->query_vars['listings-api'] = $_GET['listings-api'];
 
-		if ( ! empty( $wp->query_vars['job-manager-api'] ) ) {
+		if ( ! empty( $wp->query_vars['listings-api'] ) ) {
 			// Buffer, we won't want any output here
 			ob_start();
 
 			// Get API trigger
-			$api = strtolower( esc_attr( $wp->query_vars['job-manager-api'] ) );
+			$api = strtolower( esc_attr( $wp->query_vars['listings-api'] ) );
 
 			// Load class if exists
 			if ( class_exists( $api ) )
 				$api_class = new $api();
 
 			// Trigger actions
-			do_action( 'job_manager_api_' . $api );
+			do_action( 'listings_api_' . $api );
 
 			// Done, clear buffer and exit
 			ob_end_clean();

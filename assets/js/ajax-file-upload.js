@@ -3,7 +3,7 @@ jQuery(function($) {
 		$(this).fileupload({
 			dataType: 'json',
 			dropZone: $(this),
-			url: job_manager_ajax_file_upload.ajax_url.toString().replace( "%%endpoint%%", "upload_file" ),
+			url: listings_ajax_file_upload.ajax_url.toString().replace( "%%endpoint%%", "upload_file" ),
 			maxNumberOfFiles: 1,
 			formData: {
 				script: true
@@ -21,7 +21,7 @@ jQuery(function($) {
 	        		var acceptFileTypes = new RegExp( "(\.|\/)(" + allowed_types + ")$", "i" );
 
 			        if ( data.originalFiles[0]['name'].length && ! acceptFileTypes.test( data.originalFiles[0]['name'] ) ) {
-			        	uploadErrors.push( job_manager_ajax_file_upload.i18n_invalid_file_type + ' ' + allowed_types );
+			        	uploadErrors.push( listings_ajax_file_upload.i18n_invalid_file_type + ' ' + allowed_types );
 			        }
 			    }
 
@@ -65,10 +65,10 @@ jQuery(function($) {
 						alert( file.error );
 					} else {
 						if ( $.inArray( file.extension, image_types ) >= 0 ) {
-							var html = $.parseHTML( job_manager_ajax_file_upload.js_field_html_img );
+							var html = $.parseHTML( listings_ajax_file_upload.js_field_html_img );
 							$( html ).find('.job-manager-uploaded-file-preview img').attr( 'src', file.url );
 						} else {
-							var html = $.parseHTML( job_manager_ajax_file_upload.js_field_html );
+							var html = $.parseHTML( listings_ajax_file_upload.js_field_html );
 							$( html ).find('.job-manager-uploaded-file-name code').text( file.name );
 						}
 

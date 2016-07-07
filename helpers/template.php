@@ -17,9 +17,9 @@ function listings_get_template( $template_name, $args = array(), $template_path 
  *
  * @param string $slug
  * @param string $name (default: '')
- * @param string $template_path (default: 'job_manager')
+ * @param string $template_path (default: 'listings')
  */
-function listings_get_template_part( $slug, $name = '', $template_path = 'job_manager' ) {
+function listings_get_template_part( $slug, $name = '', $template_path = 'listings' ) {
 	listings()->template->get_template_part($slug, $name, $template_path);
 }
 

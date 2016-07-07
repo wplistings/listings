@@ -5,8 +5,8 @@ $field_name         = isset( $field['name'] ) ? $field['name'] : $key;
 $field_name         .= ! empty( $field['multiple'] ) ? '[]' : '';
 
 if ( ! empty( $field['ajax'] ) ) {
-	wp_enqueue_script( 'wp-job-manager-ajax-file-upload' );
-	$classes[] = 'wp-job-manager-file-upload';
+	wp_enqueue_script( 'listings-ajax-file-upload' );
+	$classes[] = 'listings-file-upload';
 }
 ?>
 <div class="job-manager-uploaded-files">

@@ -50,29 +50,20 @@ if ( ! function_exists( 'listings_create_account' ) ) :
  * Handle account creation.
  *
  * @param  array $args containing username, email, role
- * @param  string $deprecated role string
  * @return WP_error | bool was an account created?
  */
-function listings_create_account( $args, $deprecated = '' ) {
+function listings_create_account( $args ) {
 	global $current_user;
 
-	// Soft Deprecated in 1.20.0
-	if ( ! is_array( $args ) ) {
-		$username = '';
-		$password = wp_generate_password();
-		$email    = $args;
-		$role     = $deprecated;
-	} else {
-		$defaults = array(
-			'username' => '',
-			'email'    => '',
-			'password' => wp_generate_password(),
-			'role'     => get_option( 'default_role' )
-		);
+	$defaults = array(
+		'username' => '',
+		'email'    => '',
+		'password' => wp_generate_password(),
+		'role'     => get_option( 'default_role' )
+	);
 
-		$args = wp_parse_args( $args, $defaults );
-		extract( $args );
-	}
+	$args = wp_parse_args( $args, $defaults );
+	extract( $args );
 
 	$username = sanitize_user( $username );
 	$email    = apply_filters( 'user_registration_email', sanitize_email( $email ) );
@@ -180,7 +171,7 @@ function listings_user_can_edit_listing( $listing_id ) {
  * @return bool
  */
 function listings_enable_registration() {
-	return apply_filters( 'listings_enable_registration', get_option( 'job_manager_enable_registration' ) == 1 ? true : false );
+	return apply_filters( 'listings_enable_registration', get_option( 'listings_enable_registration' ) == 1 ? true : false );
 }
 
 /**
@@ -189,7 +180,7 @@ function listings_enable_registration() {
  * @return bool
  */
 function listings_generate_username_from_email() {
-	return apply_filters( 'listings_generate_username_from_email', get_option( 'job_manager_generate_username_from_email' ) == 1 ? true : false );
+	return apply_filters( 'listings_generate_username_from_email', get_option( 'listings_generate_username_from_email' ) == 1 ? true : false );
 }
 
 /**
@@ -198,7 +189,7 @@ function listings_generate_username_from_email() {
  * @return bool
  */
 function listings_user_requires_account() {
-	return apply_filters( 'listings_user_requires_account', get_option( 'job_manager_user_requires_account' ) == 1 ? true : false );
+	return apply_filters( 'listings_user_requires_account', get_option( 'listings_user_requires_account' ) == 1 ? true : false );
 }
 
 /**
@@ -207,7 +198,7 @@ function listings_user_requires_account() {
  * @return bool
  */
 function listings_user_can_edit_pending_submissions() {
-	return apply_filters( 'listings_user_can_edit_pending_submissions', get_option( 'job_manager_user_can_edit_pending_submissions' ) == 1 ? true : false );
+	return apply_filters( 'listings_user_can_edit_pending_submissions', get_option( 'listings_user_can_edit_pending_submissions' ) == 1 ? true : false );
 }
 
 /**
@@ -227,7 +218,7 @@ function listings_dropdown_categories( $args = '' ) {
 		'hierarchical'    => 0,
 		'name'            => 'cat',
 		'id'              => '',
-		'class'           => 'job-manager-category-dropdown ' . ( is_rtl() ? 'chosen-rtl' : '' ),
+		'class'           => 'listings-category-dropdown ' . ( is_rtl() ? 'chosen-rtl' : '' ),
 		'depth'           => 0,
 		'taxonomy'        => 'job_listing_category',
 		'value'           => 'id',
@@ -247,7 +238,7 @@ function listings_dropdown_categories( $args = '' ) {
 	extract( $r );
 
 	// Store in a transient to help sites with many cats
-	$categories_hash = 'jm_cats_' . md5( json_encode( $r ) . \Listings\CacheHelper::get_transient_version( 'jm_get_' . $r['taxonomy'] ) );
+	$categories_hash = 'listings_cats_' . md5( json_encode( $r ) . \Listings\CacheHelper::get_transient_version( 'listings_get_' . $r['taxonomy'] ) );
 	$categories      = get_transient( $categories_hash );
 
 	if ( empty( $categories ) ) {
@@ -299,7 +290,7 @@ function listings_dropdown_categories( $args = '' ) {
  * @return int
  */
 function listings_get_page_id( $page ) {
-	$page_id = get_option( 'job_manager_' . $page . '_page_id', false );
+	$page_id = get_option( 'listings_' . $page . '_page_id', false );
 	if ( $page_id ) {
 		return absint( function_exists( 'pll_get_post' ) ? pll_get_post( $page_id ) : $page_id );
 	} else {
