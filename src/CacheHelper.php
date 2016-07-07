@@ -99,7 +99,7 @@ class CacheHelper {
 				AND a.option_name NOT LIKE %s
 				AND b.option_name = CONCAT( '_transient_timeout_', SUBSTRING( a.option_name, 12 ) )
 				AND b.option_value < %s;";
-			$wpdb->query( $wpdb->prepare( $sql, $wpdb->esc_like( '_transient_jm_' ) . '%', $wpdb->esc_like( '_transient_timeout_jm_' ) . '%', time() ) );
+			$wpdb->query( $wpdb->prepare( $sql, $wpdb->esc_like( '_transient_listings_' ) . '%', $wpdb->esc_like( '_transient_timeout_listings_' ) . '%', time() ) );
 		}
 	}
 }

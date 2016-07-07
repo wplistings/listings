@@ -30,13 +30,13 @@ abstract class Writepanel
             <?php
             if ( ! empty( $field['multiple'] ) ) {
                 foreach ( (array) $field['value'] as $value ) {
-                    ?><span class="file_url"><input type="text" name="<?php echo esc_attr( $name ); ?>[]" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" value="<?php echo esc_attr( $value ); ?>" /><button class="button button-small wp_job_manager_upload_file_button" data-uploader_button_text="<?php _e( 'Use file', 'listings' ); ?>"><?php _e( 'Upload', 'listings' ); ?></button></span><?php
+                    ?><span class="file_url"><input type="text" name="<?php echo esc_attr( $name ); ?>[]" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" value="<?php echo esc_attr( $value ); ?>" /><button class="button button-small listings_upload_file_button" data-uploader_button_text="<?php _e( 'Use file', 'listings' ); ?>"><?php _e( 'Upload', 'listings' ); ?></button></span><?php
                 }
             } else {
-                ?><span class="file_url"><input type="text" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>" /><button class="button button-small wp_job_manager_upload_file_button" data-uploader_button_text="<?php _e( 'Use file', 'listings' ); ?>"><?php _e( 'Upload', 'listings' ); ?></button></span><?php
+                ?><span class="file_url"><input type="text" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>" /><button class="button button-small listings_upload_file_button" data-uploader_button_text="<?php _e( 'Use file', 'listings' ); ?>"><?php _e( 'Upload', 'listings' ); ?></button></span><?php
             }
             if ( ! empty( $field['multiple'] ) ) {
-                ?><button class="button button-small wp_job_manager_add_another_file_button" data-field_name="<?php echo esc_attr( $key ); ?>" data-field_placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" data-uploader_button_text="<?php _e( 'Use file', 'listings' ); ?>" data-uploader_button="<?php _e( 'Upload', 'listings' ); ?>"><?php _e( 'Add file', 'listings' ); ?></button><?php
+                ?><button class="button button-small listings_add_another_file_button" data-field_name="<?php echo esc_attr( $key ); ?>" data-field_placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>" data-uploader_button_text="<?php _e( 'Use file', 'listings' ); ?>" data-uploader_button="<?php _e( 'Upload', 'listings' ); ?>"><?php _e( 'Add file', 'listings' ); ?></button><?php
             }
             ?>
         </p>

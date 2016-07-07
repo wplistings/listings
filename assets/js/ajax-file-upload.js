@@ -1,5 +1,5 @@
 jQuery(function($) {
-	$('.wp-job-manager-file-upload').each(function(){
+	$('.listings-file-upload').each(function(){
 		$(this).fileupload({
 			dataType: 'json',
 			dropZone: $(this),
@@ -11,7 +11,7 @@ jQuery(function($) {
 			add: function (e, data) {
 				var $file_field     = $( this );
 				var $form           = $file_field.closest( 'form' );
-				var $uploaded_files = $file_field.parent().find('.job-manager-uploaded-files');
+				var $uploaded_files = $file_field.parent().find('.listings-uploaded-files');
 				var uploadErrors    = [];
 
 				// Validate type
@@ -35,7 +35,7 @@ jQuery(function($) {
 			},
 			progress: function (e, data) {
 				var $file_field     = $( this );
-				var $uploaded_files = $file_field.parent().find('.job-manager-uploaded-files');
+				var $uploaded_files = $file_field.parent().find('.listings-uploaded-files');
 				var progress        = parseInt(data.loaded / data.total * 100, 10);
 				data.context.val( progress );
 			},
@@ -54,7 +54,7 @@ jQuery(function($) {
 			done: function (e, data) {
 				var $file_field     = $( this );
 				var $form           = $file_field.closest( 'form' );
-				var $uploaded_files = $file_field.parent().find('.job-manager-uploaded-files');
+				var $uploaded_files = $file_field.parent().find('.listings-uploaded-files');
 				var multiple        = $file_field.attr( 'multiple' ) ? 1 : 0;
 				var image_types     = [ 'jpg', 'gif', 'png', 'jpeg', 'jpe' ];
 
@@ -66,10 +66,10 @@ jQuery(function($) {
 					} else {
 						if ( $.inArray( file.extension, image_types ) >= 0 ) {
 							var html = $.parseHTML( listings_ajax_file_upload.js_field_html_img );
-							$( html ).find('.job-manager-uploaded-file-preview img').attr( 'src', file.url );
+							$( html ).find('.listings-uploaded-file-preview img').attr( 'src', file.url );
 						} else {
 							var html = $.parseHTML( listings_ajax_file_upload.js_field_html );
-							$( html ).find('.job-manager-uploaded-file-name code').text( file.name );
+							$( html ).find('.listings-uploaded-file-name code').text( file.name );
 						}
 
 						$( html ).find('.input-text').val( file.url );
