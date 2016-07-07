@@ -122,7 +122,7 @@ class Plugin {
             listings_get_template( 'form-fields/uploaded-file-html.php', array( 'name' => '', 'value' => '', 'extension' => 'zip' ) );
             $js_field_html = ob_get_clean();
 
-            wp_localize_script( 'wp-job-listings-ajax-file-upload', 'listings_ajax_file_upload', array(
+            wp_localize_script( 'listings-ajax-file-upload', 'listings_ajax_file_upload', array(
                 'ajax_url'               => $ajax_url,
                 'js_field_html_img'      => esc_js( str_replace( "\n", "", $js_field_html_img ) ),
                 'js_field_html'          => esc_js( str_replace( "\n", "", $js_field_html ) ),

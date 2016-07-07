@@ -29,7 +29,7 @@ jQuery( document ).ready( function ( $ ) {
 
 			// Not appending. If page > 1, we should show a load previous button so the user can get to earlier-page listings if needed
 			if ( page > 1 && true != target.data( 'show_pagination' ) ) {
-				$( results ).before( '<a class="load_more_jobs load_previous" href="#"><strong>' + job_manager_ajax_filters.i18n_load_prev_listings + '</strong></a>' );
+				$( results ).before( '<a class="load_more_jobs load_previous" href="#"><strong>' + listings_ajax_filters.i18n_load_prev_listings + '</strong></a>' );
 			} else {
 				target.find( '.load_previous' ).remove();
 			}
@@ -63,7 +63,7 @@ jQuery( document ).ready( function ( $ ) {
 			}
 
 			data = {
-				lang: job_manager_ajax_filters.lang,
+				lang: listings_ajax_filters.lang,
 				search_keywords: keywords,
 				search_location: location,
 				search_categories: categories,
@@ -89,7 +89,7 @@ jQuery( document ).ready( function ( $ ) {
 			}
 
 			data = {
-				lang: job_manager_ajax_filters.lang,
+				lang: listings_ajax_filters.lang,
 				search_categories: categories,
 				search_keywords: keywords,
 				search_location: location,
@@ -106,7 +106,7 @@ jQuery( document ).ready( function ( $ ) {
 
 		xhr[index] = $.ajax( {
 			type: 'POST',
-			url: job_manager_ajax_filters.ajax_url.toString().replace( "%%endpoint%%", "get_listings" ),
+			url: listings_ajax_filters.ajax_url.toString().replace( "%%endpoint%%", "get_listings" ),
 			data: data,
 			success: function ( result ) {
 				if ( result ) {
@@ -243,7 +243,7 @@ jQuery( document ).ready( function ( $ ) {
 	} );
 
 	if ( $.isFunction( $.fn.chosen ) ) {
-		if ( job_manager_ajax_filters.is_rtl == 1 ) {
+		if ( listings_ajax_filters.is_rtl == 1 ) {
 			$( 'select[name^="search_categories"]' ).addClass( 'chosen-rtl' );
 		}
 		$( 'select[name^="search_categories"]' ).chosen({ search_contains: true });
