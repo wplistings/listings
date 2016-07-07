@@ -15,13 +15,13 @@ jQuery(document).ready(function($) {
 	});
 
 	// Datepicker
-	$( 'input.job-manager-datepicker, input#_job_expires' ).datepicker({
+	$( 'input.listings-datepicker, input#_job_expires' ).datepicker({
 		altFormat  : 'yy-mm-dd',
-		dateFormat : job_manager_admin.date_format,
+		dateFormat : listings_admin.date_format,
 		minDate    : 0
 	});
 
-	$( 'input.job-manager-datepicker, input#_job_expires' ).each( function(){
+	$( 'input.listings-datepicker, input#_job_expires' ).each( function(){
 		if ( $(this).val() ) {
 			var date = new Date( $(this).val() );
 			$(this).datepicker( "setDate", date );
@@ -33,7 +33,7 @@ jQuery(document).ready(function($) {
 	var file_target_input;
 	var file_target_wrapper;
 
-	$('.wp_job_manager_add_another_file_button').live('click', function( event ){
+	$('.listings_add_another_file_button').live('click', function( event ){
 		event.preventDefault();
 
 		var wrapper           = $( this ).closest( '.form-field' );
@@ -42,10 +42,10 @@ jQuery(document).ready(function($) {
 		var button_text       = $( this ).data( 'uploader_button_text' );
 		var button            = $( this ).data( 'uploader_button' );
 
-		$( this ).before('<span class="file_url"><input type="text" name="' + field_name + '[]" placeholder="' + field_placeholder + '" /><button class="button button-small wp_job_manager_upload_file_button" data-uploader_button_text="' + button_text + '">' + button + '</button></span>');
+		$( this ).before('<span class="file_url"><input type="text" name="' + field_name + '[]" placeholder="' + field_placeholder + '" /><button class="button button-small listings_upload_file_button" data-uploader_button_text="' + button_text + '">' + button + '</button></span>');
 	});
 
-	$('.wp_job_manager_upload_file_button').live('click', function( event ){
+	$('.listings_upload_file_button').live('click', function( event ){
 	    event.preventDefault();
 
 	    file_target_wrapper = $( this ).closest('.file_url');

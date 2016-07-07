@@ -9,7 +9,7 @@ if ( ! empty( $field['ajax'] ) ) {
 	$classes[] = 'listings-file-upload';
 }
 ?>
-<div class="job-manager-uploaded-files">
+<div class="listings-uploaded-files">
 	<?php if ( ! empty( $field['value'] ) ) : ?>
 		<?php if ( is_array( $field['value'] ) ) : ?>
 			<?php foreach ( $field['value'] as $value ) : ?>

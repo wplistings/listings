@@ -1,4 +1,4 @@
-<ul class="job-manager-term-checklist job-manager-term-checklist-<?php echo $key ?>">
+<ul class="listings-term-checklist listings-term-checklist-<?php echo $key ?>">
 <?php
 	require_once( ABSPATH . '/wp-admin/includes/template.php' );
 

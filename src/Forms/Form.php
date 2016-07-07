@@ -68,7 +68,7 @@ abstract class Form {
 	 */
 	public function show_errors() {
 		foreach ( $this->errors as $error ) {
-			echo '<div class="job-manager-error">' . $error . '</div>';
+			echo '<div class="listings-error">' . $error . '</div>';
 		}
 	}
 
