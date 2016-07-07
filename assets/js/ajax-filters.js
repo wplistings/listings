@@ -106,7 +106,7 @@ jQuery( document ).ready( function ( $ ) {
 
 		xhr[index] = $.ajax( {
 			type: 'POST',
-			url: listings_ajax_filters.ajax_url.toString().replace( "%%endpoint%%", "get_listings" ),
+			url: listings_ajax_filters.ajax_url.toString().replace( "%%endpoint%%", "get_job_listings" ),
 			data: data,
 			success: function ( result ) {
 				if ( result ) {
