@@ -45,8 +45,8 @@ class Addons {
 		}
 
 		?>
-		<div class="wrap wp_job_manager wp_job_manager_addons_wrap">
-			<h2><?php _e( 'WP Job Manager Add-ons', 'listings' ); ?></h2>
+		<div class="wrap listings listings_addons_wrap">
+			<h2><?php _e( 'Listings Add-ons', 'listings' ); ?></h2>
 
 			<?php echo $addons; ?>
 		</div>
