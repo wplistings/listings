@@ -106,12 +106,12 @@ class Geocode {
 			return false;
 		}
 
-		$transient_name              = 'jm_geocode_' . md5( $raw_address );
+		$transient_name              = 'listings_geocode_' . md5( $raw_address );
 		$geocoded_address            = get_transient( $transient_name );
-		$jm_geocode_over_query_limit = get_transient( 'jm_geocode_over_query_limit' );
+		$geocode_over_query_limit = get_transient( 'listings_geocode_over_query_limit' );
 
 		// Query limit reached - don't geocode for a while
-		if ( $jm_geocode_over_query_limit && false === $geocoded_address ) {
+		if ( $geocode_over_query_limit && false === $geocoded_address ) {
 			return false;
 		}
 
