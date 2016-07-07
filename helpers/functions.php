@@ -171,7 +171,7 @@ function listings_user_can_edit_listing( $listing_id ) {
  * @return bool
  */
 function listings_enable_registration() {
-	return apply_filters( 'listings_enable_registration', get_option( 'job_manager_enable_registration' ) == 1 ? true : false );
+	return apply_filters( 'listings_enable_registration', get_option( 'listings_enable_registration' ) == 1 ? true : false );
 }
 
 /**
@@ -180,7 +180,7 @@ function listings_enable_registration() {
  * @return bool
  */
 function listings_generate_username_from_email() {
-	return apply_filters( 'listings_generate_username_from_email', get_option( 'job_manager_generate_username_from_email' ) == 1 ? true : false );
+	return apply_filters( 'listings_generate_username_from_email', get_option( 'listings_generate_username_from_email' ) == 1 ? true : false );
 }
 
 /**
@@ -189,7 +189,7 @@ function listings_generate_username_from_email() {
  * @return bool
  */
 function listings_user_requires_account() {
-	return apply_filters( 'listings_user_requires_account', get_option( 'job_manager_user_requires_account' ) == 1 ? true : false );
+	return apply_filters( 'listings_user_requires_account', get_option( 'listings_user_requires_account' ) == 1 ? true : false );
 }
 
 /**
@@ -198,7 +198,7 @@ function listings_user_requires_account() {
  * @return bool
  */
 function listings_user_can_edit_pending_submissions() {
-	return apply_filters( 'listings_user_can_edit_pending_submissions', get_option( 'job_manager_user_can_edit_pending_submissions' ) == 1 ? true : false );
+	return apply_filters( 'listings_user_can_edit_pending_submissions', get_option( 'listings_user_can_edit_pending_submissions' ) == 1 ? true : false );
 }
 
 /**
@@ -238,7 +238,7 @@ function listings_dropdown_categories( $args = '' ) {
 	extract( $r );
 
 	// Store in a transient to help sites with many cats
-	$categories_hash = 'jm_cats_' . md5( json_encode( $r ) . \Listings\CacheHelper::get_transient_version( 'jm_get_' . $r['taxonomy'] ) );
+	$categories_hash = 'listings_cats_' . md5( json_encode( $r ) . \Listings\CacheHelper::get_transient_version( 'listings_get_' . $r['taxonomy'] ) );
 	$categories      = get_transient( $categories_hash );
 
 	if ( empty( $categories ) ) {
