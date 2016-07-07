@@ -90,7 +90,7 @@ class Plugin {
         $ajax_data 		  = array(
             'ajax_url'                => $ajax_url,
             'is_rtl'                  => is_rtl() ? 1 : 0,
-            'i18n_load_prev_listings' => __( 'Load previous listings', 'wp-job-manager' ),
+            'i18n_load_prev_listings' => __( 'Load previous listings', 'listings' ),
         );
 
         // WPML workaround
@@ -100,8 +100,8 @@ class Plugin {
 
         if ( apply_filters( 'listings_chosen_enabled', true ) ) {
             wp_register_script( 'chosen', LISTINGS_PLUGIN_URL . '/assets/js/jquery-chosen/chosen.jquery.min.js', array( 'jquery' ), '1.1.0', true );
-            wp_register_script( 'wp-job-manager-term-multiselect', LISTINGS_PLUGIN_URL . '/assets/js/term-multiselect.min.js', array( 'jquery', 'chosen' ), LISTINGS_VERSION, true );
-            wp_register_script( 'wp-job-manager-multiselect', LISTINGS_PLUGIN_URL . '/assets/js/multiselect.min.js', array( 'jquery', 'chosen' ), LISTINGS_VERSION, true );
+            wp_register_script( 'listings-term-multiselect', LISTINGS_PLUGIN_URL . '/assets/js/term-multiselect.min.js', array( 'jquery', 'chosen' ), LISTINGS_VERSION, true );
+            wp_register_script( 'listings-multiselect', LISTINGS_PLUGIN_URL . '/assets/js/multiselect.min.js', array( 'jquery', 'chosen' ), LISTINGS_VERSION, true );
             $ajax_filter_deps[] = 'chosen';
 
             wp_localize_script( 'chosen', 'listings_chosen_multiselect_args',
@@ -112,7 +112,7 @@ class Plugin {
         if ( apply_filters( 'listings_ajax_file_upload_enabled', true ) ) {
             wp_register_script( 'jquery-iframe-transport', LISTINGS_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.iframe-transport.js', array( 'jquery' ), '1.8.3', true );
             wp_register_script( 'jquery-fileupload', LISTINGS_PLUGIN_URL . '/assets/js/jquery-fileupload/jquery.fileupload.js', array( 'jquery', 'jquery-iframe-transport', 'jquery-ui-widget' ), '9.11.2', true );
-            wp_register_script( 'wp-job-manager-ajax-file-upload', LISTINGS_PLUGIN_URL . '/assets/js/ajax-file-upload.min.js', array( 'jquery', 'jquery-fileupload' ), LISTINGS_VERSION, true );
+            wp_register_script( 'listings-ajax-file-upload', LISTINGS_PLUGIN_URL . '/assets/js/ajax-file-upload.min.js', array( 'jquery', 'jquery-fileupload' ), LISTINGS_VERSION, true );
 
             ob_start();
             listings_get_template( 'form-fields/uploaded-file-html.php', array( 'name' => '', 'value' => '', 'extension' => 'jpg' ) );
@@ -131,13 +131,13 @@ class Plugin {
         }
 
         wp_register_script( 'jquery-deserialize', LISTINGS_PLUGIN_URL . '/assets/js/jquery-deserialize/jquery.deserialize.js', array( 'jquery' ), '1.2.1', true );
-        wp_register_script( 'wp-job-manager-ajax-filters', LISTINGS_PLUGIN_URL . '/assets/js/ajax-filters.min.js', $ajax_filter_deps, LISTINGS_VERSION, true );
-        wp_register_script( 'wp-job-manager-job-dashboard', LISTINGS_PLUGIN_URL . '/assets/js/job-dashboard.min.js', array( 'jquery' ), LISTINGS_VERSION, true );
-        wp_register_script( 'wp-job-manager-job-application', LISTINGS_PLUGIN_URL . '/assets/js/job-application.min.js', array( 'jquery' ), LISTINGS_VERSION, true );
-        wp_register_script( 'wp-job-manager-job-submission', LISTINGS_PLUGIN_URL . '/assets/js/job-submission.min.js', array( 'jquery' ), LISTINGS_VERSION, true );
-        wp_localize_script( 'wp-job-manager-ajax-filters', 'listings_ajax_filters', $ajax_data );
-        wp_localize_script( 'wp-job-manager-job-dashboard', 'listings_job_dashboard', array(
-            'i18n_confirm_delete' => __( 'Are you sure you want to delete this listing?', 'wp-job-manager' )
+        wp_register_script( 'listings-ajax-filters', LISTINGS_PLUGIN_URL . '/assets/js/ajax-filters.min.js', $ajax_filter_deps, LISTINGS_VERSION, true );
+        wp_register_script( 'listings-job-dashboard', LISTINGS_PLUGIN_URL . '/assets/js/job-dashboard.min.js', array( 'jquery' ), LISTINGS_VERSION, true );
+        wp_register_script( 'listings-job-application', LISTINGS_PLUGIN_URL . '/assets/js/job-application.min.js', array( 'jquery' ), LISTINGS_VERSION, true );
+        wp_register_script( 'listings-job-submission', LISTINGS_PLUGIN_URL . '/assets/js/job-submission.min.js', array( 'jquery' ), LISTINGS_VERSION, true );
+        wp_localize_script( 'listings-ajax-filters', 'listings_ajax_filters', $ajax_data );
+        wp_localize_script( 'listings-job-dashboard', 'listings_job_dashboard', array(
+            'i18n_confirm_delete' => __( 'Are you sure you want to delete this listing?', 'listings' )
         ) );
 
         wp_enqueue_style( 'listings-frontend', LISTINGS_PLUGIN_URL . '/assets/css/frontend.css' );
