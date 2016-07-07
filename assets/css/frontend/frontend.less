@@ -1,3 +1,65 @@
 @import "../mixins/mixins";
 @import "../mixins/icons";
 @import "../mixins/chosen";
+
+@primary: 			#999999; 									/* Primary colour for buttons (alt) */
+@primarytext: 		desaturate(lighten(@primary,50%),18%);		/* Text on primary colour bg */
+
+@secondary: 		desaturate(lighten(@primary,40%),18%);		/* Secondary buttons */
+@secondarytext:	 	desaturate(darken(@secondary,60%),18%);		/* Text on secondary colour bg */
+
+@highlight: 		spin( @primary, 150 ); 						/* Prices, In stock labels, sales flash */
+@highlightext:		desaturate(lighten(@highlight,50%),18%);	/* Text on highlight colour bg */
+
+@contentbg: 		#fff; 										/* Content BG - Tabs (active state) */
+@subtext: 			#777; 										/* small, breadcrumbs etc */
+
+.listings-message, .listings-error, .listings-info {
+  padding: 1em 2em 1em 3.5em !important;
+  margin: 0 0 2em !important;
+  position: relative;
+  background-color: lighten(@secondary,5%);
+  color: @secondarytext;
+  border-top: 3px solid @primary;
+  list-style: none outside !important;
+  width: auto;
+  .clearfix;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+  &:before {
+    content: "";
+    font-family: sans-serif;
+    display: inline-block;
+    position: absolute;
+    top: 1em;
+    left: 1.5em;
+  }
+  li {
+    list-style: none outside !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+  &.listings-message {
+    border-top-color: #8fae1b;
+    &:before {
+      color:#8fae1b;
+      content: "\2713";
+    }
+  }
+  &.listings-info {
+    border-top-color: #1e85be;
+    &:before {
+      color:#1e85be;
+      content: "i";
+      font-family: Times, Georgia, serif;
+      font-style: italic;
+    }
+  }
+  &.listings-error {
+    border-top-color: #b81c23;
+    &:before {
+      color:#b81c23;
+      content: "\00d7";
+      font-weight: 700;
+    }
+  }
+}
