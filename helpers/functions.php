@@ -50,29 +50,20 @@ if ( ! function_exists( 'listings_create_account' ) ) :
  * Handle account creation.
  *
  * @param  array $args containing username, email, role
- * @param  string $deprecated role string
  * @return WP_error | bool was an account created?
  */
-function listings_create_account( $args, $deprecated = '' ) {
+function listings_create_account( $args ) {
 	global $current_user;
 
-	// Soft Deprecated in 1.20.0
-	if ( ! is_array( $args ) ) {
-		$username = '';
-		$password = wp_generate_password();
-		$email    = $args;
-		$role     = $deprecated;
-	} else {
-		$defaults = array(
-			'username' => '',
-			'email'    => '',
-			'password' => wp_generate_password(),
-			'role'     => get_option( 'default_role' )
-		);
+	$defaults = array(
+		'username' => '',
+		'email'    => '',
+		'password' => wp_generate_password(),
+		'role'     => get_option( 'default_role' )
+	);
 
-		$args = wp_parse_args( $args, $defaults );
-		extract( $args );
-	}
+	$args = wp_parse_args( $args, $defaults );
+	extract( $args );
 
 	$username = sanitize_user( $username );
 	$email    = apply_filters( 'user_registration_email', sanitize_email( $email ) );
