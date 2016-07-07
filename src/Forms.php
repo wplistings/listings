@@ -24,8 +24,8 @@ class Forms {
 	 * If a form was posted, load its class so that it can be processed before display.
 	 */
 	public function load_posted_form() {
-		if ( ! empty( $_POST['job_manager_form'] ) ) {
-			$this->load_form_class( sanitize_title( $_POST['job_manager_form'] ) );
+		if ( ! empty( $_POST['listings_form'] ) ) {
+			$this->load_form_class( sanitize_title( $_POST['listings_form'] ) );
 		}
 	}
 

@@ -27,7 +27,7 @@ class Admin {
 	public function admin_menu() {
 		add_menu_page('Listings', 'Listings', 'manage_options', 'listings', function() {
 		}, '', 25);
-		if ( apply_filters( 'job_manager_show_addons_page', true ) ) {
+		if ( apply_filters( 'listings_show_addons_page', true ) ) {
 			add_submenu_page('listings', __('Listings Add-ons', 'listings'), __('Add-ons', 'listings'), 'manage_options', 'listings-addons', array($this->addons_page, 'output'));
 		}
 		add_submenu_page( 'listings', __( 'Settings', 'listings' ), __( 'Settings', 'listings' ), 'manage_options', 'listings-settings', array( $this->settings_page, 'output' ) );
@@ -44,17 +44,17 @@ class Admin {
 
 		$screen = get_current_screen();
 
-		wp_enqueue_style( 'job_manager_admin_css', LISTINGS_PLUGIN_URL . '/assets/css/admin.css' );
+		wp_enqueue_style( 'listings_admin_css', LISTINGS_PLUGIN_URL . '/assets/css/admin.css' );
 		
-		if ( in_array( $screen->id, apply_filters( 'job_manager_admin_screen_ids', array( 'edit-job_listing', 'job_listing', 'listings_page_listings-settings', 'listings_page_listings-addons' ) ) ) ) {
+		if ( in_array( $screen->id, apply_filters( 'listings_admin_screen_ids', array( 'edit-job_listing', 'job_listing', 'listings_page_listings-settings', 'listings_page_listings-addons' ) ) ) ) {
 			$jquery_version = isset( $wp_scripts->registered['jquery-ui-core']->ver ) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
 
 			wp_enqueue_style( 'jquery-ui-style', '//code.jquery.com/ui/' . $jquery_version . '/themes/smoothness/jquery-ui.css', array(), $jquery_version );
 			wp_register_script( 'jquery-tiptip', LISTINGS_PLUGIN_URL. '/assets/js/jquery-tiptip/jquery.tipTip.min.js', array( 'jquery' ), LISTINGS_VERSION, true );
-			wp_enqueue_script( 'job_manager_admin_js', LISTINGS_PLUGIN_URL. '/assets/js/admin.min.js', array( 'jquery', 'jquery-tiptip', 'jquery-ui-datepicker' ), LISTINGS_VERSION, true );
+			wp_enqueue_script( 'listings_admin_js', LISTINGS_PLUGIN_URL. '/assets/js/admin.min.js', array( 'jquery', 'jquery-tiptip', 'jquery-ui-datepicker' ), LISTINGS_VERSION, true );
 
-			wp_localize_script( 'job_manager_admin_js', 'job_manager_admin', array(
-				'date_format' => _x( 'yy-mm-dd', 'Date format for jQuery datepicker', 'wp-job-manager' )
+			wp_localize_script( 'listings_admin_js', 'listings_admin', array(
+				'date_format' => _x( 'yy-mm-dd', 'Date format for jQuery datepicker', 'listings' )
 			) );
 		}
 	}

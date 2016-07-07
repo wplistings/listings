@@ -193,7 +193,7 @@ abstract class Form {
 				// Get the value
 				$field_type = str_replace( '-', '_', $field['type'] );
 
-				if ( $handler = apply_filters( "job_manager_get_posted_{$field_type}_field", false ) ) {
+				if ( $handler = apply_filters( "listings_get_posted_{$field_type}_field", false ) ) {
 					$values[ $group_key ][ $key ] = call_user_func( $handler, $key, $field );
 				} elseif ( method_exists( $this, "get_posted_{$field_type}_field" ) ) {
 					$values[ $group_key ][ $key ] = call_user_func( array( $this, "get_posted_{$field_type}_field" ), $key, $field );

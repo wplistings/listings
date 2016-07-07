@@ -60,7 +60,7 @@ class Api {
 				$api_class = new $api();
 
 			// Trigger actions
-			do_action( 'job_manager_api_' . $api );
+			do_action( 'listings_api_' . $api );
 
 			// Done, clear buffer and exit
 			ob_end_clean();

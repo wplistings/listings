@@ -6,12 +6,12 @@ class CacheHelper {
 
 	public static function init() {
 		add_action( 'save_post', array( __CLASS__, 'flush_get_job_listings_cache' ) );
-		add_action( 'job_manager_my_job_do_action', array( __CLASS__, 'job_manager_my_job_do_action' ) );
+		add_action( 'listings_my_job_do_action', array( __CLASS__, 'listings_my_job_do_action' ) );
 		add_action( 'set_object_terms', array( __CLASS__, 'set_term' ), 10, 4 );
 		add_action( 'edited_term', array( __CLASS__, 'edited_term' ), 10, 3 );
 		add_action( 'create_term', array( __CLASS__, 'edited_term' ), 10, 3 );
 		add_action( 'delete_term', array( __CLASS__, 'edited_term' ), 10, 3 );
-		add_action( 'job_manager_clear_expired_transients', array( __CLASS__, 'clear_expired_transients' ), 10 );
+		add_action( 'listings_clear_expired_transients', array( __CLASS__, 'clear_expired_transients' ), 10 );
 	}
 
 	/**

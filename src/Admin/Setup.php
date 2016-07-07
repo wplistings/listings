@@ -41,7 +41,7 @@ class Setup {
 	 */
 	public function redirect() {
 		// Bail if no activation redirect transient is set
-	    if ( ! get_transient( '_job_manager_activation_redirect' ) ) {
+	    if ( ! get_transient( '_listings_activation_redirect' ) ) {
 			return;
 	    }
 
@@ -50,7 +50,7 @@ class Setup {
 	    }
 
 		// Delete the redirect transient
-		delete_transient( '_job_manager_activation_redirect' );
+		delete_transient( '_listings_activation_redirect' );
 
 		// Bail if activating from network, or bulk, or within an iFrame
 		if ( is_network_admin() || isset( $_GET['activate-multi'] ) || defined( 'IFRAME_REQUEST' ) ) {
@@ -108,7 +108,7 @@ class Setup {
 				if ( ! isset( $create_pages[ $page ] ) || empty( $page_titles[ $page ] ) ) {
 					continue;
 				}
-				$this->create_page( sanitize_text_field( $page_titles[ $page ] ), $content, 'job_manager_' . $page . '_page_id' );
+				$this->create_page( sanitize_text_field( $page_titles[ $page ] ), $content, 'listings_' . $page . '_page_id' );
 			}
 		}
 		?>

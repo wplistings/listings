@@ -9,7 +9,7 @@ class Addons {
 	 */
 	public function output() {
 
-		if ( false === ( $addons = get_transient( 'wp_job_manager_addons_html' ) ) ) {
+		if ( false === ( $addons = get_transient( 'listings_addons_html' ) ) ) {
 
 			$raw_addons = wp_remote_get(
 				'https://wpjobmanager.com/add-ons/',
@@ -39,7 +39,7 @@ class Addons {
 				$addons = wp_kses_post( $addons );
 
 				if ( $addons ) {
-					set_transient( 'wp_job_manager_addons_html', $addons, 60*60*24*7 ); // Cached for a week
+					set_transient( 'listings_addons_html', $addons, 60*60*24*7 ); // Cached for a week
 				}
 			}
 		}
