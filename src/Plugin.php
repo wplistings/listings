@@ -131,7 +131,6 @@ class Plugin {
         }
 
         wp_register_script( 'jquery-deserialize', LISTINGS_PLUGIN_URL . '/assets/js/jquery-deserialize/jquery.deserialize.js', array( 'jquery' ), '1.2.1', true );
-        wp_register_script( 'listings-job-submission', LISTINGS_PLUGIN_URL . '/assets/js/job-submission.min.js', array( 'jquery' ), LISTINGS_VERSION, true );
         wp_enqueue_style( 'listings-frontend', LISTINGS_PLUGIN_URL . '/assets/css/frontend.css' );
     }
 }
