@@ -11,7 +11,6 @@ class Admin {
 	 */
 	public function __construct() {
 		$this->settings_page = new Settings();
-		$this->setup = new Setup();
 		$this->addons_page = new Addons();
 
 		add_action( 'admin_menu', array( $this, 'admin_menu' ), 12 );
