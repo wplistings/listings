@@ -132,7 +132,6 @@ class Plugin {
 
         wp_register_script( 'jquery-deserialize', LISTINGS_PLUGIN_URL . '/assets/js/jquery-deserialize/jquery.deserialize.js', array( 'jquery' ), '1.2.1', true );
         wp_register_script( 'listings-job-dashboard', LISTINGS_PLUGIN_URL . '/assets/js/job-dashboard.min.js', array( 'jquery' ), LISTINGS_VERSION, true );
-        wp_register_script( 'listings-job-application', LISTINGS_PLUGIN_URL . '/assets/js/job-application.min.js', array( 'jquery' ), LISTINGS_VERSION, true );
         wp_register_script( 'listings-job-submission', LISTINGS_PLUGIN_URL . '/assets/js/job-submission.min.js', array( 'jquery' ), LISTINGS_VERSION, true );
         wp_localize_script( 'listings-job-dashboard', 'listings_job_dashboard', array(
             'i18n_confirm_delete' => __( 'Are you sure you want to delete this listing?', 'listings' )
