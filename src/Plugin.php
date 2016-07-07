@@ -21,7 +21,6 @@ class Plugin {
         }
 
         // Init classes
-        $this->install = new Install();
         $this->ajax = new Handler();
         $this->api = new Api();
         $this->forms      = new Forms();
@@ -62,7 +61,6 @@ class Plugin {
      */
     public function activate() {
         Handler::add_endpoint();
-        Install::install();
         flush_rewrite_rules();
     }
 
@@ -70,8 +68,7 @@ class Plugin {
      * Handle Updates
      */
     public function updater() {
-        if ( version_compare( LISTINGS_VERSION, get_option( 'wp_job_manager_version' ), '>' ) ) {
-            Install::install();
+        if ( version_compare( LISTINGS_VERSION, get_option( 'listings_version' ), '>' ) ) {
             flush_rewrite_rules();
         }
     }
@@ -80,8 +77,8 @@ class Plugin {
      * Localisation
      */
     public function load_plugin_textdomain() {
-        load_textdomain( 'wp-job-manager', WP_LANG_DIR . "/wp-job-manager/wp-job-manager-" . apply_filters( 'plugin_locale', get_locale(), 'wp-job-manager' ) . ".mo" );
-        load_plugin_textdomain( 'wp-job-manager', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+        load_textdomain( 'listings', WP_LANG_DIR . "/listings/listings-" . apply_filters( 'plugin_locale', get_locale(), 'listings' ) . ".mo" );
+        load_plugin_textdomain( 'listings', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
     }
 
     /**
