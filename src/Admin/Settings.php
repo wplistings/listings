@@ -104,7 +104,7 @@ class Settings {
 					if (isset($_GET['tab'] ) && isset( $this->settings[ $_GET['tab'] ] ) ) {
 						$this->settings = array( $this->settings[ $_GET['tab'] ] );
 					} else {
-						$this->settings = array(array_pop($this->settings));
+						$this->settings = array(array_shift($this->settings));
 					}
 
 					foreach ( $this->settings as $key => $section ) {
