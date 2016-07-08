@@ -155,9 +155,9 @@ function listings_user_can_edit_listing( $listing_id ) {
 	if ( ! is_user_logged_in() || ! $listing_id ) {
 		$can_edit = false;
 	} else {
-		$job      = get_post( $listing_id );
+		$listing      = get_post( $listing_id );
 
-		if ( ! $job || ( absint( $job->post_author ) !== get_current_user_id() && ! current_user_can( 'edit_post', $listing_id ) ) ) {
+		if ( ! $listing || ( absint( $listing->post_author ) !== get_current_user_id() && ! current_user_can( 'edit_post', $listing_id ) ) ) {
 			$can_edit = false;
 		}
 	}
