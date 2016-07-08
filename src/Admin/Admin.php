@@ -11,7 +11,6 @@ class Admin {
 	 */
 	public function __construct() {
 		$this->settings_page = new Settings();
-		$this->addons_page = new Addons();
 
 		add_action( 'admin_menu', array( $this, 'admin_menu' ), 12 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
@@ -26,9 +25,6 @@ class Admin {
 	public function admin_menu() {
 		add_menu_page('Listings', 'Listings', 'manage_options', 'listings', function() {
 		}, '', 25);
-		if ( apply_filters( 'listings_show_addons_page', true ) ) {
-			add_submenu_page('listings', __('Listings Add-ons', 'listings'), __('Add-ons', 'listings'), 'manage_options', 'listings-addons', array($this->addons_page, 'output'));
-		}
 		add_submenu_page( 'listings', __( 'Settings', 'listings' ), __( 'Settings', 'listings' ), 'manage_options', 'listings-settings', array( $this->settings_page, 'output' ) );
 	}
 
