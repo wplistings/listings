@@ -43,7 +43,7 @@ add_filter( 'body_class', 'listings_body_class' );
  */
 function listings_get_listing_pagination( $max_num_pages, $current_page = 1 ) {
 	ob_start();
-	listings_get_template( 'job-pagination.php', array( 'max_num_pages' => $max_num_pages, 'current_page' => absint( $current_page ) ) );
+	listings_get_template( 'pagination.php', array( 'max_num_pages' => $max_num_pages, 'current_page' => absint( $current_page ) ) );
 	return ob_get_clean();
 }
 
