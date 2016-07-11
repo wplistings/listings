@@ -30,6 +30,15 @@ class Settings {
 						'type'       => 'checkbox',
 						'attributes' => array()
 					),
+					array(
+						'name'       => 'listings_enable_default_categories',
+						'std'        => '1',
+						'label'      => __( 'Enable categories', 'listings' ),
+						'cb_label'   => __( 'Enable', 'listings' ),
+						'desc'       => __( 'This enables categories for the generic listings type.', 'listings' ),
+						'type'       => 'checkbox',
+						'attributes' => array()
+					),
 				)
 			),
 			'listings_pages' => array(
