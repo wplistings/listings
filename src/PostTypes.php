@@ -8,8 +8,12 @@ class PostTypes {
      * Constructor
      */
     public function __construct() {
+        // Only load default post type when it is switched _on_
+        if ( get_option('listings_enable_default_post_type', true) == false ) {
+            return;
+        }
+
         add_action( 'init', array( $this, 'register_post_types' ), 0 );
-        add_action( 'init', array( $this, 'register_taxonomies' ), 0 );
 
         add_filter( 'listings_single_description', 'wptexturize'        );
         add_filter( 'listings_single_description', 'convert_smilies'    );
@@ -25,6 +29,13 @@ class PostTypes {
 
         // Single job content
         $this->listing_content_filter( true );
+
+        // Only load default categories when it is switched _on_
+        if ( get_option('listings_enable_default_categories', true) == false ) {
+            return;
+        }
+
+        add_action( 'init', array( $this, 'register_taxonomies' ), 0 );
     }
 
     /**
