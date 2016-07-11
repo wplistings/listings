@@ -70,6 +70,14 @@ class Settings {
 			<form method="post" action="options.php">
 
 				<?php
+
+				// Hide all empty settings pages
+				foreach ( $this->settings as $key => $setting ) {
+					if ( ! isset($setting[1] ) || empty( $setting[1] ) ) {
+						unset($this->settings[$key] );
+					}
+				}
+
 				$settings_keys = array_keys($this->settings);
 				$first_tab = array_shift($settings_keys);
 
