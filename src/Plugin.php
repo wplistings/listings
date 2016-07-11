@@ -27,10 +27,7 @@ class Plugin {
         $this->geocode = new Geocode();
         $this->template = new Template();
 
-        // Only load default post type when it is switched _on_
-        if ( get_option('listings_enable_default_post_type', true) == true ) {
-            $this->posttypes = new PostTypes();
-        }
+        $this->posttypes = new PostTypes();
 
         $this->ajax->registerAction(new UploadFile());
 
