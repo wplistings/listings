@@ -1,5 +1,98 @@
 <?php
 
+/**
+ * @access public
+ * @param array $args
+ * @return mixed|WP_Query
+ */
+function listings_get_listings( $args = array() ) {
+	global $listings_keyword;
+
+	$args = wp_parse_args( $args, array(
+		'search_keywords'   => '',
+		'search_categories' => array(),
+		'offset'            => 0,
+		'posts_per_page'    => 20,
+		'orderby'           => 'date',
+		'order'             => 'DESC',
+		'fields'            => 'all'
+	) );
+
+	$query_args = array(
+		'post_type'              => 'listing',
+		'post_status'            => 'publish',
+		'ignore_sticky_posts'    => 1,
+		'offset'                 => absint( $args['offset'] ),
+		'posts_per_page'         => intval( $args['posts_per_page'] ),
+		'orderby'                => $args['orderby'],
+		'order'                  => $args['order'],
+		'tax_query'              => array(),
+		'meta_query'             => array(),
+		'update_post_term_cache' => false,
+		'update_post_meta_cache' => false,
+		'cache_results'          => false,
+		'fields'                 => $args['fields']
+	);
+
+	if ( $args['posts_per_page'] < 0 ) {
+		$query_args['no_found_rows'] = true;
+	}
+
+	if ( ! empty( $args['search_categories'] ) ) {
+		$field    = is_numeric( $args['search_categories'][0] ) ? 'term_id' : 'slug';
+		$operator = 'all' === get_option( 'listings_category_filter_type', 'all' ) && sizeof( $args['search_categories'] ) > 1 ? 'AND' : 'IN';
+		$query_args['tax_query'][] = array(
+			'taxonomy'         => 'listings_category',
+			'field'            => $field,
+			'terms'            => array_values( $args['search_categories'] ),
+			'include_children' => $operator !== 'AND' ,
+			'operator'         => $operator
+		);
+	}
+
+	$listings_keyword = sanitize_text_field( $args['search_keywords'] );
+
+	if ( ! empty( $listings_keyword ) && strlen( $listings_keyword ) >= apply_filters( 'listings_keyword_length_threshold', 2 ) ) {
+		$query_args['_keyword'] = $listings_keyword; // Does nothing but needed for unique hash
+		add_filter( 'posts_clauses', 'listings_get_keyword_search' );
+	}
+
+	$query_args = apply_filters( 'listings_get_listings', $query_args, $args );
+
+	if ( empty( $query_args['meta_query'] ) ) {
+		unset( $query_args['meta_query'] );
+	}
+
+	if ( empty( $query_args['tax_query'] ) ) {
+		unset( $query_args['tax_query'] );
+	}
+
+	// Polylang LANG arg
+	if ( function_exists( 'pll_current_language' ) ) {
+		$query_args['lang'] = pll_current_language();
+	}
+
+	// Filter args
+	$query_args = apply_filters( 'listings_get_listing_query_args', $query_args, $args );
+
+	// Generate hash
+	$to_hash         = json_encode( $query_args ) . apply_filters( 'wpml_current_language', '' );
+	$query_args_hash = 'listings__' . md5( $to_hash ) . \Listings\CacheHelper::get_transient_version( 'get_listings' );
+
+	do_action( 'listings_before_get_listings', $query_args, $args );
+
+	if ( false === ( $result = get_transient( $query_args_hash ) ) ) {
+		$result = new WP_Query( $query_args );
+		set_transient( $query_args_hash, $result, DAY_IN_SECONDS * 30 );
+	}
+
+	do_action( 'listings_after_get_listings', $query_args, $args );
+
+	remove_filter( 'posts_clauses', 'listings_get_keyword_search' );
+
+	return $result;
+}
+
 if ( ! function_exists( 'listings_get_keyword_search' ) ) :
 	/**
 	 * Join and where query for keywords
