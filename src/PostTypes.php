@@ -9,6 +9,7 @@ class PostTypes {
      */
     public function __construct() {
         add_action( 'init', array( $this, 'register_post_types' ), 0 );
+        add_action( 'init', array( $this, 'register_taxonomies' ), 0 );
 
         add_filter( 'listings_single_description', 'wptexturize'        );
         add_filter( 'listings_single_description', 'convert_smilies'    );
@@ -87,6 +88,34 @@ class PostTypes {
                 'show_in_nav_menus' 	=> true
             ) )
         );
+    }
+
+    public function register_taxonomies()
+    {
+        $labels = array(
+            'name'              => _x( 'Categories', 'taxonomy general name', 'listings' ),
+            'singular_name'     => _x( 'Category', 'taxonomy singular name', 'listings' ),
+            'search_items'      => __( 'Search Categories', 'listings' ),
+            'all_items'         => __( 'All Categories', 'listings' ),
+            'parent_item'       => __( 'Parent Category', 'listings' ),
+            'parent_item_colon' => __( 'Parent Category:', 'listings' ),
+            'edit_item'         => __( 'Edit Category', 'listings' ),
+            'update_item'       => __( 'Update Category', 'listings' ),
+            'add_new_item'      => __( 'Add New Category', 'listings' ),
+            'new_item_name'     => __( 'New Category Name', 'listings' ),
+            'menu_name'         => __( 'Categories', 'listings' ),
+        );
+
+        $args = array(
+            'hierarchical'      => true,
+            'labels'            => $labels,
+            'show_ui'           => true,
+            'show_admin_column' => true,
+            'query_var'         => true,
+            'rewrite'           => array( 'slug' => 'listing-category' ),
+        );
+
+        register_taxonomy( 'listings_category', array( 'listing' ), $args );
     }
 
     /**
