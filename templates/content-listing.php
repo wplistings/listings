@@ -1,15 +1,26 @@
 <?php global $post; ?>
 <li>
-    <a href="<?php echo get_permalink($post->ID); ?>">
+   <?php $permalink = get_permalink($post->ID); ?>
+    <div class="thumbnail">
+        <a href="<?php echo $permalink; ?>">
+            <?php
+            echo get_the_post_thumbnail($post->ID, 'thumbnail');
+            ?>
+        </a>
+    </div>
+    <div class="body">
         <div class="title">
-            <h3><?php the_title(); ?></h3>
+            <h3><a href="<?php echo $permalink; ?>">
+                <?php the_title(); ?>
+            </a></h3>
         </div>
         <div class="meta">
             <?php do_action( 'listings_list_meta_start' ); ?>
 
-            <span class="date"><date><?php printf( __( '%s ago', 'listings' ), human_time_diff( get_post_time( 'U' ), current_time( 'timestamp' ) ) ); ?></date></span>
+            <span class="date"><date><?php printf( __( 'Posted %s ago', 'listings' ), human_time_diff( get_post_time( 'U' ), current_time( 'timestamp' ) ) ); ?></date></span>
+            <span class="categories">in <?php echo listings_get_terms_links_string($post, 'listings_category') ?></span>
 
             <?php do_action( 'listings_list_meta_end' ); ?>
         </div>
-    </a>
+    </div>
 </li>
