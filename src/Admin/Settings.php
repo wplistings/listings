@@ -43,7 +43,15 @@ class Settings {
 			),
 			'listings_pages' => array(
 				__( 'Pages', 'listings' ),
-				array(),
+				array(
+					array(
+						'name' => 'listings_overview_page_id',
+						'std' => '',
+						'label' => __('Listings Overview Page', 'listings'),
+						'desc' => __('Select the page where you have placed the [listings] shortcode. This lets the plugin know where the main listings overview is located.', 'listings'),
+						'type' => 'page',
+					),
+				),
 			)
 		) );
 	}
