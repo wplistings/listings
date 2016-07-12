@@ -15,16 +15,8 @@
         <div class="meta">
             <?php do_action( 'listings_list_meta_start' ); ?>
 
-            <?php
-            $categories = wp_get_post_terms($post->ID, 'listings_category');
-            $categories_array = array_map(function($item) {
-                $permalink = get_term_link($item);
-                return '<a href="'.$permalink.'">'.$item->name.'</a>';
-            }, $categories);
-            $categories_string = implode(', ', $categories_array); ?>
-
             <span class="date"><date><?php printf( __( 'Posted %s ago', 'listings' ), human_time_diff( get_post_time( 'U' ), current_time( 'timestamp' ) ) ); ?></date></span>
-            <span class="categories">in <?php echo $categories_string ?></span>
+            <span class="categories">in <?php echo listings_get_terms_links_string($post, 'listings_category') ?></span>
 
             <?php do_action( 'listings_list_meta_end' ); ?>
         </div>

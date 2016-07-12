@@ -105,3 +105,19 @@ function listings_get_resized_image( $logo, $size ) {
 
 	return $logo;
 }
+
+/**
+ * @param $post
+ * @param $taxonomy
+ * @return string
+ */
+function listings_get_terms_links_string($post, $taxonomy)
+{
+	$categories = wp_get_post_terms($post->ID, $taxonomy);
+	$categories_array = array_map(function ($item) {
+		$permalink = get_term_link($item);
+		return '<a href="' . $permalink . '">' . $item->name . '</a>';
+	}, $categories);
+	$categories_string = implode(', ', $categories_array);
+	return $categories_string;
+}
