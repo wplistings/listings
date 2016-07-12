@@ -95,7 +95,7 @@ class PostTypes {
                 'rewrite' 				=> $rewrite,
                 'query_var' 			=> true,
                 'supports' 				=> array( 'title', 'editor', 'custom-fields', 'publicize', 'thumbnail' ),
-                'has_archive' 			=> _x( 'listings', 'Post type archive slug - resave permalinks after changing this', 'listings' ),
+                'has_archive' 			=> false,
                 'show_in_nav_menus' 	=> true
             ) )
         );
