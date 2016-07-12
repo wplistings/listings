@@ -11,6 +11,7 @@ class Admin {
 	 */
 	public function __construct() {
 		$this->settings_page = new Settings();
+		$this->cpt = new Cpt();
 
 		add_action( 'admin_menu', array( $this, 'admin_menu' ), 12 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
