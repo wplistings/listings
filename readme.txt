@@ -27,6 +27,9 @@ You can find extensive documentation on [how to install plugins](http://codex.wo
 
 == Screenshots ==
 
+1. The Listings Settings Page
+2. Edit Listings Page in Admin
+
 == Changelog ==
 
 = 0.1.0 =
