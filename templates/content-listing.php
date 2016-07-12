@@ -9,9 +9,11 @@
         </a>
     </div>
     <div class="body">
-        <h3><a href="<?php echo $permalink; ?>">
-            <?php the_title(); ?>
-        </a></h3>
+        <div class="title">
+            <h3><a href="<?php echo $permalink; ?>">
+                <?php the_title(); ?>
+            </a></h3>
+        </div>
         <div class="meta">
             <?php do_action( 'listings_list_meta_start' ); ?>
 
