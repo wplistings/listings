@@ -2,17 +2,7 @@
 <li>
    <?php $permalink = get_permalink($post->ID); ?>
     <div class="thumbnail">
-            <?php
-            $thumbnail = get_the_post_thumbnail($post->ID, 'thumbnail');
-
-            if ( empty($thumbnail)) {
-                echo '&nbsp;';
-            } else {
-                echo '<a href="'.$permalink .'">';
-                echo $thumbnail;
-                echo '</a>';
-            }
-            ?>
+            <?php echo listings_get_list_thumbnail_output($post, true); ?>
     </div>
     <div class="body">
         <div class="title">

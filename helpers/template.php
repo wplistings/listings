@@ -121,3 +121,32 @@ function listings_get_terms_links_string($post, $taxonomy)
 	$categories_string = implode(', ', $categories_array);
 	return $categories_string;
 }
+
+/**
+ * @param $post
+ * @param $clickable bool
+ * @return string
+ */
+function listings_get_list_thumbnail_output($post, $clickable)
+{
+	$thumbnail = get_the_post_thumbnail($post->ID, 'thumbnail');
+
+	if (empty($thumbnail)) {
+		return apply_filters('listings_get_list_thumbnail_default', '&nbsp;', $post, $clickable);
+	}
+
+	$output = '';
+	$permalink = get_permalink($post->ID);
+
+	if ($clickable) {
+		$output .= '<a href="' . $permalink . '">';
+	}
+
+	$output .= $thumbnail;
+
+	if ($clickable) {
+		$output .= '</a>';
+	}
+
+	return apply_filters('listings_get_list_thumbnail_output', $output, $post, $clickable);
+}
