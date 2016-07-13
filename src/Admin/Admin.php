@@ -24,9 +24,10 @@ class Admin {
 	 * @return void
 	 */
 	public function admin_menu() {
-		add_menu_page('Listings', 'Listings', 'manage_options', 'listings', function() {
-		}, '', 25);
-		add_submenu_page( 'listings', __( 'Settings', 'listings' ), __( 'Settings', 'listings' ), 'manage_options', 'listings-settings', array( $this->settings_page, 'output' ) );
+		add_options_page(__('Listings Settings'), __('Listings'), 'manage_options', 'listings-settings', array($this->settings_page, 'output'));
+//		add_menu_page('Listings', 'Listings', 'manage_options', 'listings', function() {
+//		}, '', 25);
+//		add_submenu_page( 'listings', __( 'Settings', 'listings' ), __( 'Settings', 'listings' ), 'manage_options', 'listings-settings', array( $this->settings_page, 'output' ) );
 	}
 
 	/**
