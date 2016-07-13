@@ -2,11 +2,17 @@
 <li>
    <?php $permalink = get_permalink($post->ID); ?>
     <div class="thumbnail">
-        <a href="<?php echo $permalink; ?>">
             <?php
-            echo get_the_post_thumbnail($post->ID, 'thumbnail');
+            $thumbnail = get_the_post_thumbnail($post->ID, 'thumbnail');
+
+            if ( empty($thumbnail)) {
+                echo '&nbsp;';
+            } else {
+                echo '<a href="'.$permalink .'">';
+                echo $thumbnail;
+                echo '</a>';
+            }
             ?>
-        </a>
     </div>
     <div class="body">
         <div class="title">
