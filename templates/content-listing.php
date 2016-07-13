@@ -18,7 +18,12 @@
             <?php do_action( 'listings_list_meta_start' ); ?>
 
             <span class="date"><date><?php printf( __( 'Posted %s ago', 'listings' ), human_time_diff( get_post_time( 'U' ), current_time( 'timestamp' ) ) ); ?></date></span>
-            <span class="categories">in <?php echo listings_get_terms_links_string($post, 'listings_category') ?></span>
+            <?php
+            $categories = listings_get_terms_links_string($post, 'listings_category');
+            if ( ! empty( $categories ) ) {
+                echo '<span class="categories">in ' . $categories . '</span>';
+            }
+            ?>
 
             <?php do_action( 'listings_list_meta_end' ); ?>
         </div>
