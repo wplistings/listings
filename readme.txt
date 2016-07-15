@@ -13,6 +13,8 @@ Manage listings from the WordPress admin panel to display on your website.
 
 Listings is a **lightweight** listing plugin for managing lists from the WordPress admin panel to display on your website.
 
+While this plugin is in open beta, we continually improve the functionality, fix bugs and introduce new features. Please stay in the loop via the [GitHub repository](https://github.com/TheLookandFeel/listings) to make sure you have the latest version and are up-to-date about upcoming changes.
+
 == Installation ==
 
 You can find extensive documentation on [how to install plugins](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins) in the Codex.
