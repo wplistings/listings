@@ -11,6 +11,24 @@ class Template
         $this->template_paths[] = LISTINGS_PLUGIN_DIR . '/templates/';
     }
 
+    public function hooks()
+    {
+        add_filter('template_include', array($this, 'template_include'), 10, 1);
+    }
+
+    public function template_include($template)
+    {
+        if ( is_tax('listings_category' ) ) {
+            return $this->locate_template('taxonomy-listings_category.php', 'listings');
+        }
+
+        if ( is_post_type_archive('listing') ) {
+            return $this->locate_template('archive-listing.php', 'listings');
+        }
+
+        return $template;
+    }
+
     public function register_template_path( $path )
     {
         $this->template_paths[] = $path;

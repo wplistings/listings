@@ -41,6 +41,8 @@ class Plugin {
         // Activation - works with symlinks
         register_activation_hook( basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ ), array( $this, 'activate' ) );
 
+        $this->template->hooks();
+
         // Switch theme
         add_action( 'after_switch_theme', array( Handler::class, 'add_endpoint' ), 10 );
         add_action( 'after_switch_theme', 'flush_rewrite_rules', 15 );
