@@ -39,6 +39,15 @@ class Settings {
 						'type'       => 'checkbox',
 						'attributes' => array()
 					),
+					array(
+						'name'       => 'listings_use_template_archive',
+						'std'        => '1',
+						'label'      => __( 'Enable listings template', 'listings' ),
+						'cb_label'   => __( 'Enable', 'listings' ),
+						'desc'       => __( 'This enables the archive page for default listings. You can alternatively use the shortcode page as an archive.', 'listings' ),
+						'type'       => 'checkbox',
+						'attributes' => array()
+					),
 				)
 			),
 			'listings_pages' => array(
