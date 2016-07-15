@@ -44,7 +44,7 @@ class Plugin {
         $this->template->hooks();
 
         // Switch theme
-        add_action( 'after_switch_theme', array( Handler::class, 'add_endpoint' ), 10 );
+        add_action( 'after_switch_theme', array( 'Listings\Ajax\Handler', 'add_endpoint' ), 10 );
         add_action( 'after_switch_theme', 'flush_rewrite_rules', 15 );
 
         // Actions
