@@ -61,6 +61,8 @@ class PostTypes {
             'pages'      => false
         );
 
+        $template_archive = get_option('listings_use_template_archive', 1) == 1;
+
         register_post_type( "listing",
             apply_filters( "listings_register_post_type_listing", array(
                 'labels' => array(
@@ -95,7 +97,7 @@ class PostTypes {
                 'rewrite' 				=> $rewrite,
                 'query_var' 			=> true,
                 'supports' 				=> array( 'title', 'editor', 'custom-fields', 'publicize', 'thumbnail' ),
-                'has_archive' 			=> true,
+                'has_archive' 			=> $template_archive,
                 'show_in_nav_menus' 	=> true
             ) )
         );
