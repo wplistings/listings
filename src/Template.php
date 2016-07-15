@@ -4,7 +4,7 @@ namespace Listings;
 
 class Template
 {
-    public $template_paths = [];
+    public $template_paths = array();
 
     public function __construct()
     {
