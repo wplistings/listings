@@ -114,6 +114,11 @@ function listings_get_resized_image( $logo, $size ) {
 function listings_get_terms_links_string($post, $taxonomy)
 {
 	$categories = wp_get_post_terms($post->ID, $taxonomy);
+
+    if ( empty($categories) || is_wp_error($categories ) ) {
+        return '';
+    }
+
 	$categories_array = array_map(function ($item) {
 		$permalink = get_term_link($item);
 		return '<a href="' . $permalink . '">' . $item->name . '</a>';
