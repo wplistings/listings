@@ -1,0 +1,376 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Listings\n"
+"POT-Creation-Date: 2016-07-14 15:53+0100\n"
+"PO-Revision-Date: 2016-07-14 15:58+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.4\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: helpers/functions.php:165
+msgid "Invalid email address."
+msgstr ""
+
+#: helpers/functions.php:173
+msgid "Your email address isn&#8217;t correct."
+msgstr ""
+
+#: helpers/functions.php:177
+msgid "This email is already registered, please choose another one."
+msgstr ""
+
+#: helpers/functions.php:320
+msgid "Choose a category&hellip;"
+msgstr ""
+
+#: helpers/functions.php:321 templates/form-fields/multiselect-field.php:3
+msgid "No results match"
+msgstr ""
+
+#: helpers/functions.php:322 templates/form-fields/multiselect-field.php:3
+msgid "Select Some Options"
+msgstr ""
+
+#: helpers/functions.php:489
+#, php-format
+msgid "\"%s\" (filetype %s) needs to be one of the following file types: %s"
+msgstr ""
+
+#: helpers/functions.php:491
+#, php-format
+msgid "Uploaded files need to be one of the following file types: %s"
+msgstr ""
+
+#: src/Admin/Admin.php:27
+msgid "Listings Settings"
+msgstr ""
+
+#: src/Admin/Admin.php:27 src/PostTypes.php:55 src/PostTypes.php:69
+msgid "Listings"
+msgstr ""
+
+#: src/Admin/Admin.php:54
+msgctxt "Date format for jQuery datepicker"
+msgid "yy-mm-dd"
+msgstr ""
+
+#: src/Admin/Settings.php:22
+msgid "Settings"
+msgstr ""
+
+#: src/Admin/Settings.php:27
+msgid "Enable generic listings"
+msgstr ""
+
+#: src/Admin/Settings.php:28 src/Admin/Settings.php:37
+msgid "Enable"
+msgstr ""
+
+#: src/Admin/Settings.php:29
+msgid ""
+"This enables the generic listings type to create a generic listings site."
+msgstr ""
+
+#: src/Admin/Settings.php:36
+msgid "Enable categories"
+msgstr ""
+
+#: src/Admin/Settings.php:38
+msgid "This enables categories for the generic listings type."
+msgstr ""
+
+#: src/Admin/Settings.php:45
+msgid "Pages"
+msgstr ""
+
+#: src/Admin/Settings.php:50
+msgid "Listings Overview Page"
+msgstr ""
+
+#: src/Admin/Settings.php:51
+msgid ""
+"Select the page where you have placed the [listings] shortcode. This lets "
+"the plugin know where the main listings overview is located."
+msgstr ""
+
+#: src/Admin/Settings.php:126
+msgid "Settings successfully saved"
+msgstr ""
+
+#: src/Admin/Settings.php:192
+msgid "--no page--"
+msgstr ""
+
+#: src/Admin/Settings.php:197
+msgid "Select a page&hellip;"
+msgstr ""
+
+#: src/Admin/Settings.php:243
+msgid "Save Changes"
+msgstr ""
+
+#: src/Admin/Writepanel.php:33 src/Admin/Writepanel.php:36
+#: src/Admin/Writepanel.php:39
+msgid "Use file"
+msgstr ""
+
+#: src/Admin/Writepanel.php:33 src/Admin/Writepanel.php:36
+#: src/Admin/Writepanel.php:39
+msgid "Upload"
+msgstr ""
+
+#: src/Admin/Writepanel.php:39
+msgid "Add file"
+msgstr ""
+
+#: src/Admin/Writepanel.php:212
+msgid "Guest User"
+msgstr ""
+
+#: src/Admin/Writepanel.php:214
+msgid "Change"
+msgstr ""
+
+#: src/Admin/Writepanel.php:218
+msgid "Enter the ID of the user, or leave blank if submitted by a guest."
+msgstr ""
+
+#: src/Geocode.php:136
+msgid "No results found"
+msgstr ""
+
+#: src/Geocode.php:140
+msgid "Query limit reached"
+msgstr ""
+
+#: src/Geocode.php:146 src/Geocode.php:150 src/Geocode.php:154
+msgid "Geocoding error"
+msgstr ""
+
+#: src/Plugin.php:91
+msgid "Load previous listings"
+msgstr ""
+
+#: src/Plugin.php:127
+msgid "Invalid file type. Accepted types:"
+msgstr ""
+
+#: src/PostTypes.php:54
+msgid "Listing"
+msgstr ""
+
+#: src/PostTypes.php:58
+msgctxt "Listing permalink - resave permalinks after changing this"
+msgid "listings"
+msgstr ""
+
+#: src/PostTypes.php:70
+#, php-format
+msgid "All %s"
+msgstr ""
+
+#: src/PostTypes.php:71
+msgid "Add New"
+msgstr ""
+
+#: src/PostTypes.php:72
+#, php-format
+msgid "Add %s"
+msgstr ""
+
+#: src/PostTypes.php:73
+msgid "Edit"
+msgstr ""
+
+#: src/PostTypes.php:74
+#, php-format
+msgid "Edit %s"
+msgstr ""
+
+#: src/PostTypes.php:75
+#, php-format
+msgid "New %s"
+msgstr ""
+
+#: src/PostTypes.php:76 src/PostTypes.php:77
+#, php-format
+msgid "View %s"
+msgstr ""
+
+#: src/PostTypes.php:78
+#, php-format
+msgid "Search %s"
+msgstr ""
+
+#: src/PostTypes.php:79
+#, php-format
+msgid "No %s found"
+msgstr ""
+
+#: src/PostTypes.php:80
+#, php-format
+msgid "No %s found in trash"
+msgstr ""
+
+#: src/PostTypes.php:81
+#, php-format
+msgid "Parent %s"
+msgstr ""
+
+#: src/PostTypes.php:82
+msgid "Listing image"
+msgstr ""
+
+#: src/PostTypes.php:83
+msgid "Set listing image"
+msgstr ""
+
+#: src/PostTypes.php:84
+msgid "Remove listing image"
+msgstr ""
+
+#: src/PostTypes.php:85
+msgid "Use as listing image"
+msgstr ""
+
+#: src/PostTypes.php:87
+#, php-format
+msgid "This is where you can create and manage %s."
+msgstr ""
+
+#: src/PostTypes.php:107
+msgctxt "taxonomy general name"
+msgid "Categories"
+msgstr ""
+
+#: src/PostTypes.php:108
+msgctxt "taxonomy singular name"
+msgid "Category"
+msgstr ""
+
+#: src/PostTypes.php:109
+msgid "Search Categories"
+msgstr ""
+
+#: src/PostTypes.php:110
+msgid "All Categories"
+msgstr ""
+
+#: src/PostTypes.php:111
+msgid "Parent Category"
+msgstr ""
+
+#: src/PostTypes.php:112
+msgid "Parent Category:"
+msgstr ""
+
+#: src/PostTypes.php:113
+msgid "Edit Category"
+msgstr ""
+
+#: src/PostTypes.php:114
+msgid "Update Category"
+msgstr ""
+
+#: src/PostTypes.php:115
+msgid "Add New Category"
+msgstr ""
+
+#: src/PostTypes.php:116
+msgid "New Category Name"
+msgstr ""
+
+#: src/PostTypes.php:117
+msgid "Categories"
+msgstr ""
+
+#: src/Shortcodes.php:82
+msgid "Load more listings"
+msgstr ""
+
+#: templates/account-signin.php:4
+msgid "Your account"
+msgstr ""
+
+#: templates/account-signin.php:8
+#, php-format
+msgid "You are currently signed in as <strong>%s</strong>."
+msgstr ""
+
+#: templates/account-signin.php:11
+msgid "Sign out"
+msgstr ""
+
+#: templates/account-signin.php:22
+msgid "Have an account?"
+msgstr ""
+
+#: templates/account-signin.php:24
+msgid "Sign in"
+msgstr ""
+
+#: templates/account-signin.php:28
+#, php-format
+msgid ""
+"If you don&rsquo;t have an account you can %screate one below by entering "
+"your email address/username. Your account details will be confirmed via "
+"email."
+msgstr ""
+
+#: templates/account-signin.php:28
+msgid "optionally"
+msgstr ""
+
+#: templates/account-signin.php:32
+msgid "You must sign in to create a new listing."
+msgstr ""
+
+#: templates/account-signin.php:40
+msgid "Username"
+msgstr ""
+
+#: templates/account-signin.php:40 templates/account-signin.php:47
+msgid "(optional)"
+msgstr ""
+
+#: templates/account-signin.php:47
+msgid "Your email"
+msgstr ""
+
+#: templates/account-signin.php:49
+msgid "you@yourdomain.com"
+msgstr ""
+
+#: templates/content-listing.php:16
+#, php-format
+msgid "Posted %s ago"
+msgstr ""
+
+#: templates/content-no-listings-found.php:2
+msgid "There are no listings matching your search."
+msgstr ""
+
+#: templates/content-no-listings-found.php:4
+msgid "There are no listings."
+msgstr ""
+
+#: templates/form-fields/file-field.php:29
+#, php-format
+msgid "Maximum file size: %s."
+msgstr ""
+
+#: templates/form-fields/uploaded-file-html.php:12
+#: templates/form-fields/uploaded-file-html.php:14
+msgid "remove"
+msgstr ""
