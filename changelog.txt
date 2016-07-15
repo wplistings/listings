@@ -1,4 +1,11 @@
 == Changelog ==
 
+= 0.2.0 =
+* Feature: New post type for generic listings
+* Feature: Categories are enabled for generic listings
+* Feature: Images of your listings are now shown in the administration panel overview
+* Feature: Templates for listings archive, categories and shortcode output
+* Fix: Empty settings pages are now hidden to prevent errors from being thrown when saved
+
 = 0.1.0 =
 * Initial release for internal testing
