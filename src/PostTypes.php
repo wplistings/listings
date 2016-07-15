@@ -95,7 +95,7 @@ class PostTypes {
                 'rewrite' 				=> $rewrite,
                 'query_var' 			=> true,
                 'supports' 				=> array( 'title', 'editor', 'custom-fields', 'publicize', 'thumbnail' ),
-                'has_archive' 			=> false,
+                'has_archive' 			=> true,
                 'show_in_nav_menus' 	=> true
             ) )
         );
