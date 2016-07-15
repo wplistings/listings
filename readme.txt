@@ -1,5 +1,5 @@
 === Listings ===
-Contributors: thelookandfeel, coenjacobs, scottbasgaard, robsward
+Contributors: thelookandfeel, coenjacobs, scottbasgaard, robsward, garethwelton
 Tags: listings, classifieds, lists
 Requires at least: 4.5
 Tested up to: 4.5.3
