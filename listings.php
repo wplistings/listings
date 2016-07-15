@@ -26,6 +26,13 @@ function listings() {
 }
 
 function __load_listings() {
+    if( version_compare( PHP_VERSION, '5.3', '<' ) ) {
+        include('helpers/php-fallback.php');
+        $fallback = new Listings_PHP_Fallback( 'Listings' );
+        $fallback->trigger_notice();
+        return;
+    }
+
     $GLOBALS['listings'] = listings();
 }
 
