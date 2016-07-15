@@ -23,7 +23,9 @@ class Template
         }
 
         if ( is_post_type_archive('listing') ) {
-            return $this->locate_template('archive-listing.php', 'listings');
+            if ( get_option('listings_use_template_archive', 1) == 1 ) {
+                return $this->locate_template('archive-listing.php', 'listings');
+            }
         }
 
         return $template;
