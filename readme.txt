@@ -27,8 +27,8 @@ You can find extensive documentation on [how to install plugins](http://codex.wo
 
 == Screenshots ==
 
-1. The Listings Settings Page
-2. Edit Listings Page in Admin
+1. Edit Listings Page in Admin
+2. The Listings Settings Page
 
 == Changelog ==
 
