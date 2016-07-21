@@ -2,7 +2,7 @@
 
 namespace Listings\Admin;
 
-abstract class Writepanel
+abstract class Metabox
 {
     /**
      * input_file function.
