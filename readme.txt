@@ -36,6 +36,7 @@ You can find extensive documentation on [how to install plugins](http://codex.wo
 
 = 0.3.0 =
 * Verified WordPress 4.6.0 compatibility
+* Refactor: Writepanel abstract class is now renamed to Metabox
 
 = 0.2.0 =
 * Feature: New post type for generic listings
