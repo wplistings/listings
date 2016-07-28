@@ -3,7 +3,7 @@ Contributors: thelookandfeel, CoenJacobs, scottbasgaard, robsward, garethwelton
 Tags: listings, classifieds, lists
 Requires at least: 4.5
 Tested up to: 4.6.0
-Stable tag: 0.2.0
+Stable tag: 0.2.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
