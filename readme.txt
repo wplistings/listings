@@ -2,8 +2,8 @@
 Contributors: thelookandfeel, CoenJacobs, scottbasgaard, robsward, garethwelton
 Tags: listings, classifieds, lists
 Requires at least: 4.5
-Tested up to: 4.5.3
-Stable tag: 0.2.0
+Tested up to: 4.6.0
+Stable tag: 0.2.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -33,6 +33,10 @@ You can find extensive documentation on [how to install plugins](http://codex.wo
 2. The Listings Settings Page
 
 == Changelog ==
+
+= 0.3.0 =
+* Verified WordPress 4.6.0 compatibility
+* Refactor: Writepanel abstract class is now renamed to Metabox
 
 = 0.2.0 =
 * Feature: New post type for generic listings
