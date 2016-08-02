@@ -15,6 +15,16 @@ Listings is a **lightweight** listing plugin for managing lists from the WordPre
 
 While this plugin is in open beta, we continually improve the functionality, fix bugs and introduce new features. Please stay in the loop via the [GitHub repository](https://github.com/TheLookandFeel/listings) to make sure you have the latest version and are up-to-date about upcoming changes.
 
+= Listings Extensions =
+
+We decided to keep our core listings plugin quite lean and the real potential for more specific needs comes with our extensions. Here is the current list of available extensions for Listings available for free on WordPress.org:
+
+- [Jobs](https://wordpress.org/plugins/listings-jobs/)
+
+= Listings Addons =
+
+We're currently working on a handful of useful addons which will be compatibile with core Listings and extensions.
+
 == Installation ==
 
 You can find extensive documentation on [how to install plugins](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins) in the Codex.
