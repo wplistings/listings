@@ -477,18 +477,24 @@ function listings_upload_file( $file, $args = array() ) {
 	$args = wp_parse_args( $args, array(
 		'file_key'           => '',
 		'file_label'         => '',
-		'allowed_mime_types' => get_allowed_mime_types()
+		'allowed_mime_types' => '',
 	) );
 
 	$listings_upload         = true;
 	$listings_uploading_file = $args['file_key'];
 	$uploaded_file              = new stdClass();
 
-	if ( ! in_array( $file['type'], $args['allowed_mime_types'] ) ) {
+    if ( '' === $args['allowed_mime_types'] ) {
+        $allowed_mime_types = listings_get_allowed_mime_types( $listings_uploading_file );
+    } else {
+        $allowed_mime_types = $args['allowed_mime_types'];
+    }
+
+    if ( ! in_array( $file['type'], $allowed_mime_types ) ) {
 		if ( $args['file_label'] ) {
-			return new WP_Error( 'upload', sprintf( __( '"%s" (filetype %s) needs to be one of the following file types: %s', 'listings' ), $args['file_label'], $file['type'], implode( ', ', array_keys( $args['allowed_mime_types'] ) ) ) );
+			return new WP_Error( 'upload', sprintf( __( '"%s" (filetype %s) needs to be one of the following file types: %s', 'listings' ), $args['file_label'], $file['type'], implode( ', ', array_keys( $allowed_mime_types ) ) ) );
 		} else {
-			return new WP_Error( 'upload', sprintf( __( 'Uploaded files need to be one of the following file types: %s', 'listings' ), implode( ', ', array_keys( $args['allowed_mime_types'] ) ) ) );
+			return new WP_Error( 'upload', sprintf( __( 'Uploaded files need to be one of the following file types: %s', 'listings' ), implode( ', ', array_keys( $allowed_mime_types ) ) ) );
 		}
 	} else {
 		$upload = wp_handle_upload( $file, apply_filters( 'listings_submit_wp_handle_upload_overrides', array( 'test_form' => false ) ) );
@@ -508,4 +514,31 @@ function listings_upload_file( $file, $args = array() ) {
 	$listings_uploading_file = '';
 
 	return $uploaded_file;
+}
+
+/**
+ * Allowed mime types for upload fields.
+ * @param   string $field Key of the field used.
+ * @return  array  Array of allowed mime types
+ */
+function listings_get_allowed_mime_types($field = '')
+{
+    if ('company_logo' === $field) {
+        $allowed_mime_types = array(
+            'jpg|jpeg|jpe' => 'image/jpeg',
+            'gif' => 'image/gif',
+            'png' => 'image/png',
+        );
+    } else {
+        $allowed_mime_types = array(
+            'jpg|jpeg|jpe' => 'image/jpeg',
+            'gif' => 'image/gif',
+            'png' => 'image/png',
+            'pdf' => 'application/pdf',
+            'doc' => 'application/msword',
+            'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        );
+    }
+
+    return apply_filters('listings_mime_types', $allowed_mime_types, $field);
 }
