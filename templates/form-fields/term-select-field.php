@@ -25,4 +25,5 @@ wp_dropdown_categories( apply_filters( 'listings_term_select_field_wp_dropdown_c
 	'selected'         => $selected,
 	'hide_empty'       => false
 ), $key, $field ) );
-if ( ! empty( $field['description'] ) ) : ?><small class="description"><?php echo $field['description']; ?></small><?php endif; ?>
+if ( ! empty( $field['description'] ) ) : ?>
+	<small class="description"><?php echo $field['description']; ?></small><?php endif; ?>

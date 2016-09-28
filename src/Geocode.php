@@ -24,7 +24,8 @@ class Geocode {
 
 	/**
 	 * Change a jobs location data upon editing
-	 * @param  int $job_id
+	 *
+	 * @param  int    $job_id
 	 * @param  string $new_location
 	 */
 	public function change_location_data( $job_id, $new_location ) {
@@ -37,7 +38,9 @@ class Geocode {
 
 	/**
 	 * Checks if a job has location data or not
-	 * @param  int  $job_id
+	 *
+	 * @param  int $job_id
+	 *
 	 * @return boolean
 	 */
 	public static function has_location_data( $job_id ) {
@@ -46,7 +49,8 @@ class Geocode {
 
 	/**
 	 * Called manually to generate location data and save to a post
-	 * @param  int $job_id
+	 *
+	 * @param  int    $job_id
 	 * @param  string $location
 	 */
 	public static function generate_location_data( $job_id, $location ) {
@@ -56,6 +60,7 @@ class Geocode {
 
 	/**
 	 * Delete a job's location data
+	 *
 	 * @param  int $job_id
 	 */
 	public static function clear_location_data( $job_id ) {
@@ -76,7 +81,8 @@ class Geocode {
 
 	/**
 	 * Save any returned data to post meta
-	 * @param  int $job_id
+	 *
+	 * @param  int   $job_id
 	 * @param  array $address_data
 	 */
 	public static function save_location_data( $job_id, $address_data ) {
@@ -96,18 +102,19 @@ class Geocode {
 	 * Based on code by Eyal Fitoussi.
 	 *
 	 * @param string $raw_address
+	 *
 	 * @return array location data
 	 */
 	public static function get_location_data( $raw_address ) {
-		$invalid_chars = array( " " => "+", "," => "", "?" => "", "&" => "", "=" => "" , "#" => "" );
+		$invalid_chars = array( " " => "+", "," => "", "?" => "", "&" => "", "=" => "", "#" => "" );
 		$raw_address   = trim( strtolower( str_replace( array_keys( $invalid_chars ), array_values( $invalid_chars ), $raw_address ) ) );
 
 		if ( empty( $raw_address ) ) {
 			return false;
 		}
 
-		$transient_name              = 'listings_geocode_' . md5( $raw_address );
-		$geocoded_address            = get_transient( $transient_name );
+		$transient_name           = 'listings_geocode_' . md5( $raw_address );
+		$geocoded_address         = get_transient( $transient_name );
 		$geocode_over_query_limit = get_transient( 'listings_geocode_over_query_limit' );
 
 		// Query limit reached - don't geocode for a while
@@ -117,15 +124,15 @@ class Geocode {
 
 		try {
 			if ( false === $geocoded_address || empty( $geocoded_address->results[0] ) ) {
-				$result = wp_remote_get(
+				$result           = wp_remote_get(
 					apply_filters( 'listings_geolocation_endpoint', "http://maps.googleapis.com/maps/api/geocode/json?address=" . $raw_address . "&sensor=false&region=" . apply_filters( 'listings_geolocation_region_cctld', '', $raw_address ), $raw_address ),
 					array(
 						'timeout'     => 5,
-					    'redirection' => 1,
-					    'httpversion' => '1.1',
-					    'user-agent'  => 'WordPress/Listings-' . LISTINGS_VERSION . '; ' . get_bloginfo( 'url' ),
-					    'sslverify'   => false
-				    )
+						'redirection' => 1,
+						'httpversion' => '1.1',
+						'user-agent'  => 'WordPress/Listings-' . LISTINGS_VERSION . '; ' . get_bloginfo( 'url' ),
+						'sslverify'   => false
+					)
 				);
 				$result           = wp_remote_retrieve_body( $result );
 				$geocoded_address = json_decode( $result );
@@ -134,21 +141,22 @@ class Geocode {
 					switch ( $geocoded_address->status ) {
 						case 'ZERO_RESULTS' :
 							throw new \Exception( __( "No results found", 'listings' ) );
-						break;
+							break;
 						case 'OVER_QUERY_LIMIT' :
 							set_transient( 'listings_geocode_over_query_limit', 1, HOUR_IN_SECONDS );
+							/** @todo: How long do we really need to wait? */
 							throw new \Exception( __( "Query limit reached", 'listings' ) );
-						break;
+							break;
 						case 'OK' :
 							if ( ! empty( $geocoded_address->results[0] ) ) {
 								set_transient( $transient_name, $geocoded_address, 24 * HOUR_IN_SECONDS * 365 );
 							} else {
 								throw new \Exception( __( "Geocoding error", 'listings' ) );
 							}
-						break;
+							break;
 						default :
 							throw new \Exception( __( "Geocoding error", 'listings' ) );
-						break;
+							break;
 					}
 				} else {
 					throw new \Exception( __( "Geocoding error", 'listings' ) );
@@ -178,27 +186,27 @@ class Geocode {
 				switch ( $data->types[0] ) {
 					case 'street_number' :
 						$address['street_number'] = sanitize_text_field( $data->long_name );
-					break;
+						break;
 					case 'route' :
-						$address['street']        = sanitize_text_field( $data->long_name );
-					break;
+						$address['street'] = sanitize_text_field( $data->long_name );
+						break;
 					case 'sublocality_level_1' :
 					case 'locality' :
 					case 'postal_town' :
-						$address['city']          = sanitize_text_field( $data->long_name );
-					break;
+						$address['city'] = sanitize_text_field( $data->long_name );
+						break;
 					case 'administrative_area_level_1' :
 					case 'administrative_area_level_2' :
-						$address['state_short']   = sanitize_text_field( $data->short_name );
-						$address['state_long']    = sanitize_text_field( $data->long_name );
-					break;
+						$address['state_short'] = sanitize_text_field( $data->short_name );
+						$address['state_long']  = sanitize_text_field( $data->long_name );
+						break;
 					case 'postal_code' :
-						$address['postcode']      = sanitize_text_field( $data->long_name );
-					break;
+						$address['postcode'] = sanitize_text_field( $data->long_name );
+						break;
 					case 'country' :
 						$address['country_short'] = sanitize_text_field( $data->short_name );
 						$address['country_long']  = sanitize_text_field( $data->long_name );
-					break;
+						break;
 				}
 			}
 		}

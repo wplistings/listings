@@ -19,4 +19,5 @@ $editor = apply_filters( 'listings_submit_form_wp_editor_args', array(
 	),
 ) );
 wp_editor( isset( $field['value'] ) ? wp_kses_post( $field['value'] ) : '', $key, $editor );
-if ( ! empty( $field['description'] ) ) : ?><small class="description"><?php echo $field['description']; ?></small><?php endif; ?>
+if ( ! empty( $field['description'] ) ) : ?>
+	<small class="description"><?php echo $field['description']; ?></small><?php endif; ?>

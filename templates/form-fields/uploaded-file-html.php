@@ -9,10 +9,13 @@
 	$extension = ! empty( $extension ) ? $extension : substr( strrchr( $image_src, '.' ), 1 );
 
 	if ( 3 !== strlen( $extension ) || in_array( $extension, array( 'jpg', 'gif', 'png', 'jpeg', 'jpe' ) ) ) : ?>
-		<span class="listings-uploaded-file-preview"><img src="<?php echo esc_url( $image_src ); ?>" /> <a class="listings-remove-uploaded-file" href="#">[<?php _e( 'remove', 'listings' ); ?>]</a></span>
+		<span class="listings-uploaded-file-preview"><img src="<?php echo esc_url( $image_src ); ?>"/> <a
+				class="listings-remove-uploaded-file" href="#">[<?php _e( 'remove', 'listings' ); ?>]</a></span>
 	<?php else : ?>
-		<span class="listings-uploaded-file-name"><code><?php echo esc_html( basename( $image_src ) ); ?></code> <a class="listings-remove-uploaded-file" href="#">[<?php _e( 'remove', 'listings' ); ?>]</a></span>
+		<span class="listings-uploaded-file-name"><code><?php echo esc_html( basename( $image_src ) ); ?></code> <a
+				class="listings-remove-uploaded-file" href="#">[<?php _e( 'remove', 'listings' ); ?>]</a></span>
 	<?php endif; ?>
 
-	<input type="hidden" class="input-text" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( $value ); ?>" />
+	<input type="hidden" class="input-text" name="<?php echo esc_attr( $name ); ?>"
+	       value="<?php echo esc_attr( $value ); ?>"/>
 </div>

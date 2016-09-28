@@ -1,6 +1,6 @@
 <?php global $post; ?>
 <div class="single_listing">
-	<meta itemprop="title" content="<?php echo esc_attr( $post->post_title ); ?>" />
+	<meta itemprop="title" content="<?php echo esc_attr( $post->post_title ); ?>"/>
 
 	<?php
 	do_action( 'listings_single_listing_start' );

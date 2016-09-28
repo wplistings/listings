@@ -25,6 +25,9 @@ function listings() {
     return $instance;
 }
 
+/**
+ * @todo: Why are we using the private class method prefix convention here when this is in the global namespace?
+ */
 function __load_listings() {
     if( version_compare( PHP_VERSION, '5.3', '<' ) ) {
         include('helpers/php-fallback.php');
@@ -33,7 +36,7 @@ function __load_listings() {
         return;
     }
 
-    $GLOBALS['listings'] = listings();
+    $GLOBALS['listings'] = listings(); /** @todo: This is cool-- makes a lot of sense, but I never thought to do this */
 }
 
 // autoloader
