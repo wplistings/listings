@@ -50,15 +50,19 @@ class Settings {
 					),
 				)
 			),
-			'listings_pages' => array(
+			/**
+			 * @todo: Can we do this programmatically? This seems like the kind of step that would confuse users due to
+			 *      bouncing out of Listings setup to Pages and then back again.
+			 */
+			'listings_pages'    => array(
 				__( 'Pages', 'listings' ),
 				array(
 					array(
-						'name' => 'listings_overview_page_id',
-						'std' => '',
-						'label' => __('Listings Overview Page', 'listings'),
-						'desc' => __('Select the page where you have placed the <code>[listings]</code> shortcode. This lets the plugin know where the main listings overview is located if using the shortcode page as an archive.', 'listings'),
-						'type' => 'page',
+						'name'  => 'listings_overview_page_id',
+						'std'   => '',
+						'label' => __( 'Listings Overview Page', 'listings' ),
+						'desc'  => __( 'Select the page where you have placed the <code>[listings]</code> shortcode. This lets the plugin know where the main listings overview is located if using the shortcode page as an archive.', 'listings' ),
+						'type'  => 'page',
 					),
 				),
 			)
@@ -76,8 +80,9 @@ class Settings {
 
 		foreach ( $this->settings as $key => $section ) {
 			foreach ( $section[1] as $option ) {
-				if ( isset( $option['std'] ) )
+				if ( isset( $option['std'] ) ) {
 					add_option( $option['name'], $option['std'] );
+				}
 				register_setting( $key, $option['name'] );
 			}
 		}
@@ -99,15 +104,15 @@ class Settings {
 
 				// Hide all empty settings pages
 				foreach ( $this->settings as $key => $setting ) {
-					if ( ! isset($setting[1] ) || empty( $setting[1] ) ) {
-						unset($this->settings[$key] );
+					if ( ! isset( $setting[1] ) || empty( $setting[1] ) ) {
+						unset( $this->settings[ $key ] );
 					}
 				}
 
-				$settings_keys = array_keys($this->settings);
-				$first_tab = array_shift($settings_keys);
+				$settings_keys = array_keys( $this->settings );
+				$first_tab     = array_shift( $settings_keys );
 
-				if ( !isset($_GET['tab'] ) || ! isset($this->settings[ $_GET['tab']])) {
+				if ( ! isset( $_GET['tab'] ) || ! isset( $this->settings[ $_GET['tab'] ] ) ) {
 					$active_tab = $first_tab;
 				} else {
 					$active_tab = $_GET['tab'];
@@ -116,144 +121,161 @@ class Settings {
 				settings_fields( $active_tab );
 				?>
 
-			    <h2 class="nav-tab-wrapper">
-			    	<?php
-			    		foreach ( $this->settings as $key => $section ) {
-							$tab_url = remove_query_arg('settings-updated', add_query_arg('tab', sanitize_title( $key ) ) );
-			    			echo '<a href="' . $tab_url . '" class="nav-tab';
-			    			 if ( sanitize_title( $key ) == $active_tab ) {
-								 echo ' nav-tab-active';
-							 }
-							echo '">' . esc_html( $section[0] ) . '</a>';
-			    		}
-			    	?>
-			    </h2>
+				<h2 class="nav-tab-wrapper">
+					<?php
+					foreach ( $this->settings as $key => $section ) {
+						$tab_url = remove_query_arg( 'settings-updated', add_query_arg( 'tab', sanitize_title( $key ) ) );
+						echo '<a href="' . $tab_url . '" class="nav-tab';
+						if ( sanitize_title( $key ) == $active_tab ) {
+							echo ' nav-tab-active';
+						}
+						echo '">' . esc_html( $section[0] ) . '</a>';
+					}
+					?>
+				</h2>
 
 				<?php
-					if ( ! empty( $_GET['settings-updated'] ) ) {
-						flush_rewrite_rules();
-						echo '<div class="updated fade listings-updated"><p>' . __( 'Settings successfully saved', 'listings' ) . '</p></div>';
-					}
+				if ( ! empty( $_GET['settings-updated'] ) ) {
+					flush_rewrite_rules();
+					echo '<div class="updated fade listings-updated"><p>' . __( 'Settings successfully saved', 'listings' ) . '</p></div>';
+				}
 
-					if (isset($_GET['tab'] ) && isset( $this->settings[ $_GET['tab'] ] ) ) {
-						$this->settings = array( $this->settings[ $_GET['tab'] ] );
-					} else {
-						$this->settings = array(array_shift($this->settings));
-					}
+				if ( isset( $_GET['tab'] ) && isset( $this->settings[ $_GET['tab'] ] ) ) {
+					$this->settings = array( $this->settings[ $_GET['tab'] ] );
+				} else {
+					$this->settings = array( array_shift( $this->settings ) );
+				}
 
-					foreach ( $this->settings as $key => $section ) {
+				foreach ( $this->settings as $key => $section ) {
 
-						echo '<div id="settings-' . sanitize_title( $key ) . '" class="settings_panel">';
+					echo '<div id="settings-' . sanitize_title( $key ) . '" class="settings_panel">';
 
-						echo '<table class="form-table">';
+					echo '<table class="form-table">';
 
-						foreach ( $section[1] as $option ) {
+					foreach ( $section[1] as $option ) {
 
-							$placeholder    = ( ! empty( $option['placeholder'] ) ) ? 'placeholder="' . $option['placeholder'] . '"' : '';
-							$class          = ! empty( $option['class'] ) ? $option['class'] : '';
-							$value          = get_option( $option['name'] );
-							$option['type'] = ! empty( $option['type'] ) ? $option['type'] : '';
-							$attributes     = array();
+						$placeholder    = ( ! empty( $option['placeholder'] ) ) ? 'placeholder="' . $option['placeholder'] . '"' : '';
+						$class          = ! empty( $option['class'] ) ? $option['class'] : '';
+						$value          = get_option( $option['name'] );
+						$option['type'] = ! empty( $option['type'] ) ? $option['type'] : '';
+						$attributes     = array();
 
-							if ( ! empty( $option['attributes'] ) && is_array( $option['attributes'] ) )
-								foreach ( $option['attributes'] as $attribute_name => $attribute_value )
-									$attributes[] = esc_attr( $attribute_name ) . '="' . esc_attr( $attribute_value ) . '"';
-
-							echo '<tr valign="top" class="' . $class . '"><th scope="row"><label for="setting-' . $option['name'] . '">' . $option['label'] . '</a></th><td>';
-
-							switch ( $option['type'] ) {
-
-								case "checkbox" :
-
-									?><label><input id="setting-<?php echo $option['name']; ?>" name="<?php echo $option['name']; ?>" type="checkbox" value="1" <?php echo implode( ' ', $attributes ); ?> <?php checked( '1', $value ); ?> /> <?php echo $option['cb_label']; ?></label><?php
-
-									if ( $option['desc'] )
-										echo ' <p class="description">' . $option['desc'] . '</p>';
-
-								break;
-								case "textarea" :
-
-									?><textarea id="setting-<?php echo $option['name']; ?>" class="large-text" cols="50" rows="3" name="<?php echo $option['name']; ?>" <?php echo implode( ' ', $attributes ); ?> <?php echo $placeholder; ?>><?php echo esc_textarea( $value ); ?></textarea><?php
-
-									if ( $option['desc'] )
-										echo ' <p class="description">' . $option['desc'] . '</p>';
-
-								break;
-								case "select" :
-
-									?><select id="setting-<?php echo $option['name']; ?>" class="regular-text" name="<?php echo $option['name']; ?>" <?php echo implode( ' ', $attributes ); ?>><?php
-										foreach( $option['options'] as $key => $name )
-											echo '<option value="' . esc_attr( $key ) . '" ' . selected( $value, $key, false ) . '>' . esc_html( $name ) . '</option>';
-									?></select><?php
-
-									if ( $option['desc'] ) {
-										echo ' <p class="description">' . $option['desc'] . '</p>';
-									}
-
-								break;
-								case "page" :
-
-									$args = array(
-										'name'             => $option['name'],
-										'id'               => $option['name'],
-										'sort_column'      => 'menu_order',
-										'sort_order'       => 'ASC',
-										'show_option_none' => __( '--no page--', 'listings' ),
-										'echo'             => false,
-										'selected'         => absint( $value )
-									);
-
-									echo str_replace(' id=', " data-placeholder='" . __( 'Select a page&hellip;', 'listings' ) .  "' id=", wp_dropdown_pages( $args ) );
-
-									if ( $option['desc'] ) {
-										echo ' <p class="description">' . $option['desc'] . '</p>';
-									}
-
-								break;
-								case "password" :
-
-									?><input id="setting-<?php echo $option['name']; ?>" class="regular-text" type="password" name="<?php echo $option['name']; ?>" value="<?php esc_attr_e( $value ); ?>" <?php echo implode( ' ', $attributes ); ?> <?php echo $placeholder; ?> /><?php
-
-									if ( $option['desc'] ) {
-										echo ' <p class="description">' . $option['desc'] . '</p>';
-									}
-
-								break;
-								case "number" :
-									?><input id="setting-<?php echo $option['name']; ?>" class="regular-text" type="number" name="<?php echo $option['name']; ?>" value="<?php esc_attr_e( $value ); ?>" <?php echo implode( ' ', $attributes ); ?> <?php echo $placeholder; ?> /><?php
-
-									if ( $option['desc'] ) {
-										echo ' <p class="description">' . $option['desc'] . '</p>';
-									}
-								break;
-								case "" :
-								case "input" :
-								case "text" :
-									?><input id="setting-<?php echo $option['name']; ?>" class="regular-text" type="text" name="<?php echo $option['name']; ?>" value="<?php esc_attr_e( $value ); ?>" <?php echo implode( ' ', $attributes ); ?> <?php echo $placeholder; ?> /><?php
-
-									if ( $option['desc'] ) {
-										echo ' <p class="description">' . $option['desc'] . '</p>';
-									}
-								break;
-								default :
-									do_action( 'listings_admin_field_' . $option['type'], $option, $attributes, $value, $placeholder );
-								break;
-
+						if ( ! empty( $option['attributes'] ) && is_array( $option['attributes'] ) ) {
+							foreach ( $option['attributes'] as $attribute_name => $attribute_value ) {
+								$attributes[] = esc_attr( $attribute_name ) . '="' . esc_attr( $attribute_value ) . '"';
 							}
-
-							echo '</td></tr>';
 						}
 
-						echo '</table></div>';
+						echo '<tr valign="top" class="' . $class . '"><th scope="row"><label for="setting-' . $option['name'] . '">' . $option['label'] . '</a></th><td>';
 
+						switch ( $option['type'] ) {
+
+							case "checkbox" :
+
+								?><label><input id="setting-<?php echo $option['name']; ?>"
+								                name="<?php echo $option['name']; ?>" type="checkbox"
+								                value="1" <?php echo implode( ' ', $attributes ); ?> <?php checked( '1', $value ); ?> /> <?php echo $option['cb_label']; ?>
+								</label><?php
+
+								if ( $option['desc'] ) {
+									echo ' <p class="description">' . $option['desc'] . '</p>';
+								}
+
+								break;
+							case "textarea" :
+
+								?><textarea id="setting-<?php echo $option['name']; ?>" class="large-text" cols="50"
+								            rows="3"
+								            name="<?php echo $option['name']; ?>" <?php echo implode( ' ', $attributes ); ?><?php echo $placeholder; ?>><?php echo esc_textarea( $value ); ?></textarea><?php
+
+								if ( $option['desc'] ) {
+									echo ' <p class="description">' . $option['desc'] . '</p>';
+								}
+
+								break;
+							case "select" :
+
+								?><select id="setting-<?php echo $option['name']; ?>" class="regular-text"
+								          name="<?php echo $option['name']; ?>" <?php echo implode( ' ', $attributes ); ?>><?php
+								foreach ( $option['options'] as $key => $name ) {
+									echo '<option value="' . esc_attr( $key ) . '" ' . selected( $value, $key, false ) . '>' . esc_html( $name ) . '</option>';
+								}
+								?></select><?php
+
+								if ( $option['desc'] ) {
+									echo ' <p class="description">' . $option['desc'] . '</p>';
+								}
+
+								break;
+							case "page" :
+
+								$args = array(
+									'name'             => $option['name'],
+									'id'               => $option['name'],
+									'sort_column'      => 'menu_order',
+									'sort_order'       => 'ASC',
+									'show_option_none' => __( '--no page--', 'listings' ),
+									'echo'             => false,
+									'selected'         => absint( $value )
+								);
+
+								echo str_replace( ' id=', " data-placeholder='" . __( 'Select a page&hellip;', 'listings' ) . "' id=", wp_dropdown_pages( $args ) );
+
+								if ( $option['desc'] ) {
+									echo ' <p class="description">' . $option['desc'] . '</p>';
+								}
+
+								break;
+							case "password" :
+
+								?><input id="setting-<?php echo $option['name']; ?>" class="regular-text"
+								         type="password" name="<?php echo $option['name']; ?>"
+								         value="<?php esc_attr_e( $value ); ?>" <?php echo implode( ' ', $attributes ); ?><?php echo $placeholder; ?> /><?php
+
+								if ( $option['desc'] ) {
+									echo ' <p class="description">' . $option['desc'] . '</p>';
+								}
+
+								break;
+							case "number" :
+								?><input id="setting-<?php echo $option['name']; ?>" class="regular-text" type="number"
+								         name="<?php echo $option['name']; ?>"
+								         value="<?php esc_attr_e( $value ); ?>" <?php echo implode( ' ', $attributes ); ?><?php echo $placeholder; ?> /><?php
+
+								if ( $option['desc'] ) {
+									echo ' <p class="description">' . $option['desc'] . '</p>';
+								}
+								break;
+							case "" :
+							case "input" :
+							case "text" :
+								?><input id="setting-<?php echo $option['name']; ?>" class="regular-text" type="text"
+								         name="<?php echo $option['name']; ?>"
+								         value="<?php esc_attr_e( $value ); ?>" <?php echo implode( ' ', $attributes ); ?><?php echo $placeholder; ?> /><?php
+
+								if ( $option['desc'] ) {
+									echo ' <p class="description">' . $option['desc'] . '</p>';
+								}
+								break;
+							default :
+								do_action( 'listings_admin_field_' . $option['type'], $option, $attributes, $value, $placeholder );
+								break;
+
+						}
+
+						echo '</td></tr>';
 					}
+
+					echo '</table></div>';
+
+				}
 				?>
 				<p class="submit">
-					<input type="submit" class="button-primary" value="<?php _e( 'Save Changes', 'listings' ); ?>" />
+					<input type="submit" class="button-primary" value="<?php _e( 'Save Changes', 'listings' ); ?>"/>
 				</p>
-		    </form>
+			</form>
 		</div>
 		<?php
-		do_action( 'listings_after_settings');
+		do_action( 'listings_after_settings' );
 	}
 }

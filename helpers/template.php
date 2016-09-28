@@ -3,33 +3,41 @@
 /**
  * Get and include template files.
  *
- * @param mixed $template_name
- * @param array $args (default: array())
+ * @param mixed  $template_name
+ * @param array  $args          (default: array())
  * @param string $template_path (default: '')
+ *
  * @return void
  */
+
+/**
+ * @todo: Does this output anyting? Why are we using the ob()? Maybe we can have a convention for output/return, e.g.,
+ *      listings_the_output() and listings_get_return()?
+ */
 function listings_get_template( $template_name, $args = array(), $template_path = 'listings' ) {
-	listings()->template->get_template($template_name, $args, $template_path);
+	listings()->template->get_template( $template_name, $args, $template_path );
 }
 
 /**
  * Get template part (for templates in loops).
  *
  * @param string $slug
- * @param string $name (default: '')
+ * @param string $name          (default: '')
  * @param string $template_path (default: 'listings')
  */
 function listings_get_template_part( $slug, $name = '', $template_path = 'listings' ) {
-	listings()->template->get_template_part($slug, $name, $template_path);
+	listings()->template->get_template_part( $slug, $name, $template_path );
 }
 
 /**
  * Add custom body classes
+ *
  * @param  array $classes
+ *
  * @return array
  */
 function listings_body_class( $classes ) {
-	$classes   = (array) $classes;
+	$classes   = (array) $classes; /** @todo Look this up-- why type the class? */
 	$classes[] = sanitize_title( wp_get_theme() );
 
 	return array_unique( $classes );
@@ -43,7 +51,11 @@ add_filter( 'body_class', 'listings_body_class' );
  */
 function listings_get_listing_pagination( $max_num_pages, $current_page = 1 ) {
 	ob_start();
-	listings_get_template( 'pagination.php', array( 'max_num_pages' => $max_num_pages, 'current_page' => absint( $current_page ) ) );
+	listings_get_template( 'pagination.php', array(
+		'max_num_pages' => $max_num_pages,
+		'current_page'  => absint( $current_page )
+	) );
+
 	return ob_get_clean();
 }
 
@@ -52,12 +64,18 @@ function listings_get_listing_pagination( $max_num_pages, $current_page = 1 ) {
  *
  * @param  string $logo
  * @param  string $size
+ *
  * @return string
  */
 function listings_get_resized_image( $logo, $size ) {
 	global $_wp_additional_image_sizes;
 
-	if ( $size !== 'full' && strstr( $logo, WP_CONTENT_URL ) && ( isset( $_wp_additional_image_sizes[ $size ] ) || in_array( $size, array( 'thumbnail', 'medium', 'large' ) ) ) ) {
+	if ( $size !== 'full' && strstr( $logo, WP_CONTENT_URL ) && ( isset( $_wp_additional_image_sizes[ $size ] ) || in_array( $size, array(
+				'thumbnail',
+				'medium',
+				'large'
+			) ) )
+	) {
 
 		if ( in_array( $size, array( 'thumbnail', 'medium', 'large' ) ) ) {
 			$img_width  = get_option( $size . '_size_w' );
@@ -70,7 +88,11 @@ function listings_get_resized_image( $logo, $size ) {
 		}
 
 		$upload_dir        = wp_upload_dir();
-		$logo_path         = str_replace( array( $upload_dir['baseurl'], $upload_dir['url'], WP_CONTENT_URL ), array( $upload_dir['basedir'], $upload_dir['path'], WP_CONTENT_DIR ), $logo );
+		$logo_path         = str_replace( array(
+			$upload_dir['baseurl'],
+			$upload_dir['url'],
+			WP_CONTENT_URL
+		), array( $upload_dir['basedir'], $upload_dir['path'], WP_CONTENT_DIR ), $logo );
 		$path_parts        = pathinfo( $logo_path );
 		$resized_logo_path = str_replace( '.' . $path_parts['extension'], '-' . $size . '.' . $path_parts['extension'], $logo_path );
 
@@ -87,9 +109,9 @@ function listings_get_resized_image( $logo, $size ) {
 
 				$resize = $image->resize( $img_width, $img_height, $img_crop );
 
-			   	if ( ! is_wp_error( $resize ) ) {
+				if ( ! is_wp_error( $resize ) ) {
 
-			   		$save = $image->save( $resized_logo_path );
+					$save = $image->save( $resized_logo_path );
 
 					if ( ! is_wp_error( $save ) ) {
 						$logo = dirname( $logo ) . '/' . basename( $resized_logo_path );
@@ -109,49 +131,51 @@ function listings_get_resized_image( $logo, $size ) {
 /**
  * @param $post
  * @param $taxonomy
+ *
  * @return string
  */
-function listings_get_terms_links_string($post, $taxonomy)
-{
-	$categories = wp_get_post_terms($post->ID, $taxonomy);
+function listings_get_terms_links_string( $post, $taxonomy ) {
+	$categories = wp_get_post_terms( $post->ID, $taxonomy );
 
-    if ( empty($categories) || is_wp_error($categories ) ) {
-        return '';
-    }
+	if ( empty( $categories ) || is_wp_error( $categories ) ) {
+		return '';
+	}
 
-	$categories_array = array_map(function ($item) {
-		$permalink = get_term_link($item);
+	$categories_array  = array_map( function ( $item ) {
+		$permalink = get_term_link( $item );
+
 		return '<a href="' . $permalink . '">' . $item->name . '</a>';
-	}, $categories);
-	$categories_string = implode(', ', $categories_array);
+	}, $categories );
+	$categories_string = implode( ', ', $categories_array );
+
 	return $categories_string;
 }
 
 /**
  * @param $post
  * @param $clickable bool
+ *
  * @return string
  */
-function listings_get_list_thumbnail_output($post, $clickable)
-{
-	$thumbnail = get_the_post_thumbnail($post->ID, 'thumbnail');
+function listings_get_list_thumbnail_output( $post, $clickable ) {
+	$thumbnail = get_the_post_thumbnail( $post->ID, 'thumbnail' );
 
-	if (empty($thumbnail)) {
-		return apply_filters('listings_get_list_thumbnail_default', '&nbsp;', $post, $clickable);
+	if ( empty( $thumbnail ) ) {
+		return apply_filters( 'listings_get_list_thumbnail_default', '&nbsp;', $post, $clickable );
 	}
 
-	$output = '';
-	$permalink = get_permalink($post->ID);
+	$output    = '';
+	$permalink = get_permalink( $post->ID );
 
-	if ($clickable) {
+	if ( $clickable ) {
 		$output .= '<a href="' . $permalink . '">';
 	}
 
 	$output .= $thumbnail;
 
-	if ($clickable) {
+	if ( $clickable ) {
 		$output .= '</a>';
 	}
 
-	return apply_filters('listings_get_list_thumbnail_output', $output, $post, $clickable);
+	return apply_filters( 'listings_get_list_thumbnail_output', $output, $post, $clickable );
 }

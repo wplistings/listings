@@ -33,6 +33,7 @@ class Forms {
 	 * Load a form's class
 	 *
 	 * @param  string $form_name
+	 *
 	 * @return string class name on success, false on failure
 	 */
 	private function load_form_class( $form_name ) {
@@ -54,12 +55,14 @@ class Forms {
 	 *
 	 * @param string $form_name
 	 * @param  array $atts Optional passed attributes
+	 *
 	 * @return string
 	 */
 	public function get_form( $form_name, $atts = array() ) {
 		if ( $form = $this->load_form_class( $form_name ) ) {
 			ob_start();
 			$form->output( $atts );
+
 			return ob_get_clean();
 		}
 	}

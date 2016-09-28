@@ -2,7 +2,9 @@
 
 /**
  * @access public
+ *
  * @param array $args
+ *
  * @return mixed|WP_Query
  */
 function listings_get_listings( $args = array() ) {
@@ -39,13 +41,13 @@ function listings_get_listings( $args = array() ) {
 	}
 
 	if ( ! empty( $args['search_categories'] ) ) {
-		$field    = is_numeric( $args['search_categories'][0] ) ? 'term_id' : 'slug';
-		$operator = 'all' === get_option( 'listings_category_filter_type', 'all' ) && sizeof( $args['search_categories'] ) > 1 ? 'AND' : 'IN';
+		$field                     = is_numeric( $args['search_categories'][0] ) ? 'term_id' : 'slug';
+		$operator                  = 'all' === get_option( 'listings_category_filter_type', 'all' ) && sizeof( $args['search_categories'] ) > 1 ? 'AND' : 'IN';
 		$query_args['tax_query'][] = array(
 			'taxonomy'         => 'listings_category',
 			'field'            => $field,
 			'terms'            => array_values( $args['search_categories'] ),
-			'include_children' => $operator !== 'AND' ,
+			'include_children' => $operator !== 'AND',
 			'operator'         => $operator
 		);
 	}
@@ -98,6 +100,7 @@ if ( ! function_exists( 'listings_get_keyword_search' ) ) :
 	 * Join and where query for keywords
 	 *
 	 * @param array $args
+	 *
 	 * @return array
 	 */
 	function listings_get_keyword_search( $args ) {
@@ -124,7 +127,7 @@ if ( ! function_exists( 'listings_notify_new_user' ) ) :
 	/**
 	 * Handle account creation.
 	 *
-	 * @param  int $user_id
+	 * @param  int    $user_id
 	 * @param  string $password
 	 */
 	function listings_notify_new_user( $user_id, $password ) {
@@ -139,89 +142,91 @@ if ( ! function_exists( 'listings_notify_new_user' ) ) :
 endif;
 
 if ( ! function_exists( 'listings_create_account' ) ) :
-/**
- * Handle account creation.
- *
- * @param  array $args containing username, email, role
- * @return WP_error | bool was an account created?
- */
-function listings_create_account( $args ) {
-	global $current_user;
+	/**
+	 * Handle account creation.
+	 *
+	 * @param  array $args containing username, email, role
+	 *
+	 * @return WP_error | bool was an account created?
+	 */
+	function listings_create_account( $args ) {
+		global $current_user;
 
-	$defaults = array(
-		'username' => '',
-		'email'    => '',
-		'password' => wp_generate_password(),
-		'role'     => get_option( 'default_role' )
-	);
+		$defaults = array(
+			'username' => '',
+			'email'    => '',
+			'password' => wp_generate_password(),
+			'role'     => get_option( 'default_role' )
+		);
 
-	$args = wp_parse_args( $args, $defaults );
-	extract( $args );
+		$args = wp_parse_args( $args, $defaults );
+		extract( $args ); /** @todo Can't have extract in VIP */
 
-	$username = sanitize_user( $username );
-	$email    = apply_filters( 'user_registration_email', sanitize_email( $email ) );
+		$username = sanitize_user( $username );
+		$email    = apply_filters( 'user_registration_email', sanitize_email( $email ) );
 
-	if ( empty( $email ) ) {
-		return new WP_Error( 'validation-error', __( 'Invalid email address.', 'listings' ) );
+		if ( empty( $email ) ) {
+			return new WP_Error( 'validation-error', __( 'Invalid email address.', 'listings' ) );
+		}
+
+		if ( empty( $username ) ) {
+			$username = sanitize_user( current( explode( '@', $email ) ) );
+		}
+
+		if ( ! is_email( $email ) ) {
+			return new WP_Error( 'validation-error', __( 'Your email address isn&#8217;t correct.', 'listings' ) );
+		}
+
+		if ( email_exists( $email ) ) {
+			return new WP_Error( 'validation-error', __( 'This email is already registered, please choose another one.', 'listings' ) );
+		}
+
+		// Ensure username is unique
+		$append     = 1;
+		$o_username = $username;
+
+		while ( username_exists( $username ) ) {
+			$username = $o_username . $append;
+			$append ++;
+		}
+
+		// Final error checking
+		$reg_errors = new WP_Error();
+		$reg_errors = apply_filters( 'listings_registration_errors', $reg_errors, $username, $email );
+
+		do_action( 'listings_register_post', $username, $email, $reg_errors );
+
+		if ( $reg_errors->get_error_code() ) {
+			return $reg_errors;
+		}
+
+		// Create account
+		$new_user = array(
+			'user_login' => $username,
+			'user_pass'  => $password,
+			'user_email' => $email,
+			'role'       => $role
+		);
+
+		$user_id = wp_insert_user( apply_filters( 'listings_create_account_data', $new_user ) );
+
+		if ( is_wp_error( $user_id ) ) {
+			return $user_id;
+		}
+
+		// Notify
+		listings_notify_new_user( $user_id, $password );
+		// Login
+		wp_set_auth_cookie( $user_id, true, is_ssl() );
+		$current_user = get_user_by( 'id', $user_id );
+
+		return true;
 	}
-
-	if ( empty( $username ) ) {
-		$username = sanitize_user( current( explode( '@', $email ) ) );
-	}
-
-	if ( ! is_email( $email ) ) {
-		return new WP_Error( 'validation-error', __( 'Your email address isn&#8217;t correct.', 'listings' ) );
-	}
-
-	if ( email_exists( $email ) ) {
-		return new WP_Error( 'validation-error', __( 'This email is already registered, please choose another one.', 'listings' ) );
-	}
-
-	// Ensure username is unique
-	$append     = 1;
-	$o_username = $username;
-
-	while ( username_exists( $username ) ) {
-		$username = $o_username . $append;
-		$append ++;
-	}
-
-	// Final error checking
-	$reg_errors = new WP_Error();
-	$reg_errors = apply_filters( 'listings_registration_errors', $reg_errors, $username, $email );
-
-	do_action( 'listings_register_post', $username, $email, $reg_errors );
-
-	if ( $reg_errors->get_error_code() ) {
-		return $reg_errors;
-	}
-
-	// Create account
-	$new_user = array(
-		'user_login' => $username,
-		'user_pass'  => $password,
-		'user_email' => $email,
-		'role'       => $role
-    );
-
-    $user_id = wp_insert_user( apply_filters( 'listings_create_account_data', $new_user ) );
-
-    if ( is_wp_error( $user_id ) ) {
-    	return $user_id;
-    }
-
-    // Notify
-	listings_notify_new_user( $user_id, $password );
-    // Login
-    wp_set_auth_cookie( $user_id, true, is_ssl() );
-    $current_user = get_user_by( 'id', $user_id );
-
-    return true;
-}
 endif;
 
 /**
- * True if an the user can post a listing. If accounts are required, and reg is enabled, users can post (they signup at the same time).
+ * True if an the user can post a listing. If accounts are required, and reg is enabled, users can post (they signup at
+ * the same time).
  *
  * @return bool
  */
@@ -248,7 +253,7 @@ function listings_user_can_edit_listing( $listing_id ) {
 	if ( ! is_user_logged_in() || ! $listing_id ) {
 		$can_edit = false;
 	} else {
-		$listing      = get_post( $listing_id );
+		$listing = get_post( $listing_id );
 
 		if ( ! $listing || ( absint( $listing->post_author ) !== get_current_user_id() && ! current_user_can( 'edit_post', $listing_id ) ) ) {
 			$can_edit = false;
@@ -328,7 +333,7 @@ function listings_dropdown_categories( $args = '' ) {
 		$r['pad_counts'] = true;
 	}
 
-	extract( $r );
+	extract( $r ); /** @todo Extract */
 
 	// Store in a transient to help sites with many cats
 	$categories_hash = 'listings_cats_' . md5( json_encode( $r ) . \Listings\CacheHelper::get_transient_version( 'listings_get_' . $r['taxonomy'] ) );
@@ -336,19 +341,19 @@ function listings_dropdown_categories( $args = '' ) {
 
 	if ( empty( $categories ) ) {
 		$categories = get_terms( $taxonomy, array(
-			'orderby'         => $r['orderby'],
-			'order'           => $r['order'],
-			'hide_empty'      => $r['hide_empty'],
-			'child_of'        => $r['child_of'],
-			'exclude'         => $r['exclude'],
-			'hierarchical'    => $r['hierarchical']
+			'orderby'      => $r['orderby'],
+			'order'        => $r['order'],
+			'hide_empty'   => $r['hide_empty'],
+			'child_of'     => $r['child_of'],
+			'exclude'      => $r['exclude'],
+			'hierarchical' => $r['hierarchical']
 		) );
 		set_transient( $categories_hash, $categories, DAY_IN_SECONDS * 30 );
 	}
 
-	$name       = esc_attr( $name );
-	$class      = esc_attr( $class );
-	$id         = $id ? esc_attr( $id ) : $name;
+	$name  = esc_attr( $name );
+	$class = esc_attr( $class );
+	$id    = $id ? esc_attr( $id ) : $name;
 
 	$output = "<select name='" . esc_attr( $name ) . "[]' id='" . esc_attr( $id ) . "' class='" . esc_attr( $class ) . "' " . ( $multiple ? "multiple='multiple'" : '' ) . " data-placeholder='" . esc_attr( $placeholder ) . "' data-no_results_text='" . esc_attr( $no_results_text ) . "' data-multiple_text='" . esc_attr( $multiple_text ) . "'>\n";
 
@@ -362,7 +367,7 @@ function listings_dropdown_categories( $args = '' ) {
 		if ( $hierarchical ) {
 			$depth = $r['depth'];  // Walk the full depth.
 		} else {
-			$depth = -1; // Flat.
+			$depth = - 1; // Flat.
 		}
 
 		$output .= $walker->walk( $categories, $depth, $r );
@@ -379,7 +384,9 @@ function listings_dropdown_categories( $args = '' ) {
 
 /**
  * Get the page ID of a page if set, with PolyLang compat.
+ *
  * @param  string $page e.g. job_dashboard, submit_job_form, jobs
+ *
  * @return int
  */
 function listings_get_page_id( $page ) {
@@ -393,7 +400,9 @@ function listings_get_page_id( $page ) {
 
 /**
  * Get the permalink of a page if set
+ *
  * @param  string $page e.g. job_dashboard, submit_job_form, jobs
+ *
  * @return string|bool
  */
 function listings_get_permalink( $page ) {
@@ -406,7 +415,9 @@ function listings_get_permalink( $page ) {
 
 /**
  * Filters the upload dir when $listings_upload is true
+ *
  * @param  array $pathdata
+ *
  * @return array
  */
 function listings_upload_dir( $pathdata ) {
@@ -434,14 +445,16 @@ add_filter( 'upload_dir', 'listings_upload_dir' );
 
 /**
  * Prepare files for upload by standardizing them into an array. This adds support for multiple file upload fields.
+ *
  * @param  array $file_data
+ *
  * @return array
  */
 function listings_prepare_uploaded_files( $file_data ) {
 	$files_to_upload = array();
 
 	if ( is_array( $file_data['name'] ) ) {
-		foreach( $file_data['name'] as $file_data_key => $file_data_value ) {
+		foreach ( $file_data['name'] as $file_data_key => $file_data_value ) {
 			if ( $file_data['name'][ $file_data_key ] ) {
 				$type              = wp_check_filetype( $file_data['name'][ $file_data_key ] ); // Map mime type to one WordPress recognises
 				$files_to_upload[] = array(
@@ -464,8 +477,10 @@ function listings_prepare_uploaded_files( $file_data ) {
 
 /**
  * Upload a file using WordPress file API.
+ *
  * @param  array $file Array of $_FILE data to upload.
  * @param  array $args Optional arguments
+ *
  * @return array|WP_Error Array of objects containing either file information or an error
  */
 function listings_upload_file( $file, $args = array() ) {
@@ -482,7 +497,7 @@ function listings_upload_file( $file, $args = array() ) {
 
 	$listings_upload         = true;
 	$listings_uploading_file = $args['file_key'];
-	$uploaded_file              = new stdClass();
+	$uploaded_file           = new stdClass();
 
 	if ( ! in_array( $file['type'], $args['allowed_mime_types'] ) ) {
 		if ( $args['file_label'] ) {

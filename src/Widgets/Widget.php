@@ -110,6 +110,10 @@ abstract class Widget extends WP_Widget {
 
             $value = isset( $instance[ $key ] ) ? $instance[ $key ] : $setting['std'];
 
+            /**
+             * @todo: No need to think much about the output, as writing your own widget using this would be quite
+             *      easy.
+             */
             switch ( $setting['type'] ) {
                 case 'text' :
                     ?>
