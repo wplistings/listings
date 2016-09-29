@@ -49,9 +49,9 @@ class Plugin {
 
         // Actions
         add_action( 'after_setup_theme', array( $this, 'load_plugin_textdomain' ) );
-
         add_action( 'wp_enqueue_scripts', array( $this, 'frontend_scripts' ) );
         add_action( 'admin_init', array( $this, 'updater' ) );
+        add_action( 'plugin_action_links_' . plugin_basename( LISTINGS_PLUGIN_FILE ), array( $this, 'plugin_action_links' ) );
 
         do_action('listings_init');
     }
@@ -133,4 +133,18 @@ class Plugin {
         wp_register_script( 'jquery-deserialize', LISTINGS_PLUGIN_URL . '/assets/js/jquery-deserialize/jquery.deserialize.js', array( 'jquery' ), '1.2.1', true );
         wp_enqueue_style( 'listings-frontend', LISTINGS_PLUGIN_URL . '/assets/css/frontend.css' );
     }
+
+    /**
+     * Show action links on the plugin screen.
+     *
+     * @param	mixed $links Plugin Action links
+     * @return	array
+     */
+    public static function plugin_action_links( $links ) {
+        $action_links = array(
+            'settings' => '<a href="' . admin_url( 'options-general.php?page=listings-settings' ) . '" title="' . esc_attr( __( 'View Listings Settings', 'listings' ) ) . '">' . __( 'Settings', 'listings' ) . '</a>',
+        );
+        return array_merge( $action_links, $links );
+    }
+
 }
