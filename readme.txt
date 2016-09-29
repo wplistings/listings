@@ -44,6 +44,8 @@ You can find extensive documentation on [how to install plugins](http://codex.wo
 
 == Changelog ==
 
+= 0.4.0 =
+
 = 0.3.0 =
 * Verified WordPress 4.6.0 compatibility
 * Refactor: Writepanel abstract class is now renamed to Metabox
